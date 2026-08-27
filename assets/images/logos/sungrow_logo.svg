@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" width="200" height="60">
+  <rect width="200" height="60" fill="none"/>
+  <circle cx="30" cy="30" r="16" fill="#F97316"/>
+  <path d="M30 18 L34 26 L42 30 L34 34 L30 42 L26 34 L18 30 L26 26 Z" fill="#FFFFFF"/>
+  <text x="55" y="38" font-family="Arial, sans-serif" font-weight="900" font-size="22" fill="#1E293B">SUNGROW</text>
+</svg>

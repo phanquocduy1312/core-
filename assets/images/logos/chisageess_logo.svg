@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 65" width="200" height="65">
+  <g transform="translate(10, 10)">
+    <!-- Red Geometric Intertwined Emblem -->
+    <rect x="10" y="8" width="16" height="26" fill="none" stroke="#c8102e" stroke-width="3" rx="2"/>
+    <path d="M14,18 L22,18 M18,14 L18,28" stroke="#c8102e" stroke-width="3"/>
+    <!-- CHISAGE ESS Text -->
+    <text x="34" y="27" font-family="'Arial Black', sans-serif" font-size="17" font-weight="900" fill="#c8102e" letter-spacing="0.5">CHISAGE ESS</text>
+  </g>
+</svg>

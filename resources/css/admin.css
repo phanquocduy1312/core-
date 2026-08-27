@@ -1,0 +1,131 @@
+@import "tailwindcss";
+@import "./builder-shell.css";
+@plugin "flowbite/plugin";
+@source "../../node_modules/flowbite";
+
+@theme {
+  --color-primary: #e32326;
+  --color-primary-hover: #b91f21;
+  --color-primary-active: #991b1e;
+}
+
+/* Global Font Override */
+body, h1, h2, h3, h4, h5, h6, * {
+  font-family: 'Quicksand', sans-serif !important;
+}
+
+/* Custom Overrides for Third-Party Libraries */
+
+/* --- Select2 Overrides --- */
+.select2-container .select2-selection--single {
+  height: 38px !important;
+  border: 1px solid #dfe5ef !important;
+  border-radius: 8px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #1f2937 !important;
+  padding-left: 10px !important;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  height: 36px !important;
+  right: 8px !important;
+}
+.select2-container--default .select2-selection--multiple {
+  min-height: 38px !important;
+  border: 1px solid #dfe5ef !important;
+  border-radius: 8px !important;
+  padding: 2px 6px !important;
+}
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+  border-color: #e32326 !important;
+  box-shadow: 0 0 0 2px rgba(227, 35, 38, 0.15) !important;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  background-color: #fef2f2 !important;
+  border: 1px solid #fee2e2 !important;
+  color: #991b1b !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  border-radius: 6px !important;
+  padding: 2px 6px !important;
+  margin-top: 4px !important;
+  margin-right: 4px !important;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+  color: #ef4444 !important;
+  margin-right: 4px !important;
+  font-weight: bold !important;
+  border: none !important;
+  background: transparent !important;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
+  color: #b91c1c !important;
+}
+.select2-dropdown {
+  border: 1px solid #dfe5ef !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+}
+.select2-results__option {
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: #1f2937 !important;
+  padding: 8px 12px !important;
+}
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background-color: #fef2f2 !important;
+  color: #e32326 !important;
+}
+.select2-container--default .select2-results__option[aria-selected="true"] {
+  background-color: #f3f4f6 !important;
+  color: #1f2937 !important;
+}
+
+/* --- Quill Editor Overrides --- */
+.ql-toolbar .ql-picker {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #1f2937 !important;
+}
+.ql-toolbar .ql-picker-label {
+  color: #1f2937 !important;
+}
+.ql-toolbar .ql-picker-options {
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+  border: 1px solid #dfe5ef !important;
+}
+.ql-toolbar .ql-picker-item {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #1f2937 !important;
+}
+.ql-container.ql-snow {
+  border-bottom-left-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
+  border-color: #d1d5db !important;
+}
+.ql-toolbar.ql-snow {
+  border-top-left-radius: 8px !important;
+  border-top-right-radius: 8px !important;
+  border-color: #d1d5db !important;
+}
+
+/* --- SweetAlert2 Style Adjustments --- */
+.swal2-popup {
+  border-radius: 12px !important;
+  font-family: inherit !important;
+}
+.swal2-styled.swal2-confirm {
+  background-color: #e32326 !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+}
+.swal2-styled.swal2-cancel {
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+}

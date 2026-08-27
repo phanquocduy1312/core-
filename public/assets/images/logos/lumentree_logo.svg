@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 120" width="460" height="120">
+  <defs>
+    <linearGradient id="lumentree-arc" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ED7226" stop-opacity="1"/>
+      <stop offset="70%" stop-color="#ED7226" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#F7AD7E" stop-opacity="0.2"/>
+    </linearGradient>
+  </defs>
+
+  <g transform="translate(10, 0)">
+    <!-- Lumentree Emblem Icon -->
+    <g fill="#ED7226" stroke="#ED7226">
+      <!-- Arc Sweep -->
+      <path d="M 86,100 C 48,114 14,84 14,48 C 14,35 19,25 24,19" fill="none" stroke="url(#lumentree-arc)" stroke-width="8.5" stroke-linecap="round"/>
+      
+      <!-- Top Dot -->
+      <circle cx="28" cy="24" r="6" fill="#ED7226" stroke="none"/>
+      
+      <!-- Main Long Diagonal Stroke -->
+      <line x1="80" y1="16" x2="38" y2="100" stroke-width="10" stroke-linecap="round"/>
+      
+      <!-- Branch Stroke to Right -->
+      <line x1="57" y1="62" x2="100" y2="44" stroke-width="10" stroke-linecap="round"/>
+      
+      <!-- Short Faint Ray (upper left) -->
+      <line x1="38" y1="20" x2="48" y2="35" stroke-width="7" stroke-linecap="round" opacity="0.45"/>
+      
+      <!-- Short Dash (lower left) -->
+      <line x1="30" y1="70" x2="44" y2="63" stroke-width="8" stroke-linecap="round"/>
+    </g>
+
+    <!-- Brand Text: LUMENTREE (font-size 46, letter-spacing 1 to fit with padding) -->
+    <text x="120" y="76" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Outfit', 'Montserrat', sans-serif" font-size="46" font-weight="800" fill="#ED7226" letter-spacing="1">LUMENTREE</text>
+  </g>
+</svg>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <title>Unsafe Source Test</title>
+    <script src="https://tracker.badsite.com/telemetry.js"></script>
+    <script>window.secretData = "malicious";</script>
+</head>
+<body>
+    <section class="unsafe-section">
+        <h1>Tiêu Đề An Toàn</h1>
+        <p onclick="alert('hacked')">Đoạn văn có event handler.</p>
+        <a href="javascript:alert('pwned')" class="btn">Bấm Vào Đây</a>
+        <img src="x" onerror="alert(1)" />
+        <iframe src="https://malicious-site.com/frame"></iframe>
+        <div data-gtm-tag="tracking-container">Dữ liệu theo dõi</div>
+    </section>
+</body>
+</html>

@@ -1,0 +1,8 @@
+{
+  "name": "grapesjs",
+  "version": "0.21.13",
+  "vendored_at": "2026-08-27T11:12:30Z",
+  "pin_strategy": "local_vendor",
+  "license": "BSD-3-Clause",
+  "description": "Pinned local vendor assets for GrapesJS Visual Page Builder. Isolated to Admin Builder only."
+}

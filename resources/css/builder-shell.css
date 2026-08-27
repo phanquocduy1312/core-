@@ -1,0 +1,580 @@
+/* Page Builder UX Shell Layout Styles */
+
+.pb-wrapper {
+    display: flex !important;
+    width: 100% !important;
+    height: 600px !important;
+    background-color: #ffffff !important;
+    border: 1px solid #dfe5ef !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    font-family: inherit !important;
+    position: relative !important;
+}
+
+#client-inline-editor .pb-wrapper {
+    height: 100vh !important;
+    border-radius: 0 !important;
+    border: none !important;
+}
+
+/* Left Sidebar Panel */
+.pb-left-panel {
+    width: 280px !important;
+    min-width: 280px !important;
+    border-right: 1px solid #dfe5ef !important;
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+    background-color: #ffffff !important;
+    z-index: 10 !important;
+}
+
+.pb-panel-header {
+    height: 50px !important;
+    padding: 0 14px !important;
+    border-bottom: 1px solid #dfe5ef !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    background-color: #f8f9fa !important;
+}
+
+.pb-panel-title {
+    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    color: #2a3547 !important;
+    margin: 0 !important;
+}
+
+.pb-panel-body {
+    flex-grow: 1 !important;
+    overflow-y: auto !important;
+    padding: 10px !important;
+    background-color: #ffffff !important;
+}
+
+.pb-panel-footer {
+    padding: 12px 14px !important;
+    border-top: 1px solid #dfe5ef !important;
+    background-color: #ffffff !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+}
+
+/* Element Tree Styling */
+.pb-tree {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+    padding-bottom: 40px !important;
+}
+
+.pb-tree-node-wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    position: relative !important;
+}
+
+.pb-tree-node {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 8px 10px !important;
+    border-radius: 6px !important;
+    background-color: #f8f9fa !important;
+    border: 1px solid transparent !important;
+    cursor: pointer !important;
+    transition: all 0.15s ease !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    color: #2a3547 !important;
+}
+
+.pb-tree-node:hover {
+    background-color: #ecf2ff !important;
+    border-color: #cbd5e1 !important;
+}
+
+.pb-tree-node.is-active {
+    background-color: #5d87ff !important;
+    color: #ffffff !important;
+    border-color: #5d87ff !important;
+}
+
+.pb-tree-node.is-active .pb-node-icon,
+.pb-tree-node.is-active .pb-node-caret,
+.pb-tree-node.is-active .pb-node-gear {
+    color: #ffffff !important;
+}
+
+.pb-node-left {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    min-width: 0 !important;
+}
+
+.pb-node-caret {
+    color: #7c8fac !important;
+    font-size: 12px !important;
+    cursor: pointer !important;
+    transition: transform 0.2s ease !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 14px !important;
+    height: 14px !important;
+}
+
+.pb-node-caret.is-collapsed {
+    transform: rotate(-90deg) !important;
+}
+
+.pb-node-icon {
+    color: #7c8fac !important;
+    font-size: 14px !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.pb-node-label {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+.pb-node-gear {
+    color: #7c8fac !important;
+    font-size: 14px !important;
+    opacity: 0 !important;
+    transition: opacity 0.15s ease !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.pb-tree-node:hover .pb-node-gear,
+.pb-tree-node.is-active .pb-node-gear {
+    opacity: 1 !important;
+}
+
+.pb-tree-children {
+    padding-left: 14px !important;
+    border-left: 1px dashed #dfe5ef !important;
+    margin-left: 16px !important;
+    margin-top: 4px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+}
+
+/* Add Button Pill (UX Builder style) */
+.pb-add-button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    padding: 6px 14px !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    color: #475569 !important;
+    background-color: #f1f5f9 !important;
+    border: 1px dashed #cbd5e1 !important;
+    border-radius: 9999px !important;
+    cursor: pointer !important;
+    transition: all 0.15s ease !important;
+    width: fit-content !important;
+    margin: 6px auto 6px 12px !important;
+}
+
+.pb-add-button:hover {
+    background-color: #e2e8f0 !important;
+    border-color: #94a3b8 !important;
+    color: #0f172a !important;
+}
+
+.pb-add-button iconify-icon {
+    font-size: 13px !important;
+}
+
+/* Center Preview Canvas area */
+.pb-canvas-container {
+    flex-grow: 1 !important;
+    height: 100% !important;
+    background-color: #fafbfc !important;
+    position: relative !important;
+}
+
+/* Vertical Toolbar Right */
+.pb-right-toolbar {
+    width: 48px !important;
+    min-width: 48px !important;
+    border-left: 1px solid #dfe5ef !important;
+    background-color: #ffffff !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 12px !important;
+    padding: 12px 0 !important;
+    height: 100% !important;
+    z-index: 10 !important;
+}
+
+.pb-toolbar-btn {
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 6px !important;
+    border: 1px solid #dfe5ef !important;
+    background-color: #ffffff !important;
+    color: #2a3547 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    transition: all 0.15s ease !important;
+}
+
+.pb-toolbar-btn:hover {
+    background-color: #ecf2ff !important;
+    border-color: #5d87ff !important;
+    color: #5d87ff !important;
+}
+
+.pb-toolbar-btn.is-active {
+    background-color: #5d87ff !important;
+    border-color: #5d87ff !important;
+    color: #ffffff !important;
+}
+
+/* Settings Drawer */
+.pb-settings-drawer {
+    width: 280px !important;
+    min-width: 280px !important;
+    border-left: 1px solid #dfe5ef !important;
+    background-color: #ffffff !important;
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+    z-index: 10 !important;
+    transition: margin-right 0.3s ease !important;
+}
+
+.pb-settings-drawer.is-hidden {
+    margin-right: -280px !important;
+    display: none !important;
+}
+
+.pb-settings-header {
+    height: 50px !important;
+    padding: 0 14px !important;
+    border-bottom: 1px solid #dfe5ef !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    background-color: #f8f9fa !important;
+}
+
+.pb-settings-title {
+    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    color: #2a3547 !important;
+    margin: 0 !important;
+}
+
+.pb-settings-body {
+    flex-grow: 1 !important;
+    overflow-y: auto !important;
+}
+
+/* Custom Overrides inside Left Panel */
+.pb-panel-locale-wrapper {
+    padding: 8px 12px !important;
+    background-color: #f8f9fa !important;
+    border-bottom: 1px solid #dfe5ef !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+}
+
+.pb-panel-locale-label {
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    color: #2a3547 !important;
+}
+
+.pb-panel-locale-select {
+    font-size: 12px !important;
+    color: #2a3547 !important;
+    background-color: #ffffff !important;
+    border: 1px solid #dfe5ef !important;
+    border-radius: 6px !important;
+    padding: 4px 8px !important;
+    outline: none !important;
+    cursor: pointer !important;
+    max-width: 140px !important;
+}
+
+/* Insert Block Modal (UX Builder style) */
+#pb-insert-modal {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 2147483647 !important;
+    display: none !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 16px !important;
+    background-color: rgba(15, 23, 42, 0.4) !important;
+    backdrop-filter: blur(4px) !important;
+}
+
+#pb-insert-modal .pb-modal-dialog {
+    background-color: #ffffff !important;
+    border-radius: 12px !important;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+    width: 100% !important;
+    max-width: 500px !important;
+    max-height: 80vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    border: 1px solid #e2e8f0 !important;
+    overflow: hidden !important;
+}
+
+#pb-insert-modal .pb-modal-header {
+    padding: 14px 20px !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    background-color: #f8fafc !important;
+}
+
+#pb-insert-modal .pb-modal-title {
+    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    color: #0f172a !important;
+    margin: 0 !important;
+}
+
+#pb-insert-modal .pb-modal-close {
+    border: none !important;
+    background: transparent !important;
+    color: #94a3b8 !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 4px !important;
+    transition: color 0.15s ease !important;
+}
+
+#pb-insert-modal .pb-modal-close:hover {
+    color: #475569 !important;
+}
+
+#pb-insert-modal .pb-modal-body {
+    padding: 20px !important;
+    overflow-y: auto !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+}
+
+#pb-insert-modal .pb-block-item-btn {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    padding: 12px 16px !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 8px !important;
+    background-color: #ffffff !important;
+    cursor: pointer !important;
+    transition: all 0.15s ease !important;
+    text-align: left !important;
+}
+
+#pb-insert-modal .pb-block-item-btn:hover {
+    border-color: #5d87ff !important;
+    background-color: #f8fafc !important;
+}
+
+#pb-insert-modal .pb-block-icon-box {
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 6px !important;
+    background-color: #f1f5f9 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #64748b !important;
+}
+
+#pb-insert-modal .pb-block-label {
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    color: #1e293b !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+/* Fix GrapesJS Canvas Width and hide default sidebar in client inline editor */
+#client-inline-editor .gjs-pn-views-container {
+    display: none !important;
+}
+
+#client-inline-editor .gjs-cv-canvas {
+    width: 100% !important;
+    height: 100% !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+}
+
+/* Settings Placeholder Styling */
+.pb-settings-placeholder {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 48px 24px !important;
+    height: 100% !important;
+    min-height: 250px !important;
+    text-align: center !important;
+}
+
+section[data-page-block="product-grid"][data-columns="2"] .product-grid-placeholder,
+section[data-page-block="product-tabs"][data-columns="2"] .product-grid-placeholder {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+section[data-page-block="product-grid"][data-columns="3"] .product-grid-placeholder,
+section[data-page-block="product-tabs"][data-columns="3"] .product-grid-placeholder {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+section[data-page-block="product-grid"][data-columns="4"] .product-grid-placeholder,
+section[data-page-block="product-tabs"][data-columns="4"] .product-grid-placeholder {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+}
+section[data-page-block="product-grid"][data-columns="5"] .product-grid-placeholder,
+section[data-page-block="product-tabs"][data-columns="5"] .product-grid-placeholder {
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+}
+
+section[data-page-block="category-grid"][data-columns="3"] .category-grid-placeholder {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+section[data-page-block="category-grid"][data-columns="4"] .category-grid-placeholder {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+}
+section[data-page-block="category-grid"][data-columns="6"] .category-grid-placeholder {
+    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+}
+section[data-page-block="category-grid"][data-columns="8"] .category-grid-placeholder {
+    grid-template-columns: repeat(8, minmax(0, 1fr)) !important;
+}
+
+section[data-page-block="post-list"][data-columns="2"] .post-list-placeholder {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+section[data-page-block="post-list"][data-columns="3"] .post-list-placeholder {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+section[data-page-block="post-list"][data-columns="4"] .post-list-placeholder {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+}
+
+section[data-page-block="latest-reviews"][data-columns="2"] .reviews-placeholder {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+section[data-page-block="latest-reviews"][data-columns="3"] .reviews-placeholder {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+section[data-page-block="latest-reviews"][data-columns="4"] .reviews-placeholder {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+}
+
+/* Dynamic placeholder gap based on parent attributes */
+section[data-gap="12"] .product-grid-placeholder,
+section[data-gap="12"] .category-grid-placeholder,
+section[data-gap="12"] .post-list-placeholder,
+section[data-gap="12"] .reviews-placeholder {
+    gap: 12px !important;
+}
+section[data-gap="16"] .product-grid-placeholder,
+section[data-gap="16"] .category-grid-placeholder,
+section[data-gap="16"] .post-list-placeholder,
+section[data-gap="16"] .reviews-placeholder {
+    gap: 16px !important;
+}
+section[data-gap="24"] .product-grid-placeholder,
+section[data-gap="24"] .category-grid-placeholder,
+section[data-gap="24"] .post-list-placeholder,
+section[data-gap="24"] .reviews-placeholder {
+    gap: 24px !important;
+}
+section[data-gap="32"] .product-grid-placeholder,
+section[data-gap="32"] .category-grid-placeholder,
+section[data-gap="32"] .post-list-placeholder,
+section[data-gap="32"] .reviews-placeholder {
+    gap: 32px !important;
+}
+section[data-gap="40"] .product-grid-placeholder {
+    gap: 40px !important;
+}
+
+/* Dynamic placeholder text alignment based on parent attributes */
+section[data-align="left"] .product-grid-placeholder > div,
+section[data-align="left"] .category-grid-placeholder > div,
+section[data-align="left"] .post-list-placeholder > div {
+    text-align: left !important;
+    align-items: flex-start !important;
+}
+section[data-align="center"] .product-grid-placeholder > div,
+section[data-align="center"] .category-grid-placeholder > div,
+section[data-align="center"] .post-list-placeholder > div {
+    text-align: center !important;
+    align-items: center !important;
+}
+section[data-align="right"] .product-grid-placeholder > div,
+section[data-align="right"] .category-grid-placeholder > div,
+section[data-align="right"] .post-list-placeholder > div {
+    text-align: right !important;
+    align-items: flex-end !important;
+}
+
+/* Product Tabs Grid Styles */
+.product-tabs-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 32px;
+    font-family: 'Quicksand', sans-serif;
+}
+.product-tabs-bar .tab-btn {
+    padding: 10px 22px;
+    background: #f1f5f9;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+    border-radius: 9999px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.product-tabs-bar .tab-btn:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+    transform: translateY(-1px);
+}
+.product-tabs-bar .tab-btn.active {
+    background: #5d87ff;
+    color: #ffffff;
+    border-color: #5d87ff;
+    box-shadow: 0 4px 12px rgba(93, 135, 255, 0.35);
+}

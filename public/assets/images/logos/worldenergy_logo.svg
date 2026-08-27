@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 110" width="520" height="110">
+  <defs>
+    <linearGradient id="solar-blue-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00A3E0"/>
+      <stop offset="100%" stop-color="#0055FF"/>
+    </linearGradient>
+  </defs>
+
+  <g transform="translate(5, 0)">
+    <!-- Sunburst (Orange) -->
+    <g fill="#FF8A00" stroke="#FF8A00">
+      <polygon points="35,20 20,6 30,24"/>
+      <polygon points="22,33 2,22 20,42"/>
+      <polygon points="18,52 0,52 18,60"/>
+      <polygon points="20,70 2,80 23,78"/>
+      <polygon points="30,86 18,103 38,92"/>
+      <path d="M 36,23 C 22,36 22,68 36,81" fill="none" stroke="#FF8A00" stroke-width="6" stroke-linecap="round"/>
+    </g>
+
+    <!-- Solar Panel -->
+    <g>
+      <polygon points="40,22 92,12 74,72 22,82" fill="url(#solar-blue-grad)"/>
+      <line x1="66" y1="17" x2="48" y2="77" stroke="#FFFFFF" stroke-width="1.8" opacity="0.8"/>
+      <line x1="31" y1="52" x2="83" y2="42" stroke="#FFFFFF" stroke-width="1.8" opacity="0.8"/>
+    </g>
+
+    <!-- Green Leaf -->
+    <path d="M 30,78 C 42,64 74,66 68,94 C 46,94 32,86 30,78 Z" fill="#22C55E" stroke="#16A34A" stroke-width="1"/>
+    <path d="M 32,79 C 45,82 62,86 64,92" fill="none" stroke="#FFFFFF" stroke-width="1.5" opacity="0.8"/>
+
+    <!-- WORLD & ENERGY (Non-overlapping) -->
+    <text x="110" y="75" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Arial Black', sans-serif" font-weight="900" font-style="italic" font-size="48" fill="#0055FF" letter-spacing="0.5">WORLD</text>
+    <text x="315" y="75" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Arial Black', sans-serif" font-weight="900" font-style="italic" font-size="48" fill="#FF8A00" letter-spacing="0.5">ENERGY</text>
+  </g>
+</svg>

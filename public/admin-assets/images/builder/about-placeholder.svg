@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+  <defs>
+    <linearGradient id="grad-about" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#e2e8f0"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#grad-about)" rx="16"/>
+  <rect x="360" y="210" width="80" height="80" rx="20" fill="#e32326" opacity="0.1"/>
+  <circle cx="400" cy="240" r="16" fill="#e32326"/>
+  <path d="M375 275 C375 260 425 260 425 275" stroke="#e32326" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <text x="400" y="340" font-family="'Quicksand', sans-serif" font-size="20" font-weight="bold" fill="#1e293b" text-anchor="middle">Hình Ảnh Giới Thiệu Doanh Nghiệp</text>
+  <text x="400" y="370" font-family="'Quicksand', sans-serif" font-size="14" fill="#64748b" text-anchor="middle">Định dạng hỗ trợ: JPG, PNG, WEBP</text>
+</svg>

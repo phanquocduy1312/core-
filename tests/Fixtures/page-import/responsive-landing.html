@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Responsive Landing Page</title>
+    <style>
+        .hero-title {
+            font-size: 56px;
+            color: #0f172a;
+        }
+        .hero-section {
+            padding-top: 96px;
+            padding-bottom: 96px;
+        }
+        .services-grid {
+            display: grid;
+            gap: 24px;
+        }
+
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 42px;
+            }
+            .hero-section {
+                padding-top: 64px;
+                padding-bottom: 64px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 32px;
+            }
+            .hero-section {
+                padding-top: 32px;
+                padding-bottom: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <section id="hero" class="hero-section">
+            <h1 class="hero-title">Kiệt Tác Du Thuyền</h1>
+            <p>Hải trình xa hoa.</p>
+            <a href="/lien-he" class="btn">Tư Vấn</a>
+        </section>
+        <section id="services" class="services-section">
+            <h2>Dịch Vụ</h2>
+            <div class="services-grid">
+                <div class="service-card"><h3>Dịch Vụ 1</h3><p>Mô tả 1</p></div>
+                <div class="service-card"><h3>Dịch Vụ 2</h3><p>Mô tả 2</p></div>
+                <div class="service-card"><h3>Dịch Vụ 3</h3><p>Mô tả 3</p></div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

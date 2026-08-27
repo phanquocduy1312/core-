@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 136" width="550" height="136">
+  <style>
+    .brand-text { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-weight: 800; fill: #38484E; }
+    .tek-text { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-weight: 800; fill: #38484E; }
+  </style>
+  <!-- LU -->
+  <text x="10" y="96" class="brand-text" font-size="78" letter-spacing="1">LU</text>
+  
+  <!-- Green Circle Icon -->
+  <g transform="translate(156, 68)">
+    <circle cx="0" cy="0" r="35" fill="#5BB388" />
+    
+    <!-- Stylized X -->
+    <path d="M -14,-16 L 0,-2 L 14,-16 L 9,-21 L 0,-12 L -9,-21 Z" fill="#FFFFFF" />
+    <path d="M -14,16 L 0,2 L 14,16 L 9,21 L 0,12 L -9,21 Z" fill="#FFFFFF" />
+    <path d="M -16,-14 L -2,0 L -16,14 L -21,9 L -12,0 L -21,-9 Z" fill="#FFFFFF" />
+    <path d="M 16,-14 L 2,0 L 16,14 L 21,9 L 12,0 L 21,-9 Z" fill="#FFFFFF" />
+  </g>
+
+  <!-- POWER -->
+  <text x="202" y="96" class="brand-text" font-size="78" letter-spacing="1">POWER</text>
+  
+  <!-- TEK -->
+  <text x="478" y="52" class="tek-text" font-size="34" letter-spacing="0.5">TEK</text>
+</svg>
