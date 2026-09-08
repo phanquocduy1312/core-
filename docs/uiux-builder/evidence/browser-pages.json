@@ -1,0 +1,367 @@
+[
+  {
+    "page": 1,
+    "status": 200,
+    "state": {
+      "nodes": 139,
+      "htmlBytes": 15935,
+      "blocks": 37,
+      "dirty": false,
+      "childTypes": [
+        {
+          "type": "",
+          "children": 4,
+          "contentLength": 0
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "page": 2,
+    "status": 200,
+    "state": {
+      "nodes": 72,
+      "htmlBytes": 12657,
+      "blocks": 37,
+      "dirty": false,
+      "childTypes": [
+        {
+          "type": "",
+          "children": 6,
+          "contentLength": 0
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "page": 3,
+    "status": 200,
+    "state": {
+      "nodes": 1287,
+      "htmlBytes": 156332,
+      "blocks": 37,
+      "dirty": false,
+      "childTypes": [
+        {
+          "type": "",
+          "children": 2,
+          "contentLength": 0
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "page": 4,
+    "status": 200,
+    "state": {
+      "nodes": 60,
+      "htmlBytes": 4419,
+      "blocks": 37,
+      "dirty": false,
+      "childTypes": [
+        {
+          "type": "",
+          "children": 4,
+          "contentLength": 0
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "page": 5,
+    "status": 200,
+    "state": {
+      "nodes": 136,
+      "htmlBytes": 6416,
+      "blocks": 37,
+      "dirty": false,
+      "childTypes": [
+        {
+          "type": "",
+          "children": 4,
+          "contentLength": 0
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "page": 6,
+    "status": 200,
+    "state": {
+      "nodes": 99,
+      "htmlBytes": 11342,
+      "blocks": 37,
+      "dirty": false,
+      "childTypes": [
+        {
+          "type": "",
+          "children": 2,
+          "contentLength": 0
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "page": 7,
+    "status": 200,
+    "state": {
+      "nodes": 270,
+      "htmlBytes": 25693,
+      "blocks": 37,
+      "dirty": false,
+      "childTypes": [
+        {
+          "type": "",
+          "children": 5,
+          "contentLength": 0
+        }
+      ]
+    },
+    "errors": []
+  },
+  {
+    "public": "/",
+    "status": 200,
+    "errors": [
+      "Unexpected token ':'",
+      "$ is not a function",
+      "Unexpected token ':'",
+      "Element missing: script#wp-emoji-settings",
+      "Cannot read properties of null (reading 'addEventListener')",
+      "Loading chunk 77 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/section-frontend-handlers.d85ab872da118940910d.bundle.min.js)",
+      "Loading chunk 77 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/section-frontend-handlers.d85ab872da118940910d.bundle.min.js)",
+      "Loading chunk 77 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/section-frontend-handlers.d85ab872da118940910d.bundle.min.js)",
+      "Loading chunk 77 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/section-frontend-handlers.d85ab872da118940910d.bundle.min.js)",
+      "Loading chunk 77 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/section-frontend-handlers.d85ab872da118940910d.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 212 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/text-editor.45609661e409413f1cef.bundle.min.js)",
+      "Loading chunk 829 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor-pro/assets/js/slides.8e9b74f1b31471377df8.bundle.min.js)"
+    ],
+    "contentRegions": 2
+  },
+  {
+    "public": "/gioi-thieu",
+    "status": 200,
+    "errors": [
+      "Unexpected token ':'",
+      "$ is not a function",
+      "Unexpected token ':'",
+      "Element missing: script#wp-emoji-settings",
+      "Cannot read properties of null (reading 'addEventListener')",
+      "Loading chunk 77 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/section-frontend-handlers.d85ab872da118940910d.bundle.min.js)",
+      "Loading chunk 77 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/section-frontend-handlers.d85ab872da118940910d.bundle.min.js)",
+      "Loading chunk 77 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/section-frontend-handlers.d85ab872da118940910d.bundle.min.js)",
+      "Loading chunk 77 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/section-frontend-handlers.d85ab872da118940910d.bundle.min.js)",
+      "Loading chunk 77 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/section-frontend-handlers.d85ab872da118940910d.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 212 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/text-editor.45609661e409413f1cef.bundle.min.js)",
+      "Loading chunk 212 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/text-editor.45609661e409413f1cef.bundle.min.js)",
+      "Loading chunk 212 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/text-editor.45609661e409413f1cef.bundle.min.js)",
+      "Loading chunk 212 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/text-editor.45609661e409413f1cef.bundle.min.js)",
+      "Loading chunk 212 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/text-editor.45609661e409413f1cef.bundle.min.js)"
+    ],
+    "contentRegions": 2
+  },
+  {
+    "public": "/thuong-hieu",
+    "status": 200,
+    "errors": [
+      "Unexpected token ':'",
+      "$ is not a function",
+      "Unexpected token ':'",
+      "Element missing: script#wp-emoji-settings",
+      "Cannot read properties of null (reading 'addEventListener')",
+      "Loading chunk 77 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/section-frontend-handlers.d85ab872da118940910d.bundle.min.js)",
+      "Loading chunk 77 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/section-frontend-handlers.d85ab872da118940910d.bundle.min.js)",
+      "Loading chunk 77 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/section-frontend-handlers.d85ab872da118940910d.bundle.min.js)",
+      "Loading chunk 77 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/section-frontend-handlers.d85ab872da118940910d.bundle.min.js)",
+      "Loading chunk 77 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/section-frontend-handlers.d85ab872da118940910d.bundle.min.js)",
+      "Loading chunk 77 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/section-frontend-handlers.d85ab872da118940910d.bundle.min.js)",
+      "Loading chunk 77 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/section-frontend-handlers.d85ab872da118940910d.bundle.min.js)",
+      "Loading chunk 77 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/section-frontend-handlers.d85ab872da118940910d.bundle.min.js)",
+      "Loading chunk 77 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/section-frontend-handlers.d85ab872da118940910d.bundle.min.js)",
+      "Loading chunk 77 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/section-frontend-handlers.d85ab872da118940910d.bundle.min.js)",
+      "Loading chunk 77 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/section-frontend-handlers.d85ab872da118940910d.bundle.min.js)",
+      "Loading chunk 77 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/section-frontend-handlers.d85ab872da118940910d.bundle.min.js)",
+      "Loading chunk 77 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/section-frontend-handlers.d85ab872da118940910d.bundle.min.js)",
+      "Loading chunk 77 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/section-frontend-handlers.d85ab872da118940910d.bundle.min.js)",
+      "Loading chunk 77 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/section-frontend-handlers.d85ab872da118940910d.bundle.min.js)",
+      "Loading chunk 77 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/section-frontend-handlers.d85ab872da118940910d.bundle.min.js)",
+      "Loading chunk 77 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/section-frontend-handlers.d85ab872da118940910d.bundle.min.js)",
+      "Loading chunk 77 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/section-frontend-handlers.d85ab872da118940910d.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 212 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/text-editor.45609661e409413f1cef.bundle.min.js)",
+      "Loading chunk 212 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/text-editor.45609661e409413f1cef.bundle.min.js)"
+    ],
+    "contentRegions": 2
+  },
+  {
+    "public": "/du-an",
+    "status": 200,
+    "errors": [
+      "Unexpected token ':'",
+      "$ is not a function",
+      "Unexpected token ':'",
+      "Element missing: script#wp-emoji-settings",
+      "Loading chunk 77 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/section-frontend-handlers.d85ab872da118940910d.bundle.min.js)",
+      "Loading chunk 77 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/section-frontend-handlers.d85ab872da118940910d.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)",
+      "Loading chunk 557 failed.\n(error: http://127.0.0.1:8765/wp-content/plugins/elementor/assets/js/shared-frontend-handlers.03caa53373b56d3bab67.bundle.min.js)"
+    ],
+    "contentRegions": 2
+  },
+  {
+    "public": "/lien-he",
+    "status": 200,
+    "errors": [
+      "Unexpected token ':'",
+      "$ is not a function",
+      "Unexpected token ':'",
+      "Element missing: script#wp-emoji-settings",
+      "Cannot read properties of null (reading 'addEventListener')"
+    ],
+    "contentRegions": 2
+  }
+]

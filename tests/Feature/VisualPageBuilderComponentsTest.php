@@ -284,7 +284,7 @@ CSS;
         $this->assertSame('24px', $savedProject['styles'][2]['style']['padding-top']);
 
         // Assert CSS contains media queries
-        $savedCss = $this->page->getTranslation('published_css', 'vi', false);
+        $savedCss = $savedProject['_draft']['css'];
         $this->assertStringContainsString('@media (max-width: 992px)', $savedCss);
         $this->assertStringContainsString('@media (max-width: 480px)', $savedCss);
         $this->assertStringContainsString('padding-top: 80px', $savedCss);

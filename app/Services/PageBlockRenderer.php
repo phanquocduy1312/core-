@@ -99,6 +99,13 @@ class PageBlockRenderer
         return $output;
     }
 
+    private function alignment(DOMElement $node, string $fallback): string
+    {
+        $align = trim($node->getAttribute('data-align'));
+
+        return in_array($align, ['left', 'center', 'right'], true) ? $align : $fallback;
+    }
+
     private function renderPartial(DOMElement $node, string $locale, array $visitedPartialIds): string
     {
         $partialId = (int) $node->getAttribute('data-partial-id');
@@ -117,7 +124,8 @@ class PageBlockRenderer
 
         $html = (string) $partial->getTranslation('published_html', $locale, false);
 
-        return $this->render($html, $locale, [...$visitedPartialIds, $partialId]);
+        return '<style data-partial-css="'.$partialId.'">'.$partial->getTranslation('published_css', $locale, false).'</style>'
+            .$this->render($html, $locale, [...$visitedPartialIds, $partialId]);
     }
 
     private function renderProductGrid(DOMElement $node, string $locale): string
@@ -129,12 +137,12 @@ class PageBlockRenderer
         // Custom layout attributes
         $columns = max(1, min(10, (int) ($node->getAttribute('data-columns') ?: 4)));
         $gap = max(0, min(100, (int) ($node->getAttribute('data-gap') ?: 24)));
-        $align = trim($node->getAttribute('data-align')) ?: 'left';
+        $align = $this->alignment($node, 'left');
 
         $textAlign = $align;
         $justifyContent = ($align === 'left') ? 'flex-start' : (($align === 'right') ? 'flex-end' : 'center');
-        $priceWrapperStyle = ($align === 'left') 
-            ? 'display:flex; justify-content:space-between; align-items:center; margin-top:8px;' 
+        $priceWrapperStyle = ($align === 'left')
+            ? 'display:flex; justify-content:space-between; align-items:center; margin-top:8px;'
             : 'display:flex; justify-content:'.$justifyContent.'; align-items:center; gap:12px; margin-top:8px;';
 
         $query = Product::query()->where('is_active', true);
@@ -194,7 +202,7 @@ class PageBlockRenderer
             .'</style>';
 
         $grid = '<div id="'.$gridId.'">'.$cards.'</div>';
-        
+
         return $style . $grid;
     }
 
@@ -205,12 +213,12 @@ class PageBlockRenderer
         // Custom layout attributes
         $columns = max(1, min(10, (int) ($node->getAttribute('data-columns') ?: 4)));
         $gap = max(0, min(100, (int) ($node->getAttribute('data-gap') ?: 24)));
-        $align = trim($node->getAttribute('data-align')) ?: 'left';
+        $align = $this->alignment($node, 'left');
 
         $textAlign = $align;
         $justifyContent = ($align === 'left') ? 'flex-start' : (($align === 'right') ? 'flex-end' : 'center');
-        $priceWrapperStyle = ($align === 'left') 
-            ? 'display:flex; justify-content:space-between; align-items:center; margin-top:8px;' 
+        $priceWrapperStyle = ($align === 'left')
+            ? 'display:flex; justify-content:space-between; align-items:center; margin-top:8px;'
             : 'display:flex; justify-content:'.$justifyContent.'; align-items:center; gap:12px; margin-top:8px;';
 
         // Query active categories that have products
@@ -306,7 +314,7 @@ class PageBlockRenderer
         // Custom layout attributes
         $columns = max(1, min(6, (int) ($node->getAttribute('data-columns') ?: 3)));
         $gap = max(0, min(100, (int) ($node->getAttribute('data-gap') ?: 24)));
-        $align = trim($node->getAttribute('data-align')) ?: 'left';
+        $align = $this->alignment($node, 'left');
 
         $textAlign = $align;
 
@@ -355,7 +363,7 @@ class PageBlockRenderer
             .'</style>';
 
         $grid = '<div id="'.$gridId.'">'.$cards.'</div>';
-        
+
         return $style . $grid;
     }
 
@@ -366,7 +374,7 @@ class PageBlockRenderer
         // Custom layout attributes
         $columns = max(1, min(12, (int) ($node->getAttribute('data-columns') ?: 4)));
         $gap = max(0, min(100, (int) ($node->getAttribute('data-gap') ?: 24)));
-        $align = trim($node->getAttribute('data-align')) ?: 'center';
+        $align = $this->alignment($node, 'center');
 
         $textAlign = $align;
 
@@ -402,7 +410,7 @@ class PageBlockRenderer
             .'</style>';
 
         $grid = '<div id="'.$gridId.'">'.$cards.'</div>';
-        
+
         return $style . $grid;
     }
 
@@ -489,7 +497,7 @@ class PageBlockRenderer
             './/*[contains(text(), "render") or contains(text(), "tự động") or contains(text(), "Storefront") or contains(text(), "danh sách")]',
             $node
         );
-        
+
         if ($placeholders && $placeholders->length > 0) {
             $target = $placeholders->item(0);
             if ($target instanceof DOMElement) {

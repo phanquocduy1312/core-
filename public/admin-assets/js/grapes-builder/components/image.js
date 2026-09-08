@@ -30,6 +30,7 @@
                         global.GrapesMediaAdapter.open(function (asset) {
                             input.value = asset.src;
                             if (targetComponent) {
+                                targetComponent.removeAttributes(['srcset', 'sizes', 'data-src', 'data-srcset', 'data-lazy-src', 'data-lazy-srcset']);
                                 targetComponent.set('src', asset.src);
                                 targetComponent.addAttributes({
                                     'src': asset.src,
@@ -44,7 +45,8 @@
                 input.addEventListener('change', function () {
                     var targetComponent = editor.getSelected();
                     if (targetComponent) {
-                        targetComponent.set('src', input.value);
+                        targetComponent.removeAttributes(['srcset', 'sizes', 'data-src', 'data-srcset', 'data-lazy-src', 'data-lazy-srcset']);
+                                targetComponent.set('src', input.value);
                         targetComponent.addAttributes({ 'src': input.value });
                     }
                 });

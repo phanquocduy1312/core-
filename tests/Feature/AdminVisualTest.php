@@ -51,21 +51,19 @@ class AdminVisualTest extends TestCase
     public function test_grapesjs_sidebar_layout_rules_applied(): void
     {
         $this->actingAs(User::factory()->create());
-        
+
         $page = Page::query()->create([
             'title' => ['vi' => 'Giới thiệu'],
             'slug' => 'gioi-thieu',
             'builder_data' => ['version' => 1, 'locales' => []],
             'is_active' => true,
         ]);
-        $response = $this->get("/vi/admin/pages/{$page->id}/edit");
+        $response = $this->get("/vi/admin/pages/{$page->id}/builder");
 
         $response->assertOk();
         $response->assertSee('.gjs-pn-views-container', false);
-        $response->assertSee('margin-top: 42px !important;', false);
-        $response->assertSee('height: calc(100% - 42px) !important;', false);
-        $response->assertSee('#page-builder-canvas', false);
-        $response->assertSee('height: 600px !important;', false);
+        $response->assertSee('id="gjs-container"', false);
+        $this->get("/vi/admin/pages/{$page->id}/edit")->assertOk()->assertSee('name="metadata_only"', false)->assertDontSee('id="page-builder-canvas"', false);
     }
 
     public function test_guest_cannot_access_page_previews(): void
@@ -97,7 +95,7 @@ class AdminVisualTest extends TestCase
             ->assertJsonStructure(['preview_url']);
 
         $previewUrl = $response->json('preview_url');
-        
+
         $renderResponse = $this->get($previewUrl);
         $renderResponse->assertOk();
         $renderResponse->assertSee('Nội dung xem trước', false);

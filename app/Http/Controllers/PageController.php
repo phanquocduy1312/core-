@@ -3,26 +3,69 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 
 class PageController extends Controller
 {
+    private function managedPage(string $slug, string $fallback)
+    {
+        if (! \Illuminate\Support\Facades\Schema::hasTable('pages')) return view($fallback);
+        $page = \App\Models\Page::query()->pages()->where('slug', $slug)->first();
+        if (! $page || ! app(\App\Support\FeatureGate::class)->enabled('cms_page')) {
+            return view($fallback);
+        }
+
+        return app(\App\Http\Controllers\Client\PageController::class)->show(app()->getLocale(), $slug);
+    }
+
     public function home()
     {
-        return view('pages.home');
+        return $this->managedPage('trang-chu', 'pages.home');
     }
 
     public function about()
     {
-        return view('pages.gioi-thieu');
+        return $this->managedPage('gioi-thieu', 'pages.gioi-thieu');
     }
 
     public function brands()
     {
-        return view('pages.thuong-hieu');
+        return $this->managedPage('thuong-hieu', 'pages.thuong-hieu');
     }
 
     public function projects()
     {
+        return $this->managedPage('du-an', 'pages.du-an');
+    }
+
+    public function hospitalityProjects()
+    {
+        return view('pages.du-an-hospitality');
+    }
+
+    public function residentialProjects()
+    {
+        return view('pages.du-an-residential');
+    }
+
+    public function commercialProjects()
+    {
+        return view('pages.du-an-commercial');
+    }
+
+    public function otherProjects()
+    {
+        return view('pages.du-an-other');
+    }
+
+    public function projectDetail(string $slug)
+    {
+        $viewName = "pages.projects.{$slug}";
+        if (View::exists($viewName)) {
+            return view($viewName);
+        }
+
+        // Generic fallback or 404
         return view('pages.du-an');
     }
 
@@ -38,32 +81,16 @@ class PageController extends Controller
 
     public function contact()
     {
-        return view('pages.lien-he');
+        return $this->managedPage('lien-he', 'pages.lien-he');
     }
 
-    public function extract()
+    public function privacyPolicy()
     {
-        set_time_limit(600);
-        ini_set('memory_limit', '512M');
-        $baseDir = base_path();
-        $zipFile = $baseDir . '/deploy.zip';
-        if (!file_exists($zipFile)) {
-            return response("ZIP_NOT_FOUND at $zipFile", 404);
-        }
-        if (!class_exists('ZipArchive')) {
-            return response("NO_ZIP_ARCHIVE", 500);
-        }
-        $zip = new ZipArchive;
-        if ($zip->open($zipFile) === TRUE) {
-            if ($zip->extractTo($baseDir)) {
-                $zip->close();
-                @unlink($zipFile);
-                return response("UNZIP_SUCCESS 200 OK", 200);
-            }
-            $zip->close();
-            return response("UNZIP_EXTRACT_FAILED", 500);
-        }
-        return response("UNZIP_OPEN_FAILED", 500);
+        return view('pages.privacy-policy');
+    }
+
+    public function termsOfUse()
+    {
+        return view('pages.terms-of-use');
     }
 }
-

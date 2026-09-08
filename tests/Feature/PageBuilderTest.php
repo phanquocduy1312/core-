@@ -145,7 +145,7 @@ class PageBuilderTest extends TestCase
 
         $page = Page::query()->where('slug', 'gioi-thieu')->firstOrFail();
         $this->actingAs($this->admin)
-            ->get("/vi/admin/pages/{$page->id}/edit")
+            ->get("/vi/admin/pages/{$page->id}/builder")
             ->assertOk()
             ->assertSee('demo-page', false);
 

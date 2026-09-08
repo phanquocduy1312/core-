@@ -1,164 +1,147 @@
 /**
- * GrapesJS Core Editor Initialization & UI Controller
- * Implements Collapsible Sidebars, Focus Mode, Real Fullscreen, Preview, and Device Widths
+ * GrapesJS Core Editor Initialization
+ *
+ * The editor chrome is GrapesJS's own (see core/panels.js): its Panels module
+ * owns the top bar, the right-hand views column and the canvas placement. This
+ * file only configures the editor and wires the behaviour GrapesJS has no
+ * opinion about — loading, saving, and canvas/frontend parity.
+ *
+ * Two properties it is responsible for:
+ *
+ *  1. The canvas renders the page as the public site does. It loads the
+ *     frontend stylesheet manifest (config/theme.php, handed over as
+ *     `config.canvasStyles`) rather than a hand-maintained subset, and applies
+ *     the site's <body> classes. Admin/Tailwind CSS is deliberately NOT loaded
+ *     into the canvas — its resets restyled the Elementor markup.
+ *
+ *  2. Editing does not corrupt the document. See loadInitialContent() and
+ *     bindDirtyTracking() for the specific failure modes that used to bite.
  */
 (function (global) {
     'use strict';
 
+    // Used only if the server did not hand over a manifest (should not happen).
+    var FALLBACK_CANVAS_STYLES = [
+        '/wp-content/plugins/elementor/assets/css/frontend.min.css',
+        '/wp-content/plugins/custom-lux/assets/custom.css',
+        '/theme/site-inline.css'
+    ];
+
+    function toast(icon, title, text) {
+        if (!global.Swal) {
+            if (icon === 'error') console.error(title, text || '');
+            return;
+        }
+        global.Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: icon,
+            title: title,
+            text: text || undefined,
+            showConfirmButton: false,
+            timer: icon === 'error' ? 6000 : 2500,
+            timerProgressBar: true
+        });
+    }
+
     function createEditor(config) {
+        config = config || {};
+
+        var canvasStyles = (config.canvasStyles && config.canvasStyles.length)
+            ? config.canvasStyles
+            : FALLBACK_CANVAS_STYLES;
+
         var editor = grapesjs.init({
             container: '#gjs-container',
             height: '100%',
             width: 'auto',
             fromElement: false,
+
+            // We drive loading and the unload prompt ourselves.
+            noticeOnUnload: false,
+
             storageManager: {
                 type: 'laravel',
                 autosave: false,
-                autoload: true
+                // Manual: loadInitialContent() below owns the load sequence.
+                // Leaving this on made GrapesJS load the project a second time,
+                // on top of our load, which duplicated undo steps and marked a
+                // freshly-opened page as dirty.
+                autoload: false
             },
+
+            blockManager: {},
+            layerManager: {},
+            traitManager: {},
+            selectorManager: { componentFirst: true },
+
+            parser: {
+                // GrapesJS calls a container a `text` component when every one
+                // of its children is already textual. Its default textTypes
+                // includes 'text' itself, so the verdict cascades upward: on an
+                // Elementor page, where each widget nests its copy in several
+                // divs, a whole card — background image, heading, button —
+                // collapses into a single text blob. Clicking it opens the rich
+                // text editor and nothing inside can be selected or restyled.
+                //
+                // Dropping 'text' stops the cascade at the element that really
+                // holds the text. Inline formatting is unaffected: those tags
+                // are matched through textTags below, extended with the inline
+                // elements this theme actually uses.
+                textTypes: ['textnode', 'comment'],
+                textTags: [
+                    'br', 'b', 'i', 'u', 'a', 'ul', 'ol',
+                    'strong', 'em', 'span', 'small', 'sub', 'sup', 'mark', 'code'
+                ]
+            },
+
+            styleManager: {
+                sectors: global.GrapesStyleSectors
+                    ? global.GrapesStyleSectors.build()
+                    : []
+            },
+
             deviceManager: {
                 devices: [
-                    {
-                        id: 'desktop',
-                        name: 'Desktop',
-                        width: '',
-                    },
-                    {
-                        id: 'tablet',
-                        name: 'Tablet',
-                        width: '768px',
-                        widthMedia: '992px',
-                    },
-                    {
-                        id: 'mobile',
-                        name: 'Mobile',
-                        width: '375px',
-                        widthMedia: '480px',
-                    }
+                    { id: 'desktop', name: 'Desktop', width: '' },
+                    { id: 'tablet', name: 'Tablet', width: '768px', widthMedia: '1024px' },
+                    { id: 'mobile', name: 'Mobile', width: '375px', widthMedia: '767px' }
                 ]
             },
-            blockManager: {
-                appendTo: '#gjs-blocks'
-            },
-            styleManager: {
-                appendTo: '#gjs-styles',
-                sectors: [
-                    {
-                        name: 'Kích thước & Lề (Dimensions & Spacing)',
-                        open: true,
-                        buildProps: ['width', 'max-width', 'min-height', 'height', 'margin', 'padding'],
-                        properties: [
-                            {
-                                property: 'padding',
-                                properties: [
-                                    { name: 'Trên', property: 'padding-top' },
-                                    { name: 'Phải', property: 'padding-right' },
-                                    { name: 'Dưới', property: 'padding-bottom' },
-                                    { name: 'Trái', property: 'padding-left' }
-                                ]
-                            },
-                            {
-                                property: 'margin',
-                                properties: [
-                                    { name: 'Trên', property: 'margin-top' },
-                                    { name: 'Phải', property: 'margin-right' },
-                                    { name: 'Dưới', property: 'margin-bottom' },
-                                    { name: 'Trái', property: 'margin-left' }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        name: 'Kiểu chữ (Typography)',
-                        open: true,
-                        buildProps: ['font-size', 'font-weight', 'line-height', 'letter-spacing', 'color', 'text-align'],
-                        properties: [
-                            {
-                                name: 'Cỡ chữ',
-                                property: 'font-size',
-                                type: 'select',
-                                defaults: '16px',
-                                options: [
-                                    { id: '14px', label: '14px' },
-                                    { id: '16px', label: '16px' },
-                                    { id: '18px', label: '18px' },
-                                    { id: '20px', label: '20px' },
-                                    { id: '24px', label: '24px' },
-                                    { id: '30px', label: '30px' },
-                                    { id: '36px', label: '36px' },
-                                    { id: '38px', label: '38px' },
-                                    { id: '48px', label: '48px' },
-                                    { id: '60px', label: '60px' }
-                                ]
-                            },
-                            {
-                                name: 'Căn lề',
-                                property: 'text-align',
-                                type: 'radio',
-                                defaults: 'left',
-                                options: [
-                                    { id: 'left', label: 'Trái' },
-                                    { id: 'center', label: 'Giữa' },
-                                    { id: 'right', label: 'Phải' },
-                                    { id: 'justify', label: 'Đều' }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        name: 'Bố cục (Layout)',
-                        open: false,
-                        buildProps: ['display', 'flex-direction', 'justify-content', 'align-items', 'gap']
-                    },
-                    {
-                        name: 'Màu nền & Bo góc (Decorations)',
-                        open: false,
-                        buildProps: ['background-color', 'border-radius', 'border', 'box-shadow']
-                    }
-                ]
-            },
-            traitManager: {
-                appendTo: '#gjs-traits'
-            },
-            layerManager: {
-                appendTo: '#gjs-layers'
-            },
+
             panels: {
-                defaults: []
+                defaults: global.GrapesPanels ? global.GrapesPanels.definitions(config) : undefined
             },
+
             canvas: {
-                styles: [
-                    'https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap',
-                    '/build/assets/builder.css',
-                    '/build/assets/admin.css'
-                ],
+                styles: canvasStyles,
+                // Iconify only: it renders the icons used by this builder's own
+                // section blocks. The theme's own JS (jQuery/Elementor/Swiper)
+                // is intentionally not run inside the canvas — it rewrites the
+                // DOM behind GrapesJS's back and desynchronises the model.
                 scripts: [
                     'https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js'
                 ]
             }
         });
 
-        // Initialize Laravel Storage Adapter
-        if (global.GrapesLaravelStorage) {
-            global.GrapesLaravelStorage.init(editor, config);
-        }
+        // --- Adapters ------------------------------------------------------
+        if (global.GrapesLaravelStorage) global.GrapesLaravelStorage.init(editor, config);
+        if (global.GrapesMediaAdapter) global.GrapesMediaAdapter.init(editor, config);
 
-        // Initialize Media Adapter (Media Library integration)
-        if (global.GrapesMediaAdapter) {
-            global.GrapesMediaAdapter.init(editor, config);
-        }
-
-        // Initialize Basic Components
+        // --- Basic components ----------------------------------------------
         if (global.GrapesHeadingComponent) global.GrapesHeadingComponent.init(editor);
         if (global.GrapesParagraphComponent) global.GrapesParagraphComponent.init(editor);
+        if (global.GrapesLinkComponent) global.GrapesLinkComponent.init(editor);
         if (global.GrapesButtonComponent) global.GrapesButtonComponent.init(editor);
         if (global.GrapesImageComponent) global.GrapesImageComponent.init(editor);
         if (global.GrapesDividerComponent) global.GrapesDividerComponent.init(editor);
         if (global.GrapesSpacerComponent) global.GrapesSpacerComponent.init(editor);
         if (global.GrapesIconComponent) global.GrapesIconComponent.init(editor);
         if (global.GrapesVideoComponent) global.GrapesVideoComponent.init(editor);
+        if (global.GrapesCustomHtmlComponent) global.GrapesCustomHtmlComponent.init(editor);
 
-        // Initialize Layout Components
+        // --- Layout components ----------------------------------------------
         if (global.GrapesSectionComponent) global.GrapesSectionComponent.init(editor);
         if (global.GrapesContainerComponent) global.GrapesContainerComponent.init(editor);
         if (global.GrapesColumnComponent) global.GrapesColumnComponent.init(editor);
@@ -166,262 +149,156 @@
         if (global.GrapesGridComponent) global.GrapesGridComponent.init(editor);
         if (global.GrapesStackComponent) global.GrapesStackComponent.init(editor);
 
-        // Initialize Blocks
+        // --- Blocks ----------------------------------------------------------
         if (global.GrapesBasicBlocks) global.GrapesBasicBlocks.init(editor);
         if (global.GrapesLayoutBlocks) global.GrapesLayoutBlocks.init(editor);
+        if (global.GrapesContentWidgets) global.GrapesContentWidgets.init(editor);
         if (global.GrapesSectionBlocks) global.GrapesSectionBlocks.init(editor);
         if (global.GrapesDynamicBlocks) global.GrapesDynamicBlocks.init(editor);
 
-        // Initialize Commands
-        if (global.GrapesCommands) {
-            global.GrapesCommands.init(editor, config);
-        }
-
-        // Attach Unique ID Clone Hook
+        // --- Commands, panels, RTE, ID hygiene --------------------------------
+        if (global.GrapesCommands) global.GrapesCommands.init(editor, config);
+        if (global.GrapesPanels) global.GrapesPanels.init(editor, config);
+        if (global.GrapesRte) global.GrapesRte.init(editor);
+        if (global.GrapesImportedMarkup) global.GrapesImportedMarkup.init(editor);
         if (global.GrapesIdManager && global.GrapesIdManager.attachCloneHook) {
             global.GrapesIdManager.attachCloneHook(editor);
         }
 
-        // Load Initial Project Data from builder_data (Source of Truth)
-        if (config.builderData && typeof config.builderData === 'object' && Object.keys(config.builderData).length > 0) {
-            try {
-                if (config.builderData.pages || config.builderData.components) {
-                    var safeProjectData = global.GrapesIdManager && global.GrapesIdManager.normalizeProjectData
-                        ? global.GrapesIdManager.normalizeProjectData(config.builderData)
-                        : config.builderData;
-                    editor.loadProjectData(safeProjectData);
-                } else if (config.initialHtml) {
-                    editor.setComponents(config.initialHtml);
-                }
-            } catch (e) {
-                console.warn('Could not load project data, falling back to html:', e);
-                if (config.initialHtml) editor.setComponents(config.initialHtml);
+        // Body classes and editor-only canvas CSS have to be re-applied on every
+        // frame load: switching device rebuilds the iframe document from
+        // scratch. The header/footer preview is handled by core/panels.js,
+        // which also owns its toggle's state.
+        //
+        // `canvas:frame:load:body` and not `canvas:frame:load`: GrapesJS fires
+        // the latter *before* its own renderHead() and renderBody(), so at that
+        // point the head holds no theme stylesheets and the body holds no
+        // wrapper — body classes landed on nothing and the injected <style> was
+        // outranked by every sheet appended after it.
+        editor.on('canvas:frame:load:body', function () {
+            if (global.GrapesCanvasContext) {
+                global.GrapesCanvasContext.apply(editor, config);
             }
-        } else if (config.initialHtml) {
-            editor.setComponents(config.initialHtml);
-        }
+        });
 
-        // Bind UI Controls (Sidebars, Focus Mode, Devices, Fullscreen, Preview)
-        bindUiControls(editor, config);
+        loadInitialContent(editor, config);
+        bindEditorBehaviour(editor);
 
         return editor;
     }
 
-    function bindUiControls(editor, config) {
-        var leftSidebar = document.getElementById('builder-left-sidebar');
-        var rightSidebar = document.getElementById('builder-right-sidebar');
-        var btnExpandLeft = document.getElementById('btn-expand-left');
-        var btnExpandRight = document.getElementById('btn-expand-right');
-        var btnCollapseLeft = document.getElementById('btn-collapse-left');
-        var btnCollapseRight = document.getElementById('btn-collapse-right');
-        var btnFocusMode = document.getElementById('btn-focus-mode');
-        var btnPreview = document.getElementById('btn-preview');
-        var btnFullscreen = document.getElementById('btn-fullscreen');
-        var appRoot = document.getElementById('builder-app');
+    /**
+     * Load order matters, and the old sequence had two document-corrupting bugs:
+     *
+     *   - setStyle(initialCss) ran unconditionally *after* loadProjectData(),
+     *     replacing every rule the project data had just restored with the
+     *     flattened published CSS. Styles silently reverted on reopen.
+     *   - the load itself landed on the undo stack, so one Ctrl+Z on a freshly
+     *     opened page wiped the whole document.
+     *
+     * Project data is the source of truth when present; the published HTML/CSS
+     * pair is only a fallback for pages that predate the builder.
+     */
+    function loadInitialContent(editor, config) {
+        var data = config.builderData;
+        var hasProjectData = !!(data && typeof data === 'object'
+            && Array.isArray(data.pages) && data.pages.length
+            && data.pages.some(function (page) {
+                return page.component != null || (Array.isArray(page.frames)
+                    && page.frames.some(function (frame) { return frame.component != null; }));
+            }));
 
-        // State tracking
-        var isFocusMode = false;
-        var savedLeftState = localStorage.getItem('grapes_left_collapsed') === 'true';
-        var savedRightState = localStorage.getItem('grapes_right_collapsed') === 'true';
+        var loaded = false;
 
-        // 1. Sidebar Collapse / Expand Helpers
-        function setLeftCollapsed(collapsed) {
-            if (collapsed) {
-                leftSidebar.style.display = 'none';
-                btnExpandLeft.classList.remove('hidden');
-            } else {
-                leftSidebar.style.display = 'flex';
-                btnExpandLeft.classList.add('hidden');
-            }
-            if (!isFocusMode) {
-                localStorage.setItem('grapes_left_collapsed', collapsed ? 'true' : 'false');
-            }
-            setTimeout(function () { editor.refresh(); }, 50);
-        }
-
-        function setRightCollapsed(collapsed) {
-            if (collapsed) {
-                rightSidebar.style.display = 'none';
-                btnExpandRight.classList.remove('hidden');
-            } else {
-                rightSidebar.style.display = 'flex';
-                btnExpandRight.classList.add('hidden');
-            }
-            if (!isFocusMode) {
-                localStorage.setItem('grapes_right_collapsed', collapsed ? 'true' : 'false');
-            }
-            setTimeout(function () { editor.refresh(); }, 50);
-        }
-
-        // Restore saved sidebar states
-        if (savedLeftState) setLeftCollapsed(true);
-        if (savedRightState) setRightCollapsed(true);
-
-        if (btnCollapseLeft) {
-            btnCollapseLeft.addEventListener('click', function () { setLeftCollapsed(true); });
-        }
-        if (btnExpandLeft) {
-            btnExpandLeft.addEventListener('click', function () { setLeftCollapsed(false); });
-        }
-        if (btnCollapseRight) {
-            btnCollapseRight.addEventListener('click', function () { setRightCollapsed(true); });
-        }
-        if (btnExpandRight) {
-            btnExpandRight.addEventListener('click', function () { setRightCollapsed(false); });
-        }
-
-        // 2. Focus Mode Toggle (Hides both sidebars, canvas gets 100% of workspace)
-        function toggleFocusMode() {
-            isFocusMode = !isFocusMode;
-            if (isFocusMode) {
-                setLeftCollapsed(true);
-                setRightCollapsed(true);
-                btnFocusMode.classList.add('bg-red-50', 'text-primary', 'border-red-200');
-            } else {
-                btnFocusMode.classList.remove('bg-red-50', 'text-primary', 'border-red-200');
-                setLeftCollapsed(localStorage.getItem('grapes_left_collapsed') === 'true');
-                setRightCollapsed(localStorage.getItem('grapes_right_collapsed') === 'true');
+        if (hasProjectData) {
+            try {
+                var safe = (global.GrapesIdManager && global.GrapesIdManager.normalizeProjectData)
+                    ? global.GrapesIdManager.normalizeProjectData(data)
+                    : data;
+                editor.loadProjectData(safe);
+                loaded = true;
+            } catch (err) {
+                console.warn('Không đọc được builder_data, chuyển sang HTML đã xuất bản:', err);
             }
         }
 
-        if (btnFocusMode) {
-            btnFocusMode.addEventListener('click', toggleFocusMode);
+        if (!loaded) {
+            editor.setComponents(config.initialHtml || '');
+            // Only meaningful on this path — project data carries its own rules.
+            if (config.initialCss) editor.setStyle(config.initialCss);
         }
 
-        // Keyboard shortcut: Ctrl+Shift+F / Cmd+Shift+F for Focus Mode
+        // Loading is not an edit: keep it off the undo stack and out of the
+        // dirty state, otherwise every page opens "unsaved" and one undo is
+        // enough to blank it.
+        editor.UndoManager.clear();
+        editor.clearDirtyCount();
+    }
+
+    function bindEditorBehaviour(editor) {
+        bindDirtyTracking(editor);
+
+        // Ctrl+S saves. GrapesJS already binds undo/redo, copy/paste and delete.
         window.addEventListener('keydown', function (e) {
-            if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'F' || e.key === 'f')) {
-                e.preventDefault();
-                toggleFocusMode();
-            }
+            if (!(e.ctrlKey || e.metaKey)) return;
+            if ((e.key || '').toLowerCase() !== 's') return;
+            e.preventDefault();
+            editor.runCommand('core:save-draft');
         });
 
-        // 3. Real Fullscreen Mode (using Fullscreen API on #builder-app)
-        if (btnFullscreen) {
-            btnFullscreen.addEventListener('click', function () {
-                if (!document.fullscreenElement) {
-                    if (appRoot.requestFullscreen) {
-                        appRoot.requestFullscreen();
-                    } else if (appRoot.webkitRequestFullscreen) {
-                        appRoot.webkitRequestFullscreen();
-                    } else if (appRoot.msRequestFullscreen) {
-                        appRoot.msRequestFullscreen();
-                    }
-                    btnFullscreen.classList.add('text-primary');
-                } else {
-                    if (document.exitFullscreen) {
-                        document.exitFullscreen();
-                    }
-                    btnFullscreen.classList.remove('text-primary');
-                }
-            });
-
-            document.addEventListener('fullscreenchange', function () {
-                if (!document.fullscreenElement) {
-                    btnFullscreen.classList.remove('text-primary');
-                }
-                setTimeout(function () { editor.refresh(); }, 50);
-            });
-        }
-
-        // 4. Preview Mode Toggle (GrapesJS core:preview command)
-        if (btnPreview) {
-            btnPreview.addEventListener('click', function () {
-                if (editor.Commands.isActive('core:preview')) {
-                    editor.stopCommand('core:preview');
-                    btnPreview.classList.remove('bg-red-50', 'text-primary', 'border-red-200');
-                } else {
-                    editor.runCommand('core:preview');
-                    btnPreview.classList.add('bg-red-50', 'text-primary', 'border-red-200');
-                }
-            });
-
-            editor.on('stop:core:preview', function () {
-                btnPreview.classList.remove('bg-red-50', 'text-primary', 'border-red-200');
-            });
-        }
-
-        // 5. Device Switcher
-        document.querySelectorAll('.device-btn').forEach(function (btn) {
-            btn.addEventListener('click', function () {
-                document.querySelectorAll('.device-btn').forEach(function (b) {
-                    b.classList.remove('active');
-                });
-                this.classList.add('active');
-
-                var device = this.dataset.device;
-                document.body.setAttribute('data-current-device', device);
-                editor.setDevice(device);
-                setTimeout(function () { editor.refresh(); }, 50);
-            });
+        // Surface storage failures instead of swallowing them.
+        editor.on('storage:error', function (err) {
+            toast('error', 'Lưu thất bại', (err && err.message) || 'Không rõ nguyên nhân.');
         });
 
-        // 6. Tab switcher in left/right sidebars
-        document.querySelectorAll('.sidebar-tab-btn').forEach(function (btn) {
-            btn.addEventListener('click', function () {
-                var group = this.dataset.tabGroup;
-                document.querySelectorAll('.sidebar-tab-btn[data-tab-group="' + group + '"]').forEach(function (b) {
-                    b.classList.remove('active');
-                });
-                this.classList.add('active');
+    }
 
-                var targetSelector = this.dataset.tabTarget;
-                document.querySelectorAll('.tab-pane[data-tab-group="' + group + '"]').forEach(function (pane) {
-                    pane.classList.add('hidden');
-                });
-                var targetPane = document.querySelector(targetSelector);
-                if (targetPane) targetPane.classList.remove('hidden');
-            });
-        });
-
-        // 7. Undo / Redo
-        var undoBtn = document.getElementById('btn-undo');
-        if (undoBtn) {
-            undoBtn.addEventListener('click', function () {
-                editor.UndoManager.undo();
-            });
-        }
-        var redoBtn = document.getElementById('btn-redo');
-        if (redoBtn) {
-            redoBtn.addEventListener('click', function () {
-                editor.UndoManager.redo();
-            });
-        }
-
-        // 8. Save Draft
-        var saveBtn = document.getElementById('btn-save-draft');
-        if (saveBtn) {
-            saveBtn.addEventListener('click', function () {
-                editor.runCommand('core:save-draft');
-            });
-        }
-
-        // 9. Publish
-        var pubBtn = document.getElementById('btn-publish');
-        if (pubBtn) {
-            pubBtn.addEventListener('click', function () {
-                editor.runCommand('core:publish');
-            });
-        }
-
-        // 10. Dirty State & Unsaved Changes Protection
+    /**
+     * The old dirty flag was armed before the document finished loading, so the
+     * component:add events emitted *by the load itself* flagged an untouched
+     * page as modified and every navigation away raised a bogus
+     * "unsaved changes" prompt. Arm it only once the editor is idle.
+     */
+    function bindDirtyTracking(editor) {
         var isDirty = false;
-        editor.on('component:update component:add component:remove style:update trait:value', function () {
-            isDirty = true;
+        var armed = false;
+
+        editor.on('load', function () {
+            // A tick after load: loadProjectData's own events have drained.
+            setTimeout(function () {
+                armed = true;
+                isDirty = false;
+            }, 0);
         });
-        editor.on('storage:after:store', function () {
+
+        editor.on('component:update component:add component:remove style:update trait:value', function () {
+            if (armed) isDirty = true;
+        });
+
+        editor.on('storage:after:store builder:published', function () {
             isDirty = false;
         });
+
+        // core:back-to-pages needs to know whether to warn before navigating.
+        editor.isDirty = function () { return isDirty; };
+
         window.addEventListener('beforeunload', function (e) {
-            if (isDirty) {
-                e.preventDefault();
-                e.returnValue = 'Bạn có thay đổi chưa lưu trong Visual Page Builder. Bạn có chắc muốn rời đi?';
-                return e.returnValue;
-            }
+            if (!isDirty) return;
+            e.preventDefault();
+            e.returnValue = 'Bạn có thay đổi chưa lưu trong Visual Page Builder. Bạn có chắc muốn rời đi?';
+            return e.returnValue;
         });
     }
 
     global.GrapesEditor = {
-        init: createEditor
+        init: function (config) {
+            try {
+                return createEditor(config);
+            } catch (err) {
+                console.error('Không khởi tạo được trình thiết kế:', err);
+                toast('error', 'Không mở được trình thiết kế', err && err.message);
+                throw err;
+            }
+        }
     };
 })(window);

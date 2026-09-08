@@ -7,28 +7,53 @@
 
     function initColumnComponent(editor) {
         var DomComponents = editor.DomComponents;
-        var CT = global.GrapesCommonTraits || {};
 
         DomComponents.addType('builder-column', {
             model: {
                 defaults: {
                     name: 'Cột (Column)',
                     tagName: 'div',
-                    draggable: 'builder-columns',
+                    draggable: '.builder-columns',
                     droppable: true,
-                    classes: ['flex-1', 'min-w-0', 'w-full'],
+                    classes: ['builder-column'],
                     style: {
-                        'padding': '0px'
+                        'min-height': '80px',
+                        'padding': '12px',
+                        'box-sizing': 'border-box',
+                        'width': '100%'
                     },
                     traits: [
-                        CT.spacingTrait ? CT.spacingTrait('padding', 'Lề trong (Padding)', [
-                            { id: '0px', label: '0px (Không lề)' },
-                            { id: '12px', label: '12px (Nhỏ)' },
-                            { id: '20px', label: '20px (Vừa)' },
-                            { id: '32px', label: '32px (Rộng)' }
-                        ]) : { type: 'text', name: 'padding' },
-                        CT.colorTrait ? CT.colorTrait('background-color', 'Màu nền cột', '') : { type: 'color', name: 'background-color' },
-                        CT.borderRadiusTrait ? CT.borderRadiusTrait() : { type: 'text', name: 'border-radius' }
+                        {
+                            type: 'select',
+                            name: 'style-padding',
+                            label: 'Lề trong (Padding)',
+                            options: [
+                                { id: '0px', label: '0px (Không lề)' },
+                                { id: '12px', label: '12px (Nhỏ)' },
+                                { id: '20px', label: '20px (Vừa)' },
+                                { id: '32px', label: '32px (Rộng)' }
+                            ],
+                            default: '12px',
+                            changeProp: 1
+                        },
+                        {
+                            type: 'color',
+                            name: 'style-background-color',
+                            label: 'Màu nền cột',
+                            changeProp: 1
+                        },
+                        {
+                            type: 'select',
+                            name: 'style-border-radius',
+                            label: 'Bo góc cột',
+                            options: [
+                                { id: '0px', label: '0px (Vuông)' },
+                                { id: '8px', label: '8px (Nhẹ)' },
+                                { id: '16px', label: '16px (Bo tròn)' }
+                            ],
+                            default: '0px',
+                            changeProp: 1
+                        }
                     ]
                 },
 

@@ -123,7 +123,9 @@ class VisualPageBuilderFullQATest extends TestCase
         $this->assertNotNull($this->page->published_at);
         $this->assertGreaterThanOrEqual(1, $this->page->revisions()->count());
 
-        $rev1 = $this->page->revisions()->first();
+        // A revision snapshots the state BEFORE a write; capture the published
+        // first version after the second publish has created that snapshot.
+        $rev1 = null;
 
         // 3. Publish Revision 2
         $projectDataRev2 = [
@@ -155,6 +157,9 @@ class VisualPageBuilderFullQATest extends TestCase
         $res = $this->get('/vi/pages/' . $this->page->slug);
         $res->assertOk();
         $res->assertSee('Phiên Bản 2');
+
+        $rev1 = $this->page->revisions()->get()->first(fn ($revision) => str_contains($revision->published_html['vi'] ?? '', 'Phiên Bản 1'));
+        $this->assertNotNull($rev1);
 
         // 4. Restore Revision 1 via Core Restore Endpoint
         $this->actingAs($this->admin)->post('/vi/admin/pages/' . $this->page->id . '/revisions/' . $rev1->id . '/restore')
@@ -277,5 +282,87 @@ class VisualPageBuilderFullQATest extends TestCase
         $this->assertStringContainsString('Majesty 160 Superyacht', $rendered);
         $this->assertStringContainsString('25.000.000.000đ', $rendered);
         $this->assertStringContainsString('form id="cf-', $rendered);
+    }
+
+    /**
+     * TEST 6: Automated Verification of Builder Components & Assets Loading
+     */
+    public function test_builder_view_loads_all_components_and_link_and_custom_html(): void
+    {
+        $response = $this->actingAs($this->admin)->get('/vi/admin/pages/' . $this->page->id . '/builder');
+        $response->assertOk();
+
+        // Verify all required script tags are present in the view
+        $response->assertSee('grapes-builder/components/link.js');
+        $response->assertSee('grapes-builder/components/custom-html.js');
+        $response->assertSee('grapes-builder/adapters/media.js');
+        $response->assertSee('grapes-builder/blocks/basic.js');
+        $response->assertSee('grapes-builder/blocks/content-widgets.js');
+        $response->assertSee('grapes-builder/core/canvas-context.js');
+        $response->assertSee('grapes-builder/core/editor.js');
+
+        // Verify CSP headers allow maps.google.com and youtube
+        $csp = $response->headers->get('Content-Security-Policy');
+        $this->assertNotNull($csp);
+        $this->assertStringContainsString('https://maps.google.com', $csp);
+        $this->assertStringContainsString('https://www.youtube.com', $csp);
+    }
+
+    /**
+     * TEST 7: Save Draft & Publish with builder-link and builder-custom-html
+     */
+    public function test_saving_link_and_custom_html_blocks(): void
+    {
+        $projectData = [
+            'pages' => [
+                [
+                    'id' => 'page-1',
+                    'frames' => [
+                        [
+                            'component' => [
+                                'type' => 'wrapper',
+                                'components' => [
+                                    [
+                                        'type' => 'builder-link',
+                                        'tagName' => 'a',
+                                        'content' => 'Xem thêm sản phẩm',
+                                        'attributes' => ['href' => '/vi/products', 'target' => '_blank']
+                                    ],
+                                    [
+                                        'type' => 'builder-custom-html',
+                                        'classes' => ['builder-custom-embed'],
+                                        'components' => [
+                                            ['type' => 'text', 'content' => '<iframe src="https://maps.google.com/maps?q=Hanoi&output=embed"></iframe>']
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ];
+
+        $res = $this->actingAs($this->admin)->postJson(
+            '/vi/admin/pages/' . $this->page->id . '/builder/save',
+            [
+                'content_locale' => 'vi',
+                'builder_data' => $projectData,
+                'published_html' => '<a href="/vi/products" target="_blank" class="builder-link">Xem thêm sản phẩm</a><div class="builder-custom-embed"><iframe src="https://maps.google.com/maps?q=Hanoi&output=embed"></iframe></div>',
+                'published_css' => '.builder-link { color: #00a0d2; }',
+            ]
+        );
+
+        $res->assertOk();
+        $res->assertJsonPath('success', true);
+
+        // Verify database persistence
+        $this->page->refresh();
+        $savedHtml = $this->page->getTranslation('published_html', 'vi');
+        $savedData = $this->page->getTranslation('builder_data', 'vi');
+
+        $this->assertNotEmpty($savedData);
+        $this->assertEquals('builder-link', $savedData['pages'][0]['frames'][0]['component']['components'][0]['type']);
+        $this->assertEquals('builder-custom-html', $savedData['pages'][0]['frames'][0]['component']['components'][1]['type']);
     }
 }

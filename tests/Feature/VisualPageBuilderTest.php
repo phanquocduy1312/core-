@@ -116,9 +116,11 @@ class VisualPageBuilderTest extends TestCase
 
         $this->page->refresh();
         $storedProjectData = $this->page->getTranslation('builder_data', 'vi', false);
+        $this->assertSame($html, $storedProjectData['_draft']['html']);
+        $this->assertSame($css, $storedProjectData['_draft']['css']);
+        unset($storedProjectData['_draft']);
         $this->assertEquals($projectData, $storedProjectData);
-        $this->assertSame($html, $this->page->getTranslation('published_html', 'vi', false));
-        $this->assertSame($css, $this->page->getTranslation('published_css', 'vi', false));
+        $this->assertStringContainsString('Nội dung ban đầu', $this->page->getTranslation('published_html', 'vi', false));
         $this->assertFalse($this->page->is_active);
     }
 

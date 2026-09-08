@@ -32,3 +32,9 @@ Khi phát hiện một sự thật nghiệp vụ/quyết định chưa được 
 1. Thêm vào file `knowledge/` phù hợp (hoặc tạo mục mới), viết ngắn gọn *luật + lý do*.
 2. Nếu là quyết định có đánh đổi → ghi thêm một mục trong [knowledge/decisions.md](knowledge/decisions.md).
 3. Commit cùng phiên (theo RULES R1, chỉ local).
+
+### UI/UX Builder — hướng dẫn và kiểm thử 08/09/2026
+
+- [Hướng dẫn sử dụng có 16 ảnh chụp giao diện](uiux-builder/HUONG-DAN-SU-DUNG.md)
+- [Báo cáo kiểm thử, lỗi đã sửa và lỗi còn tồn tại](uiux-builder/BAO-CAO-KIEM-THU.md)
+- [Quy tắc nghiệp vụ nháp/xuất bản và phần dùng chung](knowledge/uiux-builder-workflow.md)

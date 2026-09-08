@@ -1,450 +1,377 @@
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}" class="h-full w-full overflow-hidden">
+<html lang="{{ app()->getLocale() }}" class="h-full w-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Trình thiết kế trực quan (GrapesJS) — {{ $page->getTranslation('title', $contentLocale, false) ?: $page->slug }}</title>
+    <title>Trình thiết kế trực quan — {{ $page->getTranslation('title', $contentLocale, false) ?: $page->slug }}</title>
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    {{--
+        This page uses GrapesJS's native editor layout (its top panels, right-hand
+        views container, and canvas).
 
-    <!-- Tailwind Admin Styles -->
-    <link rel="stylesheet" href="{{ asset('build/assets/builder.css') }}">
-    <link rel="stylesheet" href="{{ asset('build/assets/admin.css') }}">
-
-    <!-- GrapesJS Pinned CSS -->
+        Font Awesome 4.7 is required: GrapesJS's default panel buttons are
+        declared with `fa fa-*` class names.
+    --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ asset('admin-assets/libs/grapesjs/grapes.min.css') }}">
+    {{-- Tailwind utilities for the media-library modal, which is built from
+         them. builder.css only, never admin.css: that one carries Tailwind's
+         preflight, which would reset GrapesJS's own panel styling. --}}
+    @vite(['resources/css/builder.css'])
     <link rel="stylesheet" href="{{ asset('admin-assets/libs/sweetalert2/dist/sweetalert2.min.css') }}">
-
-    <!-- Icons -->
-    <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.8/iconify-icon.min.js"></script>
 
     <style>
         :root {
-            --builder-topbar-height: 56px;
-            --builder-left-width: 280px;
-            --builder-right-width: 300px;
+            --gjs-left-width: 320px;
+            --gjs-primary-color: #22272e;
+            --gjs-secondary-color: #adbac7;
+            --gjs-tertiary-color: #00a0d2;
+            --gjs-quaternary-color: #38bdf8;
+            --gjs-color-highlight: #00a0d2;
+            --gjs-font-color: #cdd9e5;
+            --gjs-main-dark-color: #1c2128;
         }
-        *, *::before, *::after {
-            box-sizing: border-box;
-        }
-        html, body, #builder-app {
-            width: 100%;
+
+        html, body {
             height: 100%;
+            width: 100%;
             margin: 0;
             padding: 0;
             overflow: hidden;
-            font-family: 'Quicksand', sans-serif;
-            background-color: #f8fafc;
+            background: #1c2128;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
-        .builder-topbar {
-            height: var(--builder-topbar-height);
-            background: #ffffff;
-            border-bottom: 1px solid #e2e8f0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 16px;
-            z-index: 50;
-            position: relative;
-        }
-        .builder-workspace {
-            display: flex;
-            width: 100%;
-            height: calc(100vh - var(--builder-topbar-height));
-            overflow: hidden;
-            position: relative;
-            background: #f1f5f9;
-        }
-        .builder-sidebar-left {
-            width: var(--builder-left-width);
-            min-width: var(--builder-left-width);
-            max-width: var(--builder-left-width);
-            background: #ffffff;
-            border-right: 1px solid #e2e8f0;
-            display: flex;
-            flex-direction: column;
-            z-index: 30;
-            height: 100%;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow: hidden;
-        }
-        .builder-sidebar-right {
-            width: var(--builder-right-width);
-            min-width: var(--builder-right-width);
-            max-width: var(--builder-right-width);
-            background: #ffffff;
-            border-left: 1px solid #e2e8f0;
-            display: flex;
-            flex-direction: column;
-            z-index: 30;
-            height: 100%;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow: hidden;
-        }
-        .builder-center-canvas {
-            flex: 1 1 auto;
-            min-width: 0;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden;
-            background: #f1f5f9;
-        }
+
         #gjs-container {
-            width: 100%;
             height: 100%;
-            position: relative;
+            width: 100%;
         }
 
-        /* GrapesJS Canvas Overrides */
+        /* Topbar and Panel Sizing */
+        .gjs-pn-commands {
+            background: #181b1f !important;
+            border-bottom: 1px solid #2d333b !important;
+            height: 44px !important;
+            z-index: 50 !important;
+        }
+        .gjs-pn-commands .gjs-pn-buttons {
+            justify-content: flex-start;
+            height: 100%;
+            align-items: center;
+        }
+
+        .gjs-pn-options {
+            background: #181b1f !important;
+            border-bottom: 1px solid #2d333b !important;
+            height: 44px !important;
+            z-index: 51 !important;
+        }
+        .gjs-pn-options .gjs-pn-buttons {
+            height: 100%;
+            align-items: center;
+        }
+
+        .gjs-pn-views {
+            background: #181b1f !important;
+            border-bottom: 1px solid #2d333b !important;
+            height: 44px !important;
+            z-index: 52 !important;
+        }
+        .gjs-pn-views .gjs-pn-buttons {
+            height: 100%;
+            align-items: center;
+        }
+
+        .gjs-pn-views-container {
+            background: #1c2128 !important;
+            border-left: 1px solid #2d333b !important;
+            top: 44px !important;
+            height: calc(100% - 44px) !important;
+            padding: 10px !important;
+            box-sizing: border-box !important;
+            color: #cdd9e5 !important;
+        }
+
         .gjs-cv-canvas {
-            background-color: #f1f5f9;
-            box-sizing: border-box;
-            width: 100%;
-            height: 100%;
-            top: 0;
-        }
-        .gjs-frame-wrapper {
-            margin: 0 auto;
-            transition: width 0.25s ease, margin 0.25s ease, box-shadow 0.25s ease;
-            background: #ffffff;
-        }
-        [data-current-device="Desktop"] .gjs-frame-wrapper {
-            width: 100% !important;
-            height: 100% !important;
-            margin: 0 !important;
-            border-radius: 0 !important;
-            box-shadow: none !important;
-        }
-        [data-current-device="Tablet"] .gjs-frame-wrapper {
-            width: 768px !important;
-            height: calc(100% - 32px) !important;
-            margin: 16px auto !important;
-            border-radius: 12px !important;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.08) !important;
-        }
-        [data-current-device="Mobile"] .gjs-frame-wrapper {
-            width: 375px !important;
-            height: calc(100% - 32px) !important;
-            margin: 16px auto !important;
-            border-radius: 16px !important;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.08) !important;
+            top: 44px !important;
+            height: calc(100% - 44px) !important;
+            box-sizing: border-box !important;
         }
 
-        /* GrapesJS Block styling */
-        .gjs-block {
-            user-select: none;
-            cursor: grab;
+        /* Topbar items that are labels rather than buttons */
+        .gjs-pn-btn.builder-meta {
+            color: #e2e8f0;
+            cursor: default;
+            font-size: 13px;
+            font-weight: 700;
+            max-width: 260px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            padding: 0 8px;
+        }
+        .gjs-pn-btn.builder-badge {
             border-radius: 10px;
-            border: 1px solid #e2e8f0;
-            padding: 10px 12px;
-            margin: 4px;
-            background: #ffffff;
-            color: #1e293b;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
-            transition: all 0.15s ease;
-            font-family: 'Quicksand', sans-serif;
+            cursor: default;
+            font-size: 10px;
+            font-weight: 700;
+            min-width: 0;
+            padding: 3px 8px;
+            margin: 0 4px;
+        }
+        .gjs-pn-btn.builder-badge--live { background: #17603a; color: #b7f0cf; }
+        .gjs-pn-btn.builder-badge--draft { background: #6b4a10; color: #ffe0a3; }
+        .gjs-pn-btn.builder-badge--partial { background: #312e81; color: #c7d2fe; }
+
+        /* Save / publish / action buttons */
+        .gjs-pn-btn.builder-action {
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 5px 12px;
+            margin: 0 3px;
+            cursor: pointer;
+        }
+        .gjs-pn-btn.builder-action--draft { background: #2d333b; color: #e2e8f0; border: 1px solid #444c56; }
+        .gjs-pn-btn.builder-action--draft:hover { background: #373e47; color: #ffffff; }
+        .gjs-pn-btn.builder-action--publish { background: #00a0d2; color: #ffffff; }
+        .gjs-pn-btn.builder-action--publish:hover { background: #00b4ec; }
+        .gjs-pn-btn.builder-action--header { background: #1e293b; color: #38bdf8; border: 1px solid #334155; }
+        .gjs-pn-btn.builder-action--header:hover { background: #0f172a; color: #7dd3fc; }
+        .gjs-pn-btn.builder-action--footer { background: #1e293b; color: #a78bfa; border: 1px solid #334155; }
+        .gjs-pn-btn.builder-action--footer:hover { background: #0f172a; color: #c4b5fd; }
+        .gjs-pn-btn.builder-action.gjs-pn-btn--busy { opacity: .5; cursor: progress; }
+
+        .gjs-pn-btn.builder-locale.gjs-pn-active { background: #00a0d2; color: #ffffff; }
+
+        /* Collapse Right Panel Toggle */
+        html.builder-panel-collapsed {
+            --gjs-left-width: 0px !important;
+        }
+        html.builder-panel-collapsed .gjs-pn-views,
+        html.builder-panel-collapsed .gjs-pn-views-container {
+            display: none !important;
+        }
+
+        /* Source-code modal */
+        .builder-code-field {
+            background: #1e1e1e;
+            border: 1px solid #444;
+            border-radius: 4px;
+            color: #eee;
+            font-family: ui-monospace, Menlo, Consolas, monospace;
+            font-size: 12px;
+            line-height: 1.5;
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .builder-code-label {
+            color: #ddd;
+            display: block;
             font-size: 11px;
             font-weight: 700;
-            text-align: left;
+            margin: 10px 0 4px;
+            text-transform: uppercase;
+        }
+
+        /* 2-Column Block Cards */
+        .gjs-blocks-c {
+            padding: 4px 0 !important;
+            display: grid !important;
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 8px !important;
+        }
+        .gjs-block {
+            width: 100% !important;
+            min-height: 80px !important;
+            margin: 0 !important;
+            padding: 12px 6px !important;
+            background: #22272e !important;
+            border: 1px solid #333940 !important;
+            border-radius: 8px !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2) !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+            cursor: grab !important;
+            transition: all 0.15s ease !important;
+            user-select: none !important;
+            box-sizing: border-box !important;
         }
         .gjs-block:hover {
-            border-color: #e32326;
-            color: #e32326;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 10px rgba(227, 35, 38, 0.08);
+            background: #2d333b !important;
+            border-color: #00a0d2 !important;
+            color: #ffffff !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 4px 12px rgba(0, 160, 210, 0.25) !important;
         }
-        .gjs-block:active {
-            cursor: grabbing;
+        .gjs-block .block-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            gap: 6px;
         }
-        .gjs-block-category {
-            border-top: 1px solid #f1f5f9;
+        .gjs-block svg, .gjs-block iconify-icon, .gjs-block i {
+            font-size: 24px !important;
+            width: 24px !important;
+            height: 24px !important;
+            line-height: 24px !important;
+            display: block !important;
+            margin: 0 auto 2px !important;
+            transition: transform 0.15s ease !important;
         }
-        .gjs-title {
-            font-size: 11px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #64748b;
-            padding: 8px 12px;
-            background: #f8fafc;
+        .gjs-block:hover svg, .gjs-block:hover iconify-icon, .gjs-block:hover i {
+            transform: scale(1.1) !important;
+        }
+        .gjs-block .block-title {
+            font-size: 11px !important;
+            font-weight: 600 !important;
+            color: #cbd5e1 !important;
+            line-height: 1.25 !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            max-width: 100% !important;
+            display: block !important;
+        }
+        .gjs-block:hover .block-title {
+            color: #ffffff !important;
+        }
+        .gjs-block-category .gjs-title {
+            background: #181b1f !important;
+            font-weight: 700 !important;
+            font-size: 11.5px !important;
+            letter-spacing: 0.5px !important;
+            padding: 10px 14px !important;
+            border-bottom: 1px solid #282f37 !important;
+            color: #94a3b8 !important;
+            text-transform: uppercase !important;
+            cursor: pointer !important;
+            transition: background 0.15s, color 0.15s !important;
+        }
+        .gjs-block-category .gjs-title:hover {
+            background: #22272e !important;
+            color: #e2e8f0 !important;
+        }
+        .gjs-block-category.gjs-open .gjs-title {
+            color: #38bdf8 !important;
+            border-bottom: 1px solid rgba(56, 189, 248, 0.25) !important;
         }
 
-        /* Sidebar Tabs */
-        .sidebar-tab-btn.active {
-            background: #ffffff;
-            color: #e32326;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-            border: 1px solid rgba(226, 232, 240, 0.8);
+        /* Selection & Highlight */
+        .gjs-cv-canvas .gjs-highlighter-sel {
+            outline: 2px solid #00a0d2 !important;
+            outline-offset: -1px !important;
         }
-        .sidebar-tab-btn:not(.active) {
-            color: #64748b;
-            background: transparent;
-            border: 1px solid transparent;
+        .gjs-badge {
+            background-color: #00a0d2 !important;
+            color: #ffffff !important;
+            border-radius: 4px 4px 0 0 !important;
+            padding: 3px 8px !important;
+            font-size: 11px !important;
+            font-weight: 700 !important;
         }
-        .sidebar-tab-btn:not(.active):hover {
-            color: #1e293b;
-        }
-
-        /* Device Buttons */
-        .device-btn.active {
-            background: #ffffff;
-            color: #e32326;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.06);
-            border-color: #fecaca;
-        }
-        .device-btn:not(.active) {
-            color: #64748b;
-            border-color: transparent;
-        }
-        .device-btn:not(.active):hover {
-            color: #1e293b;
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 5px;
-            height: 5px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 9999px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
+        .gjs-toolbar {
+            background-color: #00a0d2 !important;
+            border-radius: 4px 4px 0 0 !important;
         }
     </style>
 </head>
-<body class="antialiased select-none" data-current-device="Desktop">
+<body>
 
-<div id="builder-app">
-    <!-- Topbar -->
-    <header class="builder-topbar shadow-2xs">
-        <!-- Left Section -->
-        <div class="flex items-center gap-3">
-            <a href="{{ route('admin.pages.index') }}" class="flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-bold transition-all" title="Quay lại danh sách trang">
-                <iconify-icon icon="solar:arrow-left-linear" class="text-sm"></iconify-icon>
-                <span>Quay lại</span>
-            </a>
-
-            <div class="h-4 w-px bg-slate-200"></div>
-
-            <div class="flex items-center gap-2">
-                <span class="font-bold text-slate-900 text-xs sm:text-sm max-w-[140px] sm:max-w-[200px] truncate" title="{{ $page->getTranslation('title', $contentLocale, false) ?: $page->slug }}">
-                    {{ $page->getTranslation('title', $contentLocale, false) ?: $page->slug }}
-                </span>
-                <span class="px-2 py-0.5 rounded-md text-2xs font-bold {{ $page->is_active ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700' }}">
-                    {{ $page->is_active ? 'Đã xuất bản' : 'Bản nháp' }}
-                </span>
-            </div>
-
-            <!-- Multilingual selector -->
-            @if(count($contentLanguages) > 1)
-                <div class="flex items-center bg-slate-100 p-0.5 rounded-lg border border-slate-200 ml-1">
-                    @foreach($contentLanguages as $langCode => $langName)
-                        <a href="{{ route('admin.pages.builder', ['locale' => app()->getLocale(), 'page' => $page->id, 'content_locale' => $langCode]) }}" 
-                           class="px-2 py-0.5 text-2xs font-bold rounded-md transition-all {{ $contentLocale === $langCode ? 'bg-white text-primary shadow-xs' : 'text-slate-600 hover:text-slate-900' }}">
-                            {{ strtoupper($langCode) }}
-                        </a>
-                    @endforeach
-                </div>
-            @endif
-        </div>
-
-        <!-- Center: Device Switcher -->
-        <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200">
-            <button type="button" class="device-btn active px-3 py-1 rounded-lg text-xs font-bold flex items-center gap-1.5 border transition-all" data-device="Desktop" title="Máy tính (Desktop 100%)">
-                <iconify-icon icon="solar:laptop-minimalistic-linear" class="text-sm"></iconify-icon>
-                <span class="hidden md:inline">Desktop</span>
-            </button>
-            <button type="button" class="device-btn px-3 py-1 rounded-lg text-xs font-bold flex items-center gap-1.5 border transition-all" data-device="Tablet" title="Máy tính bảng (Tablet 768px)">
-                <iconify-icon icon="solar:tablet-linear" class="text-sm"></iconify-icon>
-                <span class="hidden md:inline">Tablet</span>
-            </button>
-            <button type="button" class="device-btn px-3 py-1 rounded-lg text-xs font-bold flex items-center gap-1.5 border transition-all" data-device="Mobile" title="Điện thoại (Mobile 375px)">
-                <iconify-icon icon="solar:smartphone-linear" class="text-sm"></iconify-icon>
-                <span class="hidden md:inline">Mobile</span>
-            </button>
-        </div>
-
-        <!-- Right: Actions & Tools -->
-        <div class="flex items-center gap-1.5">
-            <!-- Undo / Redo -->
-            <button type="button" id="btn-undo" class="p-1.5 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors" title="Hoàn tác (Ctrl+Z)">
-                <iconify-icon icon="solar:undo-left-round-linear" class="text-base"></iconify-icon>
-            </button>
-            <button type="button" id="btn-redo" class="p-1.5 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors" title="Làm lại (Ctrl+Y)">
-                <iconify-icon icon="solar:undo-right-round-linear" class="text-base"></iconify-icon>
-            </button>
-
-            <div class="h-4 w-px bg-slate-200 mx-0.5"></div>
-
-            <!-- Focus Mode -->
-            <button type="button" id="btn-focus-mode" class="px-2.5 py-1.5 text-slate-700 hover:text-primary hover:bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold flex items-center gap-1 transition-all" title="Chế độ tập trung (Focus Mode - Ctrl+Shift+F)">
-                <iconify-icon icon="solar:maximize-square-3-linear" class="text-base"></iconify-icon>
-                <span class="hidden xl:inline text-2xs">Tập trung</span>
-            </button>
-
-            <!-- Preview Mode -->
-            <button type="button" id="btn-preview" class="px-2.5 py-1.5 text-slate-700 hover:text-primary hover:bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold flex items-center gap-1 transition-all" title="Xem trước không có viền công cụ (Preview)">
-                <iconify-icon icon="solar:eye-linear" class="text-base"></iconify-icon>
-                <span class="hidden xl:inline text-2xs">Xem trước</span>
-            </button>
-
-            <!-- Fullscreen -->
-            <button type="button" id="btn-fullscreen" class="p-1.5 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors" title="Toàn màn hình (Fullscreen)">
-                <iconify-icon icon="solar:full-screen-linear" class="text-base"></iconify-icon>
-            </button>
-
-            <div class="h-4 w-px bg-slate-200 mx-0.5"></div>
-
-            <!-- Save Draft -->
-            <button type="button" id="btn-save-draft" class="px-3.5 py-1.5 bg-slate-900 hover:bg-black text-white text-xs font-bold rounded-xl shadow-xs flex items-center gap-1.5 transition-all">
-                <iconify-icon icon="solar:diskette-bold" class="text-sm"></iconify-icon>
-                <span class="btn-text">Lưu nháp</span>
-            </button>
-
-            <!-- Publish -->
-            <button type="button" id="btn-publish" class="px-3.5 py-1.5 bg-primary hover:bg-primary/90 text-white text-xs font-bold rounded-xl shadow-md shadow-primary/20 flex items-center gap-1.5 transition-all">
-                <iconify-icon icon="solar:upload-track-2-bold" class="text-sm"></iconify-icon>
-                <span class="btn-text">Xuất bản</span>
-            </button>
-        </div>
-    </header>
-
-    <!-- Workspace -->
-    <div class="builder-workspace">
-        
-        <!-- Left Sidebar: width 280px (collapsible) -->
-        <aside id="builder-left-sidebar" class="builder-sidebar-left shadow-xs">
-            <div class="flex items-center justify-between border-b border-slate-200 bg-slate-50/75 p-2 shrink-0">
-                <div class="flex items-center gap-1 bg-slate-100/80 p-0.5 rounded-lg border border-slate-200/60">
-                    <button type="button" class="sidebar-tab-btn active px-3 py-1 text-2xs font-bold rounded-md transition-all" data-tab-group="left" data-tab-target="#tab-blocks">
-                        Khối (Blocks)
-                    </button>
-                    <button type="button" class="sidebar-tab-btn px-3 py-1 text-2xs font-bold rounded-md transition-all" data-tab-group="left" data-tab-target="#tab-layers">
-                        Lớp (Layers)
-                    </button>
-                </div>
-                <button type="button" id="btn-collapse-left" class="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200/60 transition-colors" title="Thu gọn bảng trái">
-                    <iconify-icon icon="solar:alt-arrow-left-linear" class="text-base"></iconify-icon>
-                </button>
-            </div>
-
-            <div id="tab-blocks" class="tab-pane flex-1 overflow-y-auto p-2" data-tab-group="left">
-                <div id="gjs-blocks"></div>
-            </div>
-
-            <div id="tab-layers" class="tab-pane flex-1 overflow-y-auto p-2 hidden" data-tab-group="left">
-                <div id="gjs-layers" class="p-2 text-xs"></div>
-            </div>
-        </aside>
-
-        <!-- Floating Left Expand Button -->
-        <button type="button" id="btn-expand-left" class="hidden absolute top-3 left-3 z-40 p-2 bg-white text-slate-700 rounded-xl shadow-md border border-slate-200 hover:bg-slate-50 hover:text-primary transition-all" title="Mở bảng Khối & Lớp">
-            <iconify-icon icon="solar:sidebar-minimalistic-bold-duotone" class="text-lg"></iconify-icon>
-        </button>
-
-        <!-- Center: GrapesJS Canvas (flex: 1 1 auto, expands completely) -->
-        <main class="builder-center-canvas">
-            <div id="gjs-container"></div>
-        </main>
-
-        <!-- Floating Right Expand Button -->
-        <button type="button" id="btn-expand-right" class="hidden absolute top-3 right-3 z-40 p-2 bg-white text-slate-700 rounded-xl shadow-md border border-slate-200 hover:bg-slate-50 hover:text-primary transition-all" title="Mở bảng Thuộc tính & Kiểu dáng">
-            <iconify-icon icon="solar:tuning-bold-duotone" class="text-lg"></iconify-icon>
-        </button>
-
-        <!-- Right Sidebar: width 300px (collapsible) -->
-        <aside id="builder-right-sidebar" class="builder-sidebar-right shadow-xs">
-            <div class="flex items-center justify-between border-b border-slate-200 bg-slate-50/75 p-2 shrink-0">
-                <button type="button" id="btn-collapse-right" class="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200/60 transition-colors" title="Thu gọn bảng phải">
-                    <iconify-icon icon="solar:alt-arrow-right-linear" class="text-base"></iconify-icon>
-                </button>
-                <div class="flex items-center gap-1 bg-slate-100/80 p-0.5 rounded-lg border border-slate-200/60">
-                    <button type="button" class="sidebar-tab-btn active px-3 py-1 text-2xs font-bold rounded-md transition-all" data-tab-group="right" data-tab-target="#tab-traits">
-                        Thuộc tính
-                    </button>
-                    <button type="button" class="sidebar-tab-btn px-3 py-1 text-2xs font-bold rounded-md transition-all" data-tab-group="right" data-tab-target="#tab-styles">
-                        Kiểu dáng
-                    </button>
-                </div>
-            </div>
-
-            <div id="tab-traits" class="tab-pane flex-1 overflow-y-auto p-3" data-tab-group="right">
-                <div id="gjs-traits" class="text-xs"></div>
-            </div>
-
-            <div id="tab-styles" class="tab-pane flex-1 overflow-y-auto p-3 hidden" data-tab-group="right">
-                <div id="gjs-styles" class="text-xs"></div>
-            </div>
-        </aside>
-
-    </div>
-</div>
+<div id="gjs-container"></div>
 
 <!-- Scripts -->
 <script src="{{ asset('admin-assets/libs/sweetalert2/dist/sweetalert2.min.js') }}"></script>
 <script src="{{ asset('admin-assets/libs/grapesjs/grapes.min.js') }}"></script>
 
 <!-- GrapesJS Modular Architecture -->
-<script src="{{ asset('admin-assets/js/grapes-builder/adapters/laravel-storage.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/adapters/media.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/traits/common.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/components/heading.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/components/paragraph.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/components/button.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/components/image.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/components/divider.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/components/spacer.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/components/icon.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/components/video.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/components/section.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/components/container.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/components/column.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/components/columns.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/components/grid.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/components/stack.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/blocks/basic.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/blocks/layout.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/utils/id-manager.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/sections/helpers.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/sections/registry.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/sections/hero.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/sections/about.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/sections/services.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/sections/projects.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/sections/gallery.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/sections/cta.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/sections/contact.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/blocks/sections.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/dynamic/registry.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/dynamic/base.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/dynamic/product-grid.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/dynamic/product-tabs.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/dynamic/category-grid.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/dynamic/post-list.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/dynamic/latest-reviews.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/dynamic/contact-form.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/dynamic/partial.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/blocks/dynamic.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/core/commands.js') }}"></script>
-<script src="{{ asset('admin-assets/js/grapes-builder/core/editor.js') }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/adapters/laravel-storage.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/adapters/media.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/traits/common.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/components/heading.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/components/paragraph.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/components/link.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/components/button.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/components/image.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/components/divider.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/components/spacer.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/components/icon.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/components/video.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/components/custom-html.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/components/section.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/components/container.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/components/column.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/components/columns.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/components/grid.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/components/stack.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/blocks/basic.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/blocks/layout.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/blocks/content-widgets.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/utils/id-manager.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/sections/helpers.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/sections/registry.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/sections/hero.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/sections/about.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/sections/services.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/sections/projects.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/sections/gallery.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/sections/cta.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/sections/contact.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/blocks/sections.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/dynamic/registry.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/dynamic/base.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/dynamic/product-grid.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/dynamic/product-tabs.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/dynamic/category-grid.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/dynamic/post-list.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/dynamic/latest-reviews.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/dynamic/contact-form.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/dynamic/partial.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/blocks/dynamic.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/core/style-sectors.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/core/canvas-context.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/core/rte.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/core/imported-markup.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/core/commands.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/core/panels.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/core/editor.js').'?v='.$builderVersion }}"></script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     window.BUILDER_CONFIG = {
         locale: @json($contentLocale),
+        labels: { loadMore: @json(__('pages.load_more')), uploadFailed: @json(__('pages.upload_failed')) },
         builderData: @json($builderData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
-        initialHtml: @json($page->getTranslation('published_html', $contentLocale, false) ?: '', JSON_UNESCAPED_UNICODE),
+        initialHtml: @json($editorContent['html'], JSON_UNESCAPED_UNICODE),
+        initialCss: @json($editorContent['css'], JSON_UNESCAPED_UNICODE),
+
+        // Frontend parity — see config/theme.php. The canvas loads the exact
+        // stylesheet list and body classes the public site uses, so the design
+        // surface and the live page cannot drift apart.
+        canvasStyles: @json($canvasStyles, JSON_UNESCAPED_SLASHES),
+        canvasBodyClass: @json($canvasBodyClass),
+        canvasContentClass: @json($canvasContentClass),
+        canvasHeaderHtml: @json($canvasHeaderHtml, JSON_UNESCAPED_UNICODE),
+        canvasFooterHtml: @json($canvasFooterHtml, JSON_UNESCAPED_UNICODE),
+
+        // Topbar metadata, rendered as GrapesJS panel buttons.
+        pageTitle: @json($page->getTranslation('title', $contentLocale, false) ?: $page->slug),
+        isPublished: @json((bool) $page->is_active),
+        isPartial: @json($page->isPartial()),
+        partialRole: @json($page->partial_role),
+        backUrl: @json($backUrl ?? route('admin.pages.index', ['locale' => app()->getLocale()]), JSON_UNESCAPED_SLASHES),
+        headerBuilderUrl: @json($headerBuilderUrl ?? null, JSON_UNESCAPED_SLASHES),
+        footerBuilderUrl: @json($footerBuilderUrl ?? null, JSON_UNESCAPED_SLASHES),
+        contentLanguages: @json($contentLanguageLinks, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
+
         saveUrl: @json($saveUrl, JSON_UNESCAPED_SLASHES),
         publishUrl: @json($publishUrl, JSON_UNESCAPED_SLASHES),
         mediaResourcesUrl: @json($mediaResourcesUrl, JSON_UNESCAPED_SLASHES),

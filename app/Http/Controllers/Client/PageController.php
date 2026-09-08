@@ -41,14 +41,9 @@ class PageController extends Controller
 
         $html = $this->content->get($page, 'published_html');
         $resolvedLocale = app()->getLocale();
-        $partialsVersion = Cache::get('page-partials-version', 0);
-        $cacheKey = "page-block-render:{$page->id}:{$resolvedLocale}:{$page->updated_at?->timestamp}:v{$partialsVersion}";
-        $renderedHtml = Cache::remember($cacheKey, now()->addHour(), fn () => $this->blockRenderer->render($html, $resolvedLocale));
-
-        $headerCacheKey = "page-header:{$page->id}:{$resolvedLocale}:v{$partialsVersion}";
-        $footerCacheKey = "page-footer:{$page->id}:{$resolvedLocale}:v{$partialsVersion}";
-        $headerHtml = Cache::remember($headerCacheKey, now()->addHour(), fn () => $this->partials->resolveHeader($page, $resolvedLocale));
-        $footerHtml = Cache::remember($footerCacheKey, now()->addHour(), fn () => $this->partials->resolveFooter($page, $resolvedLocale));
+        $renderedHtml = $this->blockRenderer->render($html, $resolvedLocale);
+        $headerHtml = $this->partials->resolveHeader($page, $resolvedLocale);
+        $footerHtml = $this->partials->resolveFooter($page, $resolvedLocale);
 
         return view('client.pages.show', [
             'page' => $page,

@@ -99,7 +99,8 @@ class PageController extends Controller
         abort_if($page->isPartial(), 404);
 
         $previewLocale = $this->languages->resolve((string) $request->query('content_locale', $this->languages->defaultLocale()));
-        $html = $page->getTranslation('published_html', $previewLocale, false);
+        $draft = $this->pages->editorContent($page, $previewLocale);
+        $html = $draft['html'];
 
         $partials = app(\App\Services\PagePartialResolver::class);
         $headerHtml = $partials->resolveHeader($page, $previewLocale);
@@ -112,7 +113,7 @@ class PageController extends Controller
             'renderedHtml' => $this->blockRenderer->render($html, $previewLocale),
             'headerHtml' => $headerHtml,
             'footerHtml' => $footerHtml,
-            'css' => $page->getTranslation('published_css', $previewLocale, false),
+            'css' => $draft['css'],
             'metaTitle' => $page->getTranslation('meta_title', $previewLocale, false),
             'metaDescription' => $page->getTranslation('meta_description', $previewLocale, false),
         ]);
@@ -134,6 +135,10 @@ class PageController extends Controller
             'footer_partial_id' => 'nullable|integer',
         ]);
 
+        $validated['html'] = app(\App\Support\PageHtmlSanitizer::class)->clean($validated['html']);
+        $validated['css'] = $this->pages->cleanCss($validated['css'] ?? '');
+        $validated['created_by'] = $request->user()->id;
+
         $previewToken = \Illuminate\Support\Str::random(40);
         \Illuminate\Support\Facades\Cache::put("page-preview:{$previewToken}", $validated, now()->addMinutes(5));
 
@@ -148,7 +153,7 @@ class PageController extends Controller
         $token = $request->query('token');
         $previewData = \Illuminate\Support\Facades\Cache::get("page-preview:{$token}");
 
-        if (!$previewData) {
+        if (!$previewData || ($previewData['created_by'] ?? null) !== $request->user()->id) {
             abort(404, 'Mã xem trước đã hết hạn hoặc không hợp lệ.');
         }
 
@@ -219,37 +224,115 @@ class PageController extends Controller
 
     public function builder(Request $request, string $locale, Page $page)
     {
-        abort_if($page->isPartial(), 404);
-
         $contentLocale = $this->languages->resolve((string) $request->query('content_locale', $this->languages->defaultLocale()));
-        $builderData = $page->getTranslation('builder_data', $contentLocale, false) ?: ($page->builder_data[$contentLocale] ?? []);
+        $builderData = $this->pages->projects($page)[$contentLocale] ?? [];
+
+        // Header/footer are rendered into the canvas as locked context so the
+        // designer edits the page body against the real site chrome. When editing
+        // a header or footer partial itself, do not wrap it with its own chrome.
+        $partials = app(\App\Services\PagePartialResolver::class);
+        $headerHtml = '';
+        $footerHtml = '';
+        if (! $page->isPartial()) {
+            $headerHtml = $this->chromeHtml($partials->resolveHeader($page, $contentLocale), $page->header_mode, 'partials.header');
+            $footerHtml = $this->chromeHtml($partials->resolveFooter($page, $contentLocale), $page->footer_mode, 'partials.footer');
+        } elseif ($page->partial_role === 'header') {
+            $footerHtml = $this->chromeHtml($partials->resolveFooter($page, $contentLocale), $page->footer_mode, 'partials.footer');
+        } elseif ($page->partial_role === 'footer') {
+            $headerHtml = $this->chromeHtml($partials->resolveHeader($page, $contentLocale), $page->header_mode, 'partials.header');
+        }
+
+        $pageHtml = (string) $page->getTranslation('published_html', $contentLocale, false);
+
+        // LanguageRegistry::active() yields Language models, not code => name.
+        $contentLanguages = $this->languages->active();
+        $contentLanguageLinks = $contentLanguages
+            ->map(fn ($language) => [
+                'code' => $language->code,
+                'name' => $language->native_name ?: $language->name,
+                'url' => route('admin.pages.builder', ['locale' => $locale, 'page' => $page->id, 'content_locale' => $language->code]),
+                'active' => $language->code === $contentLocale,
+            ])
+            ->values()
+            ->all();
+
+        $defaultHeader = $partials->selectedPartial($page, 'header');
+        $defaultFooter = $partials->selectedPartial($page, 'footer');
+        $headerBuilderUrl = $defaultHeader ? route('admin.pages.builder', ['locale' => $locale, 'page' => $defaultHeader->id, 'content_locale' => $contentLocale]) : null;
+        $footerBuilderUrl = $defaultFooter ? route('admin.pages.builder', ['locale' => $locale, 'page' => $defaultFooter->id, 'content_locale' => $contentLocale]) : null;
+
+        $backUrl = $page->isPartial()
+            ? route('admin.partials.index', ['locale' => $locale])
+            : route('admin.pages.index', ['locale' => $locale]);
 
         return view('admin.pages.builder', [
             'page' => $page->load('localizedSlugs'),
             'contentLocale' => $contentLocale,
-            'contentLanguages' => $this->languages->active(),
+            'contentLanguages' => $contentLanguages,
+            'contentLanguageLinks' => $contentLanguageLinks,
             'defaultContentLocale' => $this->languages->defaultLocale(),
             'builderData' => $builderData,
+            'editorContent' => $this->pages->editorContent($page, $contentLocale),
+            'canvasStyles' => \App\Support\ThemeAssets::canvasStyles($pageHtml, $headerHtml, $footerHtml),
+            'canvasBodyClass' => \App\Support\ThemeAssets::bodyClass(),
+            'canvasContentClass' => \App\Support\ThemeAssets::contentClass(),
+            'builderVersion' => \App\Support\ThemeAssets::builderVersion(),
+            'canvasHeaderHtml' => $headerHtml,
+            'canvasFooterHtml' => $footerHtml,
             'canvasUrl' => route('admin.pages.builder.canvas', ['locale' => $locale, 'page' => $page->id, 'content_locale' => $contentLocale]),
             'saveUrl' => route('admin.pages.builder.save', ['locale' => $locale, 'page' => $page->id]),
             'publishUrl' => route('admin.pages.builder.publish', ['locale' => $locale, 'page' => $page->id]),
-            'previewUrl' => route('admin.pages.preview', ['locale' => $locale, 'page' => $page->id, 'content_locale' => $contentLocale]),
+            'previewUrl' => $page->isPartial() ? null : route('admin.pages.preview', ['locale' => $locale, 'page' => $page->id, 'content_locale' => $contentLocale]),
             'mediaResourcesUrl' => route('admin.media.resources', ['locale' => $locale]),
             'mediaUploadUrl' => route('admin.media.upload', ['locale' => $locale]),
+            'backUrl' => $backUrl,
+            'headerBuilderUrl' => $headerBuilderUrl,
+            'footerBuilderUrl' => $footerBuilderUrl,
         ]);
+    }
+
+    /**
+     * Header/footer markup to frame the builder canvas with.
+     *
+     * PagePartialResolver only knows about partials stored as Page records. This
+     * site's chrome lives in Blade (resources/views/partials/header.blade.php),
+     * so with no partial rows in the database the resolver correctly returns ''
+     * and the builder would show a page with no header or footer at all. Fall
+     * back to the layout's own partials — the same markup the public site uses.
+     */
+    private function chromeHtml(string $resolved, ?string $mode, string $fallbackView): string
+    {
+        if ($resolved !== '' || $mode === 'none') {
+            return $resolved;
+        }
+
+        try {
+            return view($fallbackView)->render();
+        } catch (\Throwable $e) {
+            // Chrome is context, not content: never let it break the builder.
+            report($e);
+
+            return '';
+        }
     }
 
     public function builderCanvas(Request $request, string $locale, Page $page)
     {
-        abort_if($page->isPartial(), 404);
-
         $contentLocale = $this->languages->resolve((string) $request->query('content_locale', $this->languages->defaultLocale()));
         $html = $page->getTranslation('published_html', $contentLocale, false) ?: '';
         $css = $page->getTranslation('published_css', $contentLocale, false) ?: '';
 
         $partials = app(\App\Services\PagePartialResolver::class);
-        $headerHtml = $partials->resolveHeader($page, $contentLocale);
-        $footerHtml = $partials->resolveFooter($page, $contentLocale);
+        $headerHtml = '';
+        $footerHtml = '';
+        if (! $page->isPartial()) {
+            $headerHtml = $partials->resolveHeader($page, $contentLocale);
+            $footerHtml = $partials->resolveFooter($page, $contentLocale);
+        } elseif ($page->partial_role === 'header') {
+            $footerHtml = $partials->resolveFooter($page, $contentLocale);
+        } elseif ($page->partial_role === 'footer') {
+            $headerHtml = $partials->resolveHeader($page, $contentLocale);
+        }
 
         return view('admin.pages.builder-canvas', [
             'page' => $page,
@@ -326,8 +409,6 @@ class PageController extends Controller
 
     public function builderSave(Request $request, string $locale, Page $page)
     {
-        abort_if($page->isPartial(), 404);
-
         $validated = $request->validate([
             'content_locale' => 'required|string',
             'published_html' => 'nullable|string',
@@ -335,7 +416,8 @@ class PageController extends Controller
             'builder_data' => 'required|array',
         ]);
 
-        $contentLocale = $this->languages->resolve($validated['content_locale']);
+        $contentLocale = $validated['content_locale'];
+        abort_unless($this->languages->supports($contentLocale), 422, __('pages.invalid_locale'));
         $payload = [
             'content_locale' => $contentLocale,
             'published_html' => $validated['published_html'] ?? '',
@@ -343,7 +425,11 @@ class PageController extends Controller
             'builder_data' => $validated['builder_data'],
         ];
 
-        $page = $this->pages->updateLocale($page, $contentLocale, $payload, $request->user()?->id);
+        $page = $this->pages->saveDraft($page, $contentLocale, $payload, $request->user()?->id);
+        if ($page->isPartial()) {
+            \Illuminate\Support\Facades\Cache::increment('page-partials-version');
+        }
+
         ActivityLogger::log('updated', $page, "Lưu bản nháp builder trang {$page->slug}", [
             'content_locale' => $contentLocale,
         ]);
@@ -359,8 +445,6 @@ class PageController extends Controller
 
     public function builderPublish(Request $request, string $locale, Page $page)
     {
-        abort_if($page->isPartial(), 404);
-
         $validated = $request->validate([
             'content_locale' => 'nullable|string',
             'published_html' => 'required|string',
@@ -368,7 +452,8 @@ class PageController extends Controller
             'builder_data' => 'nullable|array',
         ]);
 
-        $contentLocale = $this->languages->resolve($validated['content_locale'] ?? $this->languages->defaultLocale());
+        $contentLocale = $validated['content_locale'] ?? $this->languages->defaultLocale();
+        abort_unless($this->languages->supports($contentLocale), 422, __('pages.invalid_locale'));
         $builderData = $validated['builder_data'] ?? ($page->getTranslation('builder_data', $contentLocale, false) ?: []);
 
         $this->pages->updateLocale($page, $contentLocale, [
@@ -382,6 +467,10 @@ class PageController extends Controller
             'is_active' => true,
             'published_at' => $page->published_at ?: now(),
         ]);
+
+        if ($page->isPartial()) {
+            \Illuminate\Support\Facades\Cache::increment('page-partials-version');
+        }
 
         ActivityLogger::log('updated', $page, "Xuất bản trang {$page->slug}");
 

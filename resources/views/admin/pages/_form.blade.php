@@ -22,6 +22,12 @@
         <p class="text-xs text-gray-400">Kéo block vào canvas, chọn block để chỉnh nội dung và kiểu hiển thị.</p>
     </div>
     <div class="flex items-center gap-2">
+        @if($page->exists)
+            <x-admin.button variant="primary" size="sm" href="{{ route('admin.pages.builder', $page) }}" class="flex items-center gap-1">
+                <iconify-icon icon="solar:palette-bold" class="text-base"></iconify-icon>
+                <span>Thiết kế (Builder)</span>
+            </x-admin.button>
+        @endif
         <x-admin.button type="button" variant="outline" size="sm" id="page-builder-preview-button" class="flex items-center gap-1">
             <iconify-icon icon="solar:eye-linear" class="text-base"></iconify-icon>
             <span>Xem trước</span>
@@ -107,8 +113,8 @@
         <div class="border-b border-gray-200">
             <nav class="-mb-px flex space-x-4 overflow-x-auto" aria-label="Languages">
                 @foreach($contentLanguages as $language)
-                    <button type="button" @click="activeLanguage = '{{ $language->code }}'" 
-                            :class="activeLanguage === '{{ $language->code }}' ? 'border-primary text-primary font-bold' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'" 
+                    <button type="button" @click="activeLanguage = '{{ $language->code }}'"
+                            :class="activeLanguage === '{{ $language->code }}' ? 'border-primary text-primary font-bold' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
                             class="whitespace-nowrap pb-3 px-1 border-b-2 font-semibold text-xs flex items-center gap-1 focus:outline-none transition-colors">
                         <iconify-icon icon="solar:global-linear" class="text-base"></iconify-icon>
                         <span>{{ $language->native_name }}</span>
@@ -116,7 +122,7 @@
                 @endforeach
             </nav>
         </div>
-        
+
         <div class="pt-2">
             @foreach($contentLanguages as $language)
                 @php $code = $language->code; @endphp
@@ -143,6 +149,7 @@
     </div>
 </div>
 
+@unless($page->exists)
 <!-- GrapesJS Page Builder Card -->
 <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden mb-6">
     <div id="page-builder-status" class="p-3 bg-blue-50 text-blue-800 text-xs font-semibold flex items-center gap-2 border-b border-gray-150">
@@ -159,7 +166,7 @@
                     <iconify-icon icon="solar:settings-linear"></iconify-icon>
                 </button>
             </div>
-            
+
             <div class="p-3 border-b border-gray-200 bg-gray-50/50 flex flex-col gap-2">
                 <div class="flex items-center justify-between">
                     <label for="page-builder-locale" class="text-xs font-bold text-gray-900">Ngôn ngữ:</label>
@@ -191,7 +198,7 @@
             <div class="pb-panel-body">
                 <div class="pb-tree" id="pb-element-tree"></div>
             </div>
-            
+
             <div class="pb-panel-footer">
                 <button type="button" id="pb-submit-proxy" class="w-full py-2.5 px-4 text-sm font-bold text-white bg-primary hover:bg-primary-hover active:bg-primary-active rounded-lg transition-colors focus:outline-none flex items-center justify-center gap-2">
                     <iconify-icon icon="solar:diskette-linear" class="text-base"></iconify-icon>
@@ -245,12 +252,12 @@
 </div>
 
 <!-- Dán HTML/CSS Modal -->
-<div x-data="{ open: false }" 
-     @keydown.escape.window="open = false" 
-     class="relative z-50" 
+<div x-data="{ open: false }"
+     @keydown.escape.window="open = false"
+     class="relative z-50"
      id="pageBuilderHtmlModal"
      style="display: none;"
-     x-show="open" 
+     x-show="open"
      x-transition>
     <div class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity"></div>
     <div class="fixed inset-0 z-10 overflow-y-auto">
@@ -300,12 +307,12 @@
 
 @unless($page->exists)
 <!-- Chọn mẫu khởi tạo Modal -->
-<div x-data="{ open: false }" 
-     @keydown.escape.window="open = false" 
-     class="relative z-50" 
+<div x-data="{ open: false }"
+     @keydown.escape.window="open = false"
+     class="relative z-50"
      id="pageTemplateModal"
      style="display: none;"
-     x-show="open" 
+     x-show="open"
      x-transition>
     <div class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity"></div>
     <div class="fixed inset-0 z-10 overflow-y-auto">
@@ -334,6 +341,8 @@
 </div>
 @endunless
 
+@endunless
+
 <!-- Bottom Actions Card -->
 <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-6 flex flex-wrap items-center justify-between gap-4 mt-6">
     <div>
@@ -350,6 +359,14 @@
     </div>
 </div>
 
+@if($page->exists)
+<input type="hidden" name="metadata_only" value="1">
+<script>
+document.getElementById('page-builder-preview-button').addEventListener('click', function () {
+    window.open(@json($page->isPartial() ? route('admin.pages.builder', $page) : route('admin.pages.preview', $page)), '_blank');
+});
+</script>
+@else
 <input type="hidden" name="builder_data" id="page-builder-data">
 <input type="hidden" name="published_html" id="page-builder-html">
 <input type="hidden" name="published_css" id="page-builder-css">
@@ -467,7 +484,7 @@
         color: #2a3547 !important;
         font-weight: 600 !important;
     }
-    
+
     /* GrapesJS style fields, inputs and selects */
     .gjs-field, .gjs-clm-tags-field {
         background-color: #ffffff !important;
@@ -489,7 +506,7 @@
         outline: none !important;
         border: none !important;
     }
-    
+
     /* GrapesJS Unit selector */
     .gjs-input-unit, select.gjs-input-unit, .gjs-field-units {
         background-color: #f8f9fa !important;
@@ -501,7 +518,7 @@
     .gjs-input-unit:hover {
         color: #5d87ff !important;
     }
-    
+
     /* GrapesJS Radio Position Button Groups */
     .gjs-radio-item-label {
         background-color: #ffffff !important;
@@ -565,7 +582,7 @@
     .gjs-sm-btn:hover {
         background-color: #e9edf0 !important;
     }
-    
+
     .gjs-layer-name, .gjs-layer-title {
         color: #2a3547 !important;
     }
@@ -925,7 +942,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const titleInput = document.querySelector('[name="title[' + activeLocale + ']"]');
         const metaTitleInput = document.querySelector('[name="meta_title[' + activeLocale + ']"]');
         const metaDescriptionInput = document.querySelector('[name="meta_description[' + activeLocale + ']"]');
-        
+
         const headerMode = document.querySelector('[name="header_mode"]');
         const headerPartial = document.querySelector('[name="header_partial_id"]');
         const footerMode = document.querySelector('[name="footer_mode"]');
@@ -1056,3 +1073,5 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 @endpush
+
+@endif

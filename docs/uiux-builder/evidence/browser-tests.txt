@@ -1,0 +1,17 @@
+test_all_registered_blocks_can_be_inserted_and_serialized (__main__.BuilderBrowserTest) ... ok
+test_basic_text_components_support_double_click_editing (__main__.BuilderBrowserTest) ... ok
+test_columns_accept_child_and_gap_preserves_alignment (__main__.BuilderBrowserTest) ... ok
+test_devices_match_toolbar_and_generate_mobile_css (__main__.BuilderBrowserTest) ... ok
+test_edit_save_reload_keeps_text_and_mobile_styles (__main__.BuilderBrowserTest) ... ok
+test_empty_project_reopens_without_resurrecting_published_content (__main__.BuilderBrowserTest) ... ok
+test_heading_tag_trait_changes_real_html (__main__.BuilderBrowserTest) ... ok
+test_legacy_project_preserves_editor_state (__main__.BuilderBrowserTest) ... ok
+test_media_drop_uploads_once_and_error_never_reports_success (__main__.BuilderBrowserTest) ... ok
+test_media_load_more_appends_results (__main__.BuilderBrowserTest) ... ok
+test_publish_clears_unsaved_warning (__main__.BuilderBrowserTest) ... ok
+test_replacement_clears_old_responsive_image_sources (__main__.BuilderBrowserTest) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 20.660s
+
+OK

@@ -13,8 +13,8 @@
                 defaults: {
                     name: 'Các cột (Columns)',
                     tagName: 'div',
-                    droppable: 'builder-column',
-                    classes: ['grid', 'grid-cols-1', 'gap-8', 'w-full'],
+                    droppable: '.builder-column',
+                    classes: ['builder-columns', 'grid', 'grid-cols-1', 'gap-8', 'w-full'],
                     style: {
                         'display': 'grid',
                         'grid-template-columns': 'repeat(2, minmax(0, 1fr))',
@@ -70,15 +70,17 @@
                 },
 
                 init: function () {
+                    this.addClass('builder-columns');
                     this.on('change:columns-layout change:columns-gap change:columns-align', this.handleStyles);
                 },
 
                 handleStyles: function () {
-                    var layout = this.get('columns-layout') || '1-1';
-                    var gap = this.get('columns-gap') || '32px';
-                    var align = this.get('columns-align') || 'center';
+                    var current = this.getStyle();
+                    var layout = this.get('columns-layout');
+                    var gap = this.get('columns-gap') || current.gap || '32px';
+                    var align = this.get('columns-align') || current['align-items'] || 'center';
 
-                    var gridCols = 'repeat(2, minmax(0, 1fr))';
+                    var gridCols = current['grid-template-columns'] || 'repeat(2, minmax(0, 1fr))';
                     if (layout === '1-1') gridCols = 'repeat(2, minmax(0, 1fr))';
                     else if (layout === '1-2') gridCols = '1fr 2fr';
                     else if (layout === '2-1') gridCols = '2fr 1fr';

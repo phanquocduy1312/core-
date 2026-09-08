@@ -45,6 +45,12 @@ class PageRequest extends FormRequest
             'footer_partial_id' => ['nullable', Rule::exists('pages', 'id')->where('type', 'partial')->where('partial_role', 'footer')],
         ];
 
+        $metadataOnly = $this->boolean('metadata_only') && in_array($this->method(), ['PUT', 'PATCH'], true);
+        $rules['metadata_only'] = ['sometimes', 'boolean'];
+        if ($metadataOnly) {
+            unset($rules['builder_data'], $rules['builder_data.version'], $rules['builder_data.locales']);
+        }
+
         foreach ($languages->codes() as $locale) {
             $required = $locale === $languages->defaultLocale() ? 'required' : 'nullable';
             $rules["title.$locale"] = [$required, 'string', 'max:255'];

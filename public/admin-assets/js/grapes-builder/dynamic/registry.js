@@ -20,7 +20,8 @@
             icon: definition.icon || 'solar:database-bold',
             traits: definition.traits || [],
             defaults: definition.defaults || {},
-            initComponent: definition.initComponent
+            initComponent: definition.initComponent,
+            create: definition.create
         };
         dynamicRegistry.push(entry);
     }

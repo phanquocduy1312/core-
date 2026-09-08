@@ -26,9 +26,9 @@
             var categoryName = 'DỮ LIỆU ĐỘNG';
 
             BlockManager.add(blockId, {
-                label: '<div class="flex items-center gap-2 text-left"><iconify-icon icon="' + block.icon + '" class="text-indigo-600 text-xl shrink-0"></iconify-icon><div class="truncate"><div class="font-bold text-xs text-slate-800">' + block.name + '</div><div class="text-[10px] text-slate-400 font-mono">' + block.type + '</div></div></div>',
+                label: '<div class="block-card"><iconify-icon icon="' + block.icon + '" style="color:#6366f1;"></iconify-icon><span class="block-title">' + block.name + '</span></div>',
                 category: categoryName,
-                content: block.create
+                content: block.create()
             });
         });
     }

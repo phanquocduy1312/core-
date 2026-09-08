@@ -33,12 +33,60 @@ class PageBuilderService
     {
         return DB::transaction(function () use ($page, $data, $userId): Page {
             $this->snapshot($page, $userId);
-            $page->update($this->payload($data, $page));
+            $payload = $this->payload($data, $page);
+            if ($data['metadata_only'] ?? false) {
+                unset($payload['builder_data'], $payload['published_html'], $payload['published_css'], $payload['schema_version']);
+            }
+            $page->update($payload);
             $this->localizedSlugs->sync($page, $data['slug'] ?? [], $data['title']);
             $this->bumpPartialsVersionIfNeeded($page);
 
             return $page->refresh();
         });
+    }
+
+    /** Save editor state without replacing the public snapshot. */
+    public function saveDraft(Page $page, string $locale, array $data, ?int $userId): Page
+    {
+        if (! $this->languages->supports($locale)) {
+            throw ValidationException::withMessages(['content_locale' => __('pages.invalid_locale')]);
+        }
+
+        return DB::transaction(function () use ($page, $locale, $data, $userId): Page {
+            $page = Page::query()->lockForUpdate()->findOrFail($page->id);
+            $this->snapshot($page, $userId);
+            $projects = $this->projects($page);
+            $project = $data['builder_data'];
+            $project['_draft'] = [
+                'html' => $this->htmlSanitizer->clean($data['published_html'] ?? ''),
+                'css' => $this->cleanCss($data['published_css'] ?? ''),
+            ];
+            $projects[$locale] = $this->cleanBuilderData($project);
+            $page->update(['builder_data' => $projects]);
+
+            return $page->refresh();
+        });
+    }
+
+    public function projects(Page $page): array
+    {
+        $stored = $page->getTranslations('builder_data');
+        $projects = is_array($stored['locales'] ?? null) ? $stored['locales'] : [];
+        foreach ($stored as $key => $value) {
+            if (! in_array($key, ['version', 'locales'], true) && is_array($value)) $projects[$key] = $value;
+        }
+
+        return $projects;
+    }
+
+    public function editorContent(Page $page, string $locale): array
+    {
+        $project = $this->projects($page)[$locale] ?? [];
+
+        return [
+            'html' => $project['_draft']['html'] ?? $page->getTranslation('published_html', $locale, false) ?: '',
+            'css' => $project['_draft']['css'] ?? $page->getTranslation('published_css', $locale, false) ?: '',
+        ];
     }
 
     public function updateLocale(Page $page, string $locale, array $data, ?int $userId): Page
@@ -48,10 +96,13 @@ class PageBuilderService
         }
 
         return DB::transaction(function () use ($page, $locale, $data, $userId): Page {
+            $page = Page::query()->lockForUpdate()->findOrFail($page->id);
             $this->snapshot($page, $userId);
 
-            $builderData = $page->getTranslations('builder_data');
-            $builderData[$locale] = $this->cleanBuilderData($data['builder_data'] ?? ($page->getTranslation('builder_data', $locale, false) ?: []));
+            $builderData = $this->projects($page);
+            $project = $data['builder_data'] ?? ($page->getTranslation('builder_data', $locale, false) ?: []);
+            unset($project['_draft']);
+            $builderData[$locale] = $this->cleanBuilderData($project);
 
             $html = $page->getTranslations('published_html');
             $html[$locale] = $this->htmlSanitizer->clean($data['published_html']);
@@ -113,7 +164,7 @@ class PageBuilderService
             'title' => $titles,
             'slug' => $this->uniqueLegacySlug($baseSlug, $page?->id),
             'schema_version' => (int) ($data['builder_data']['version'] ?? 1),
-            'builder_data' => $this->cleanBuilderData($data['builder_data']),
+            'builder_data' => $this->cleanBuilderData($data['builder_data'] ?? []),
             'published_html' => $this->cleanHtmlByLocale($data['published_html'] ?? []),
             'published_css' => $this->cleanCssByLocale($data['published_css'] ?? []),
             'meta_title' => $this->localizedStrings($data['meta_title'] ?? []),
@@ -158,7 +209,7 @@ class PageBuilderService
             ->all();
     }
 
-    private function cleanCss(string $css): string
+    public function cleanCss(string $css): string
     {
         if (preg_match('/@import|expression\s*\(|javascript\s*:|behavior\s*:|-moz-binding|<\s*\/?\s*(script|style)/i', $css)) {
             throw ValidationException::withMessages(['published_css' => 'CSS chứa nội dung không được phép.']);
