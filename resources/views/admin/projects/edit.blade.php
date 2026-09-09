@@ -22,7 +22,7 @@
                         <li>
                             <div class="flex items-center">
                                 <iconify-icon icon="solar:alt-arrow-right-linear" class="mx-1 text-slate-500"></iconify-icon>
-                                <span class="text-slate-400">{{ __('admin.edit') }}</span>
+                                <span class="text-slate-400">{{ __('admin.projects.edit_title') }}</span>
                             </div>
                         </li>
                     </ol>
