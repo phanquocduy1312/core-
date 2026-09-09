@@ -3,6 +3,8 @@
 return [
     'sidebar' => [
         'projects' => '프로젝트 관리',
+        'contact_inquiries' => '문의 요청 관리',
+        'newsletter_subscribers' => '뉴스레터 구독자',
     ],
     'projects' => [
         'title' => '프로젝트 관리',

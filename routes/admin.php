@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\Catalog\CategoryController;
 use App\Http\Controllers\Admin\Catalog\ProductController;
 use App\Http\Controllers\Admin\Catalog\ProductOptionController;
 use App\Http\Controllers\Admin\Catalog\ProductVariantController;
+use App\Http\Controllers\Admin\ContactInquiryController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FeatureController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\LanguageController;
 use App\Http\Controllers\Admin\LogViewerController;
 use App\Http\Controllers\Admin\MediaController;
+use App\Http\Controllers\Admin\NewsletterSubscriberController;
 use App\Http\Controllers\Admin\NotificationSettingController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PageController;
@@ -118,6 +120,15 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
         Route::patch('projects/bulk', [ProjectController::class, 'bulk'])->name('projects.bulk');
         Route::resource('projects', ProjectController::class)->except(['show']);
+
+        Route::patch('contact-inquiries/bulk', [ContactInquiryController::class, 'bulk'])->name('contact-inquiries.bulk');
+        Route::get('contact-inquiries/export', [ContactInquiryController::class, 'exportCsv'])->name('contact-inquiries.export');
+        Route::resource('contact-inquiries', ContactInquiryController::class)->except(['create', 'store', 'edit']);
+
+        Route::patch('newsletter-subscribers/bulk', [NewsletterSubscriberController::class, 'bulk'])->name('newsletter-subscribers.bulk');
+        Route::get('newsletter-subscribers/export', [NewsletterSubscriberController::class, 'exportCsv'])->name('newsletter-subscribers.export');
+        Route::patch('newsletter-subscribers/{newsletter_subscriber}/toggle-status', [NewsletterSubscriberController::class, 'toggleStatus'])->name('newsletter-subscribers.toggle-status');
+        Route::resource('newsletter-subscribers', NewsletterSubscriberController::class)->only(['index', 'destroy']);
     });
 
     Route::middleware(['feature:voucher', 'can:manage_vouchers'])->group(function () {

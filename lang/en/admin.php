@@ -671,6 +671,8 @@ return [
         'page_management' => 'Page Management',
         'page_partials' => 'Shared Blocks',
         'projects' => 'Projects',
+        'contact_inquiries' => 'Contact Inquiries',
+        'newsletter_subscribers' => 'Newsletter Subscribers',
         'user_management' => 'User Management',
         'user_list' => 'Users List',
         'roles_permissions' => 'Roles & Permissions',

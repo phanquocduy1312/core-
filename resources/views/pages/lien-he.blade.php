@@ -458,37 +458,41 @@
                 <h2 class="lux-section-title">Discover Our<br/>Exclusive Services</h2>
                 
                 <div class="lux-form-wrapper">
-                    <div class="lux-form-success" id="lux-success-msg">
+                    <div class="lux-form-success" id="lux-success-msg" style="display:none;">
                         Thank you for contacting LuxLight! We will get back to you shortly.
                     </div>
+                    <div class="lux-form-error" id="lux-error-msg" style="display:none; color: #dc2626; background: #fef2f2; border: 1px solid #fecaca; padding: 12px 16px; border-radius: 4px; margin-bottom: 20px; font-size: 13px;">
+                    </div>
 
-                    <form class="lux-gravity-form" id="lux-contact-form" onsubmit="event.preventDefault(); document.getElementById('lux-success-msg').style.display='block'; this.reset();">
+                    <form class="lux-gravity-form" id="lux-contact-form" method="POST" action="{{ route('contact.submit') }}" onsubmit="handleContactSubmit(event)">
+                        @csrf
                         <div class="lux-form-field">
-                            <input aria-required="true" required name="input_3" placeholder="Name: *" type="text" value=""/>
+                            <input aria-required="true" required name="name" placeholder="Name: *" type="text" value=""/>
                         </div>
                         <div class="lux-form-field">
-                            <input aria-required="true" required name="input_4" placeholder="Title:*" type="text" value=""/>
+                            <input aria-required="true" required name="title" placeholder="Title:*" type="text" value=""/>
                         </div>
                         <div class="lux-form-field">
-                            <input aria-required="true" required name="input_5" placeholder="Company: *" type="text" value=""/>
+                            <input aria-required="true" required name="company" placeholder="Company: *" type="text" value=""/>
                         </div>
                         <div class="lux-form-field">
-                            <input aria-required="true" required name="input_25" placeholder="Email*" type="email" value=""/>
+                            <input aria-required="true" required name="email" placeholder="Email*" type="email" value=""/>
                         </div>
                         <div class="lux-form-field">
-                            <input aria-required="true" required name="input_27" placeholder="Phone (Required)" type="tel" value=""/>
+                            <input aria-required="true" required name="phone" placeholder="Phone (Required)" type="tel" value=""/>
                         </div>
                         <div class="lux-form-field">
-                            <select aria-required="true" name="input_18">
+                            <select aria-required="true" name="enquiry_type">
                                 <option value="Sales Enquiry">Sales Enquiry</option>
                                 <option value="Technical Enquiry">Technical Enquiry</option>
                                 <option value="Feedback">Feedback</option>
+                                <option value="Other">Other</option>
                             </select>
                         </div>
                         <div class="lux-form-field">
-                            <textarea aria-required="true" required cols="50" name="input_22" placeholder="Message*" rows="10"></textarea>
+                            <textarea aria-required="true" required cols="50" name="message" placeholder="Message*" rows="10"></textarea>
                         </div>
-                        <button class="lux-submit-button" type="submit">Submit Now</button>
+                        <button class="lux-submit-button" id="lux-contact-btn" type="submit">Submit Now</button>
                     </form>
                 </div>
             </div>
@@ -607,4 +611,76 @@
         </div>
     </div>
 </div>
+
+<script>
+function handleContactSubmit(e) {
+    e.preventDefault();
+    var form = e.target;
+    var btn = document.getElementById('lux-contact-btn');
+    var successMsg = document.getElementById('lux-success-msg');
+    var errorMsg = document.getElementById('lux-error-msg');
+    var origText = btn ? btn.innerText : 'Submit Now';
+
+    if (btn) {
+        btn.disabled = true;
+        btn.innerText = 'Submitting...';
+    }
+    if (successMsg) successMsg.style.display = 'none';
+    if (errorMsg) errorMsg.style.display = 'none';
+
+    var formData = new FormData(form);
+
+    fetch(form.action, {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Accept': 'application/json'
+        },
+        body: formData
+    })
+    .then(function(res) {
+        return res.json().then(function(data) {
+            return { ok: res.ok, data: data };
+        });
+    })
+    .then(function(result) {
+        if (btn) {
+            btn.disabled = false;
+            btn.innerText = origText;
+        }
+        if (result.ok && result.data.success) {
+            if (successMsg) {
+                successMsg.innerText = result.data.message || 'Thank you for contacting LuxLight! We will get back to you shortly.';
+                successMsg.style.display = 'block';
+            }
+            form.reset();
+        } else {
+            if (errorMsg) {
+                var errText = result.data.message || 'Please verify the submitted details.';
+                if (result.data.errors) {
+                    var msgs = [];
+                    for (var key in result.data.errors) {
+                        if (result.data.errors.hasOwnProperty(key)) {
+                            msgs = msgs.concat(result.data.errors[key]);
+                        }
+                    }
+                    if (msgs.length) errText = msgs.join('<br>');
+                }
+                errorMsg.innerHTML = errText;
+                errorMsg.style.display = 'block';
+            }
+        }
+    })
+    .catch(function(err) {
+        if (btn) {
+            btn.disabled = false;
+            btn.innerText = origText;
+        }
+        if (errorMsg) {
+            errorMsg.innerText = 'An error occurred while sending your message. Please try again later.';
+            errorMsg.style.display = 'block';
+        }
+    });
+}
+</script>
 @endsection

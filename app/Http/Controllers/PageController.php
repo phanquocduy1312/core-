@@ -188,29 +188,77 @@ class PageController extends Controller
         return $this->managedPage('terms-of-use', 'pages.terms-of-use');
     }
 
-    public function subscribeNewsletter(Request $request)
+    public function subscribeNewsletter(\App\Http\Requests\Front\NewsletterSubscribeRequest $request)
     {
-        $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
-            'first_name' => 'required|string|max:100',
-            'last_name' => 'required|string|max:100',
-            'email' => 'required|email|max:255',
-            'company' => 'nullable|string|max:255',
-            'referral' => 'nullable|string|max:255',
-        ]);
+        if (\Illuminate\Support\Facades\Schema::hasTable('newsletter_subscribers')) {
+            $subscriber = \App\Models\NewsletterSubscriber::query()->where('email', $request->email)->first();
+            if ($subscriber) {
+                if (! $subscriber->is_active) {
+                    $subscriber->update([
+                        'is_active' => true,
+                        'subscribed_at' => now(),
+                        'unsubscribed_at' => null,
+                        'first_name' => $request->first_name,
+                        'last_name' => $request->last_name,
+                        'company' => $request->company,
+                        'referral' => $request->referral,
+                        'ip_address' => $request->ip(),
+                        'user_agent' => $request->userAgent(),
+                    ]);
+                }
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Thank you! You are already registered for our newsletter updates.',
+                ]);
+            }
 
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Please fill in all required fields properly.',
-                'errors' => $validator->errors(),
-            ], 422);
+            \App\Models\NewsletterSubscriber::query()->create([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'email' => $request->email,
+                'company' => $request->company,
+                'referral' => $request->referral,
+                'is_active' => true,
+                'subscribed_at' => now(),
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+            ]);
         }
-
-        \Illuminate\Support\Facades\Log::info('Newsletter subscriber:', $request->only(['first_name', 'last_name', 'email', 'company', 'referral']));
 
         return response()->json([
             'success' => true,
             'message' => 'Thank you for subscribing to LuxLight!',
         ]);
     }
+
+    public function submitContact(\App\Http\Requests\Front\ContactInquirySubmitRequest $request)
+    {
+        $inquiryId = null;
+        if (\Illuminate\Support\Facades\Schema::hasTable('contact_inquiries')) {
+            $inquiry = \App\Models\ContactInquiry::query()->create([
+                'name' => $request->name,
+                'title' => $request->title,
+                'company' => $request->company,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'enquiry_type' => $request->enquiry_type ?: 'Sales Enquiry',
+                'message' => $request->message,
+                'status' => \App\Models\ContactInquiry::STATUS_NEW,
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+            ]);
+            $inquiryId = $inquiry->id;
+        }
+
+        if ($request->expectsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Thank you for contacting LuxLight! We will get back to you shortly.',
+                'inquiry_id' => $inquiryId,
+            ]);
+        }
+
+        return back()->with('success', 'Thank you for contacting LuxLight! We will get back to you shortly.');
+    }
 }
+

@@ -29,6 +29,7 @@ Route::post('/newsletter/subscribe', [PageController::class, 'subscribeNewslette
 Route::get('/lien-he', [PageController::class, 'contact'])->name('contact');
 Route::get('/contact-luxlight', [PageController::class, 'contact'])->name('contact.en');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact.alias');
+Route::post('/contact/submit', [PageController::class, 'submitContact'])->name('contact.submit');
 
 Route::get('/privacy-policy', [PageController::class, 'privacyPolicy'])->name('privacy-policy');
 Route::get('/terms-of-use', [PageController::class, 'termsOfUse'])->name('terms-of-use');

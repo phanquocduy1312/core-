@@ -156,6 +156,30 @@
                 <iconify-icon icon="solar:stars-line-duotone" class="text-xl"></iconify-icon>
                 <span>{{ __('admin.sidebar.brands') }}</span>
             </a>
+
+            <!-- Contact Inquiries Standalone Tab -->
+            @php
+                $newInquiriesCount = \Illuminate\Support\Facades\Schema::hasTable('contact_inquiries')
+                    ? \App\Models\ContactInquiry::where('status', \App\Models\ContactInquiry::STATUS_NEW)->count()
+                    : 0;
+            @endphp
+            <a href="{{ route('admin.contact-inquiries.index') }}" class="flex items-center justify-between px-4 py-2.5 rounded-lg text-sm font-semibold transition-colors {{ request()->routeIs('admin.contact-inquiries.*') ? 'bg-primary/10 text-primary font-bold' : 'text-gray-700 hover:bg-gray-50' }}">
+                <div class="flex items-center gap-3">
+                    <iconify-icon icon="solar:letter-unread-line-duotone" class="text-xl"></iconify-icon>
+                    <span>{{ __('admin.sidebar.contact_inquiries') }}</span>
+                </div>
+                @if($newInquiriesCount > 0)
+                    <span class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold leading-none text-white bg-primary rounded-full">
+                        {{ $newInquiriesCount }}
+                    </span>
+                @endif
+            </a>
+
+            <!-- Newsletter Subscribers Standalone Tab -->
+            <a href="{{ route('admin.newsletter-subscribers.index') }}" class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-semibold transition-colors {{ request()->routeIs('admin.newsletter-subscribers.*') ? 'bg-primary/10 text-primary font-bold' : 'text-gray-700 hover:bg-gray-50' }}">
+                <iconify-icon icon="solar:mailbox-line-duotone" class="text-xl"></iconify-icon>
+                <span>{{ __('admin.sidebar.newsletter_subscribers') }}</span>
+            </a>
             @endcan
         @endif
 

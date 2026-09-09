@@ -674,6 +674,8 @@ return [
         'page_management' => 'Quản lý trang',
         'page_partials' => 'Khối dùng chung',
         'projects' => 'Quản lý dự án',
+        'contact_inquiries' => 'Yêu cầu liên hệ',
+        'newsletter_subscribers' => 'Đăng ký bản tin',
         'user_management' => 'Người dùng',
         'user_list' => 'Danh sách người dùng',
         'roles_permissions' => 'Vai trò & Quyền',

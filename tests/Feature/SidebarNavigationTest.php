@@ -71,6 +71,8 @@ class SidebarNavigationTest extends TestCase
         $this->assertContains('/vi/admin/partials', $links);
         $this->assertContains('/vi/admin/projects', $links);
         $this->assertContains('/vi/admin/brands', $links);
+        $this->assertContains('/vi/admin/contact-inquiries', $links);
+        $this->assertContains('/vi/admin/newsletter-subscribers', $links);
         $this->assertContains('/vi/admin/media', $links);
 
         // Hidden tabs by default (the photographed 10 sections)
