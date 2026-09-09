@@ -7,7 +7,7 @@ async def main():
  async with async_playwright() as p:
   b=await p.chromium.launch(args=['--no-sandbox']);page=await b.new_page()
   await page.goto((ROOT/'index.html').as_uri());await page.evaluate('document.fonts.ready');await page.emulate_media(media='print')
-  result=await page.evaluate('''()=>({images:[...document.images].map(x=>({src:x.getAttribute('src'),ok:x.complete&&x.naturalWidth>0})),pages:[...document.querySelectorAll('.page')].map(s=>{let m=s.querySelector('main'),f=s.querySelector('footer');return {id:s.id,title:s.querySelector('h1').innerText,bottom:m.getBoundingClientRect().bottom,limit:f.getBoundingClientRect().top,overflow:m.getBoundingClientRect().bottom>f.getBoundingClientRect().top-8}})})''')
+  result=await page.evaluate('''()=>({images:[...document.images].map(x=>({src:x.getAttribute('src'),ok:x.complete&&x.naturalWidth>0})),pages:[...document.querySelectorAll('.page')].map(s=>{let m=s.querySelector('main'),f=s.querySelector('footer'),items=[...m.children];let bottom=Math.max(...items.map(x=>x.getBoundingClientRect().bottom));return {id:s.id,title:s.querySelector('h1').innerText,bottom,limit:f.getBoundingClientRect().top,overflow:bottom>f.getBoundingClientRect().top-8}})})''')
   (ROOT/'verification.json').write_text(json.dumps(result,ensure_ascii=False,indent=2))
   print('Missing images',[x for x in result['images'] if not x['ok']]);print('Overflow',[(x['id'],x['title'],round(x['bottom']-x['limit'])) for x in result['pages'] if x['overflow']])
   assert all(x['ok'] for x in result['images']), 'Có ảnh chưa tải được'

@@ -1,265 +1,753 @@
 {
   "images": [
     {
-      "src": "images/annotated/01-tong-quan.png",
+      "src": "images/annotated/full-feature-01.png",
       "ok": true
     },
     {
-      "src": "images/annotated/04-cay-lop.png",
+      "src": "images/annotated/full-feature-02.png",
       "ok": true
     },
     {
-      "src": "images/annotated/02-chon-va-sua-chu.png",
+      "src": "images/annotated/full-feature-03.png",
       "ok": true
     },
     {
-      "src": "images/annotated/03-kieu-dang.png",
+      "src": "images/annotated/full-feature-04.png",
       "ok": true
     },
     {
-      "src": "images/annotated/05-them-khoi.png",
+      "src": "images/annotated/full-feature-05.png",
       "ok": true
     },
     {
-      "src": "images/annotated/06-chon-anh.png",
+      "src": "images/annotated/full-feature-06.png",
       "ok": true
     },
     {
-      "src": "images/annotated/07-tai-anh.png",
+      "src": "images/annotated/full-feature-07.png",
       "ok": true
     },
     {
-      "src": "images/annotated/08-thuoc-tinh-anh.png",
+      "src": "images/annotated/full-feature-08.png",
       "ok": true
     },
     {
-      "src": "images/annotated/09-nut-va-link.png",
+      "src": "images/annotated/full-feature-09.png",
       "ok": true
     },
     {
-      "src": "images/annotated/10-video.png",
+      "src": "images/annotated/full-feature-10.png",
       "ok": true
     },
     {
-      "src": "images/annotated/11-du-lieu-dong.png",
+      "src": "images/annotated/full-feature-11.png",
       "ok": true
     },
     {
-      "src": "images/annotated/12-dien-thoai.png",
+      "src": "images/annotated/full-feature-12.png",
       "ok": true
     },
     {
-      "src": "images/annotated/13-may-tinh-bang.png",
+      "src": "images/annotated/full-feature-13.png",
       "ok": true
     },
     {
-      "src": "images/annotated/01-tong-quan.png",
+      "src": "images/annotated/full-feature-14.png",
       "ok": true
     },
     {
-      "src": "images/annotated/14-xuat-ban.png",
+      "src": "images/annotated/full-feature-15.png",
       "ok": true
     },
     {
-      "src": "images/annotated/15-header.png",
+      "src": "images/annotated/full-feature-16.png",
       "ok": true
     },
     {
-      "src": "images/annotated/16-footer.png",
+      "src": "images/annotated/full-feature-17.png",
       "ok": true
     },
     {
-      "src": "images/annotated/17-khoi-dung-chung.png",
+      "src": "images/annotated/full-feature-18.png",
       "ok": true
     },
     {
-      "src": "images/annotated/18-khoi-co-ban.png",
+      "src": "images/annotated/full-feature-19.png",
       "ok": true
     },
     {
-      "src": "images/annotated/19-khoi-bo-cuc.png",
+      "src": "images/annotated/full-feature-20.png",
       "ok": true
     },
     {
-      "src": "images/annotated/20-khoi-noi-dung.png",
+      "src": "images/annotated/full-feature-21.png",
       "ok": true
     },
     {
-      "src": "images/annotated/21-khoi-tien-ich.png",
+      "src": "images/annotated/full-feature-22.png",
       "ok": true
     },
     {
-      "src": "images/annotated/22-khoi-du-lieu-dong.png",
+      "src": "images/annotated/full-feature-23.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-feature-24.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-feature-25.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-feature-26.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-feature-27.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-feature-28.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-feature-29.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-feature-30.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-01.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-02.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-03.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-04.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-05.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-06.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-07.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-08.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-09.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-10.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-11.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-12.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-13.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-14.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-15.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-16.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-17.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-18.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-19.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-20.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-21.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-22.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-23.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-24.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-25.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-26.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-27.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-28.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-29.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-30.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-31.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-32.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-33.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-34.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-35.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-36.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-37.png",
+      "ok": true
+    },
+    {
+      "src": "images/annotated/full-block-38.png",
       "ok": true
     }
   ],
   "pages": [
     {
       "id": "",
-      "title": "Hướng dẫn sửa trang bằng UI/UX Builder",
-      "bottom": 839.828125,
-      "limit": 1071.734375,
+      "title": "Tên trang và vị trí đang sửa",
+      "bottom": 578.171875,
+      "limit": 1039.5,
       "overflow": false
     },
     {
       "id": "",
-      "title": "1. Chọn đúng phần trước khi sửa",
-      "bottom": 1748.375,
-      "limit": 2194.25,
+      "title": "Quay lại danh sách trang",
+      "bottom": 1700.6875,
+      "limit": 2162.015625,
       "overflow": false
     },
     {
       "id": "",
-      "title": "2. Sửa tiêu đề và đoạn chữ",
-      "bottom": 2870.890625,
-      "limit": 3316.765625,
+      "title": "Lưu nháp",
+      "bottom": 2823.203125,
+      "limit": 3284.53125,
       "overflow": false
     },
     {
       "id": "",
-      "title": "3. Đổi màu, cỡ chữ và khoảng cách",
-      "bottom": 3993.40625,
-      "limit": 4439.28125,
+      "title": "Xuất bản",
+      "bottom": 3945.71875,
+      "limit": 4407.046875,
       "overflow": false
     },
     {
       "id": "",
-      "title": "4. Thêm khối mới vào trang",
-      "bottom": 5115.921875,
-      "limit": 5561.796875,
+      "title": "Hoàn tác",
+      "bottom": 5068.234375,
+      "limit": 5529.5625,
       "overflow": false
     },
     {
       "id": "",
-      "title": "5. Chọn ảnh từ thư viện",
-      "bottom": 6238.4375,
-      "limit": 6684.3125,
+      "title": "Làm lại",
+      "bottom": 6190.75,
+      "limit": 6652.078125,
       "overflow": false
     },
     {
       "id": "",
-      "title": "6. Tải ảnh mới lên",
-      "bottom": 7360.953125,
-      "limit": 7806.828125,
+      "title": "Kiểm tra Desktop",
+      "bottom": 7313.265625,
+      "limit": 7774.59375,
       "overflow": false
     },
     {
       "id": "",
-      "title": "7. Kiểm tra mô tả và cách cắt ảnh",
-      "bottom": 8483.46875,
-      "limit": 8929.34375,
+      "title": "Kiểm tra Tablet",
+      "bottom": 8435.78125,
+      "limit": 8897.109375,
       "overflow": false
     },
     {
       "id": "",
-      "title": "8. Sửa nút và đường link",
-      "bottom": 9605.984375,
-      "limit": 10051.859375,
+      "title": "Kiểm tra Mobile",
+      "bottom": 9558.296875,
+      "limit": 10019.625,
       "overflow": false
     },
     {
       "id": "",
-      "title": "9. Chèn video",
-      "bottom": 10728.5,
-      "limit": 11174.375,
+      "title": "Kiểu dáng",
+      "bottom": 10680.8125,
+      "limit": 11142.140625,
       "overflow": false
     },
     {
       "id": "",
-      "title": "10. Dùng khối dữ liệu động",
-      "bottom": 11851.015625,
-      "limit": 12296.890625,
+      "title": "Thuộc tính",
+      "bottom": 11803.328125,
+      "limit": 12264.65625,
       "overflow": false
     },
     {
       "id": "",
-      "title": "11. Kiểm tra điện thoại",
-      "bottom": 12973.53125,
-      "limit": 13419.40625,
+      "title": "Cây lớp",
+      "bottom": 12925.84375,
+      "limit": 13387.171875,
       "overflow": false
     },
     {
       "id": "",
-      "title": "12. Kiểm tra máy tính bảng",
-      "bottom": 14065.0625,
-      "limit": 14541.921875,
+      "title": "Thư viện Khối",
+      "bottom": 14048.359375,
+      "limit": 14509.6875,
       "overflow": false
     },
     {
       "id": "",
-      "title": "13. Lưu nháp",
-      "bottom": 15218.5625,
-      "limit": 15664.4375,
+      "title": "Xem trước",
+      "bottom": 15170.875,
+      "limit": 15632.203125,
       "overflow": false
     },
     {
       "id": "",
-      "title": "14. Xuất bản trang",
-      "bottom": 16341.078125,
-      "limit": 16786.953125,
+      "title": "Hiện viền các phần tử",
+      "bottom": 16293.390625,
+      "limit": 16754.71875,
       "overflow": false
     },
     {
       "id": "",
-      "title": "15. Sửa Header",
-      "bottom": 17463.59375,
-      "limit": 17909.46875,
+      "title": "Toàn màn hình",
+      "bottom": 17415.90625,
+      "limit": 17877.234375,
       "overflow": false
     },
     {
       "id": "",
-      "title": "16. Sửa Footer",
-      "bottom": 18586.109375,
-      "limit": 19031.984375,
+      "title": "Mã nguồn (dành cho kỹ thuật)",
+      "bottom": 18559.296875,
+      "limit": 18999.75,
       "overflow": false
     },
     {
       "id": "",
-      "title": "17. Khối dùng chung",
-      "bottom": 19708.625,
-      "limit": 20154.5,
+      "title": "Hiện Header và Footer khi sửa",
+      "bottom": 19681.8125,
+      "limit": 20122.265625,
       "overflow": false
     },
     {
       "id": "",
-      "title": "18. Nhóm khối Cơ bản",
-      "bottom": 20929.90625,
-      "limit": 21277.015625,
+      "title": "Thu gọn bảng bên phải",
+      "bottom": 20804.328125,
+      "limit": 21244.78125,
       "overflow": false
     },
     {
       "id": "",
-      "title": "19. Nhóm khối Bố cục",
-      "bottom": 21973.609375,
-      "limit": 22399.53125,
+      "title": "Kéo tự do",
+      "bottom": 21905.96875,
+      "limit": 22367.296875,
       "overflow": false
     },
     {
       "id": "",
-      "title": "20. Nhóm khối Thẻ và nội dung",
-      "bottom": 23096.125,
-      "limit": 23522.046875,
+      "title": "Sửa Header",
+      "bottom": 23028.484375,
+      "limit": 23489.8125,
       "overflow": false
     },
     {
       "id": "",
-      "title": "21. Nhóm khối Tiện ích",
-      "bottom": 24139.84375,
-      "limit": 24644.5625,
+      "title": "Sửa Footer",
+      "bottom": 24151,
+      "limit": 24612.328125,
       "overflow": false
     },
     {
       "id": "",
-      "title": "22. Nhóm khối Dữ liệu động",
-      "bottom": 25341.15625,
-      "limit": 25767.078125,
+      "title": "Sửa tiêu đề và đoạn chữ",
+      "bottom": 25273.515625,
+      "limit": 25734.84375,
       "overflow": false
     },
     {
       "id": "",
-      "title": "23. Kiểm tra trước khi xuất bản",
-      "bottom": 26414.34375,
-      "limit": 26889.59375,
+      "title": "Thay ảnh",
+      "bottom": 26396.03125,
+      "limit": 26857.359375,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Sửa nút và link",
+      "bottom": 27518.546875,
+      "limit": 27979.875,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Chèn video",
+      "bottom": 28641.0625,
+      "limit": 29102.390625,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Dùng dữ liệu động",
+      "bottom": 29763.578125,
+      "limit": 30224.90625,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Mở Header để sửa",
+      "bottom": 30886.09375,
+      "limit": 31347.421875,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Mở Footer để sửa",
+      "bottom": 32008.609375,
+      "limit": 32469.9375,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Xác nhận xuất bản",
+      "bottom": 33131.125,
+      "limit": 33592.453125,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 1: Tiêu Đề",
+      "bottom": 34280.5625,
+      "limit": 34714.96875,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 2: Đoạn Văn",
+      "bottom": 35403.078125,
+      "limit": 35837.484375,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 3: Thẻ Link",
+      "bottom": 36525.59375,
+      "limit": 36960,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 4: Khối Link",
+      "bottom": 37648.109375,
+      "limit": 38082.515625,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 5: Nút Bấm",
+      "bottom": 38770.625,
+      "limit": 39205.03125,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 6: Hình Ảnh",
+      "bottom": 39893.140625,
+      "limit": 40327.546875,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 7: Biểu Tượng",
+      "bottom": 41015.65625,
+      "limit": 41450.0625,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 8: Video",
+      "bottom": 42138.171875,
+      "limit": 42572.578125,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 9: Đường Kẻ",
+      "bottom": 43260.6875,
+      "limit": 43695.09375,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 10: Khoảng Cách",
+      "bottom": 44383.203125,
+      "limit": 44817.609375,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 11: Section Mới",
+      "bottom": 45505.71875,
+      "limit": 45940.125,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 12: Khung Chứa",
+      "bottom": 46628.234375,
+      "limit": 47062.640625,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 13: 2 Cột (50/50)",
+      "bottom": 47750.75,
+      "limit": 48185.15625,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 14: 3 Cột Đều",
+      "bottom": 48873.265625,
+      "limit": 49307.671875,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 15: 4 Cột Đều",
+      "bottom": 49995.78125,
+      "limit": 50430.1875,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 16: Lưới (Grid)",
+      "bottom": 51118.296875,
+      "limit": 51552.703125,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 17: Khối Xếp",
+      "bottom": 52240.8125,
+      "limit": 52675.21875,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 18: Hộp Biểu Tượng",
+      "bottom": 53363.328125,
+      "limit": 53797.734375,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 19: Hộp Hình Ảnh",
+      "bottom": 54485.84375,
+      "limit": 54920.25,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 20: Bảng Giá (Pricing)",
+      "bottom": 55608.359375,
+      "limit": 56042.765625,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 21: Đánh Giá (Review)",
+      "bottom": 56730.875,
+      "limit": 57165.28125,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 22: Bộ Đếm Số",
+      "bottom": 57853.390625,
+      "limit": 58287.796875,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 23: Danh Sách Tick",
+      "bottom": 58975.90625,
+      "limit": 59410.3125,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 24: Khối Trích Dẫn",
+      "bottom": 60098.421875,
+      "limit": 60532.828125,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 25: Hộp Thông Báo",
+      "bottom": 61220.9375,
+      "limit": 61655.34375,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 26: Hỏi Đáp (FAQ)",
+      "bottom": 62343.453125,
+      "limit": 62777.859375,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 27: Mạng Xã Hội",
+      "bottom": 63465.96875,
+      "limit": 63900.375,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 28: Bản Đồ (Maps)",
+      "bottom": 64588.484375,
+      "limit": 65022.890625,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 29: Mã HTML Tùy Ý",
+      "bottom": 65711,
+      "limit": 66145.40625,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 30: Thư Viện Ảnh",
+      "bottom": 66833.515625,
+      "limit": 67267.921875,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 31: Lưới Sản Phẩm",
+      "bottom": 67956.03125,
+      "limit": 68390.4375,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 32: Tabs Sản Phẩm",
+      "bottom": 69078.546875,
+      "limit": 69512.953125,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 33: Danh Mục Sản Phẩm",
+      "bottom": 70201.0625,
+      "limit": 70635.46875,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 34: Bài Viết Mới",
+      "bottom": 71323.578125,
+      "limit": 71757.984375,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 35: Lưới Dự Án",
+      "bottom": 72446.09375,
+      "limit": 72880.5,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 36: Đánh Giá Mới",
+      "bottom": 73568.609375,
+      "limit": 74003.015625,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 37: Form Liên Hệ",
+      "bottom": 74691.125,
+      "limit": 75125.53125,
+      "overflow": false
+    },
+    {
+      "id": "",
+      "title": "Khối 38: Khối Dùng Chung (Partial)",
+      "bottom": 75813.640625,
+      "limit": 76248.046875,
       "overflow": false
     }
   ]

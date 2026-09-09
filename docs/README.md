@@ -39,7 +39,7 @@ Khi phát hiện một sự thật nghiệp vụ/quyết định chưa được 
 - [Báo cáo kiểm thử, lỗi đã sửa và lỗi còn tồn tại](uiux-builder/BAO-CAO-KIEM-THU.md)
 - [Quy tắc nghiệp vụ nháp/xuất bản và phần dùng chung](knowledge/uiux-builder-workflow.md)
 
-### Sổ tay PDF UI/UX Builder — 09/09/2026
+### Sổ tay PDF UI/UX Builder — 10/09/2026
 
-- [PDF 24 trang thao tác trực tiếp trong Builder](uiux-builder/handbook/HUONG-DAN-UIUX-BUILDER.pdf) — ảnh giao diện giữ nguyên, nhãn đặt trong dải bên phải và nối tới đúng vị trí, hướng dẫn sửa chữ, ảnh, khối, thiết bị, lưu và xuất bản.
+- [PDF 68 trang thao tác trực tiếp trong Builder](uiux-builder/handbook/HUONG-DAN-UIUX-BUILDER.pdf) — mỗi tính năng và toàn bộ 38 khối runtime có ảnh riêng; giao diện giữ nguyên, nhãn đặt trong dải bên phải và nối tới đúng vị trí.
 - [Bản HTML và cách cập nhật/in lại](uiux-builder/handbook/README.md).
