@@ -135,7 +135,11 @@ class PageController extends Controller
             'footer_partial_id' => 'nullable|integer',
         ]);
 
-        $validated['html'] = app(\App\Support\PageHtmlSanitizer::class)->clean($validated['html']);
+        $pageId = $validated['page_id'] ?? null;
+        $page = $pageId ? \App\Models\Page::find($pageId) : null;
+        $allowForms = $page ? $page->isPartial() : false;
+
+        $validated['html'] = app(\App\Support\PageHtmlSanitizer::class)->clean($validated['html'], allowForms: $allowForms);
         $validated['css'] = $this->pages->cleanCss($validated['css'] ?? '');
         $validated['created_by'] = $request->user()->id;
 

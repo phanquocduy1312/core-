@@ -34,6 +34,9 @@ return Application::configure(basePath: dirname(__DIR__))
                 'locale' => $request->route('locale') ?: app(\App\Services\LanguageRegistry::class)->defaultLocale(),
             ]);
         });
+        $middleware->validateCsrfTokens(except: [
+            'newsletter/subscribe',
+        ]);
         $middleware->append(\App\Http\Middleware\SecurityHeaders::class);
         $middleware->appendToGroup('api', \App\Http\Middleware\LogApiRequests::class);
         $middleware->alias([

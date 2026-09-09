@@ -38,6 +38,27 @@
     @endif
 
     @include('client.partials.admin-bar')
+    @include('partials.subscribe-modal')
+
+    <script>
+    (function() {
+        function applyDceBackgrounds() {
+            var elements = document.querySelectorAll('[data-dce-background-image-url]');
+            for (var i = 0; i < elements.length; i++) {
+                var el = elements[i];
+                var bgUrl = el.getAttribute('data-dce-background-image-url');
+                if (bgUrl && (!el.style.backgroundImage || el.style.backgroundImage === 'none')) {
+                    el.style.backgroundImage = 'url("' + bgUrl + '")';
+                }
+            }
+        }
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', applyDceBackgrounds);
+        } else {
+            applyDceBackgrounds();
+        }
+    })();
+    </script>
 
     <!-- Scripts -->
     <script>
@@ -74,11 +95,11 @@ var gform_gravityforms = {"strings":{"invalid_file_extension":"This type of file
   });
 });
          </script>
-    <script>
+    <script type="speculationrules">
    {"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":["/wp-*.php","/wp-admin/*","/wp-content/uploads/*","/wp-content/*","/wp-content/plugins/*","/wp-content/themes/twentytwentyone/*","/*\\?(.+)","/*ao_noptirocket*","/*jetpack=comms*","/*kinsta-monitor*","/*ao_speedup_cachebuster*","/*removed_item*","/my-account*","/wc-api/*","/edd-api/*","/wp-json*"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
   </script>
     <script>
-   $(document).ready(function(){
+   jQuery(document).ready(function($){
  $('.elementor-search-form__input').hide();
   $(".elementor-search-form__submit").click(function(){
      $('.elementor-search-form__input').slideToggle('slow');

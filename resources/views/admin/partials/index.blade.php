@@ -77,6 +77,10 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right">
                                     <div class="flex justify-end gap-2">
+                                        <x-admin.button variant="primary" size="xs" href="{{ route('admin.pages.builder', $partial) }}" class="flex items-center gap-1">
+                                            <iconify-icon icon="solar:palette-bold"></iconify-icon>
+                                            <span>Thiết kế (Builder)</span>
+                                        </x-admin.button>
                                         <x-admin.button variant="outline" size="xs" href="{{ route('admin.partials.edit', $partial) }}">
                                             Chỉnh sửa
                                         </x-admin.button>

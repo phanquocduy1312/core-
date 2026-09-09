@@ -7,17 +7,18 @@
     @if(!empty($metaDescription))
         <meta name="description" content="{{ $metaDescription }}">
     @endif
-    <link rel="stylesheet" href="{{ asset('build/assets/builder.css') }}">
-    <style>
-        body {
-            font-family: 'Quicksand', sans-serif !important;
-        }
-    </style>
+    {{-- Same stylesheet manifest as the public site (config/theme.php) so a
+         page rendered from the builder is visually identical to a hand-built
+         Blade page, then the builder's Tailwind utilities for blocks authored
+         in the builder. No font-family override: forcing Quicksand here made
+         every builder page look unlike the rest of the site. --}}
+    @include('partials.theme-styles')
+    @vite(['resources/css/builder.css'])
     @yield('styles')
     @stack('styles')
     <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
 </head>
-<body class="bg-white text-gray-900 antialiased">
+<body class="{{ \App\Support\ThemeAssets::bodyClass() }} antialiased">
     @yield('content')
 
     @include('client.partials.admin-bar')

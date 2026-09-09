@@ -7,12 +7,9 @@
 
     function initSectionBlocks(editor) {
         var BlockManager = editor.BlockManager;
-        var Registry = global.GrapesSectionRegistry;
         var Helpers = global.GrapesSectionHelpers;
 
-        if (!Registry || !BlockManager) return;
-
-        // Inject Shared Section CSS rules into GrapesJS CssComposer if not already added
+        // Keep Shared Section CSS rules in GrapesJS CssComposer so existing pages and layouts continue to render properly
         if (Helpers && Helpers.SHARED_SECTION_CSS && editor.Css) {
             try {
                 editor.Css.addRules(Helpers.SHARED_SECTION_CSS);
@@ -21,18 +18,22 @@
             }
         }
 
-        var allSections = Registry.getAll();
-
-        allSections.forEach(function (sec) {
-            var blockId = 'pattern-' + sec.type + '-' + sec.variant;
-            var categoryName = 'MẪU SECTION: ' + (sec.category || 'Chung');
-
-            BlockManager.add(blockId, {
-                label: '<div class="flex items-center gap-2 text-left"><iconify-icon icon="solar:widget-add-bold-duotone" class="text-primary text-xl shrink-0"></iconify-icon><div class="truncate"><div class="font-bold text-xs text-slate-800">' + sec.name + '</div><div class="text-[10px] text-slate-400 font-mono">' + sec.variant + '</div></div></div>',
-                category: categoryName,
-                content: sec.create
+        // Clean up any pattern-* or MẪU SECTION blocks if present
+        if (BlockManager && BlockManager.getAll) {
+            var blocks = BlockManager.getAll();
+            var toRemove = [];
+            blocks.forEach(function (b) {
+                var id = b.getId ? b.getId() : (b.get ? b.get('id') : '');
+                var cat = b.get ? b.get('category') : '';
+                var catId = typeof cat === 'object' ? (cat.id || cat.label || '') : (cat || '');
+                if ((id && id.indexOf('pattern-') === 0) || (catId && catId.indexOf('MẪU SECTION') !== -1)) {
+                    toRemove.push(id);
+                }
             });
-        });
+            toRemove.forEach(function (id) {
+                BlockManager.remove(id);
+            });
+        }
     }
 
     global.GrapesSectionBlocks = {

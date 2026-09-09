@@ -2,3 +2,12 @@
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities);
 @import "./builder-shell.css";
+
+/* Brand tokens. The builder page loads only this sheet — admin.css carries
+   Tailwind's preflight, which would reset GrapesJS's own panel styling — so the
+   primary-colour utilities the media modal uses have to be generated here. */
+@theme {
+  --color-primary: #e32326;
+  --color-primary-hover: #b91f21;
+  --color-primary-active: #991b1e;
+}

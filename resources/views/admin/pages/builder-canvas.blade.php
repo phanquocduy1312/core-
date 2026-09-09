@@ -3,30 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="{{ url('/') }}/">
     <title>{{ $title ?? 'Canvas' }}</title>
     
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind & Site Styles -->
-    <link rel="stylesheet" href="{{ asset('build/assets/builder.css') }}">
-    <link rel="stylesheet" href="{{ asset('build/assets/admin.css') }}">
+    {{-- The real site theme first, so imported Elementor markup renders exactly
+         as it does on the public page, then the builder's Tailwind utilities for
+         blocks authored in this builder. --}}
+    @include('partials.theme-styles')
+    @vite(['resources/css/builder.css'])
 
     <!-- Icons -->
     <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
 
     <style id="page-custom-css">
+        /* Only what the theme does not already provide. Deliberately no
+           font-family / color override here: forcing Quicksand on top of the
+           theme was making this preview diverge from the live page. */
         body {
-            font-family: 'Quicksand', sans-serif;
-            color: #1f2937;
-            background-color: #ffffff;
             margin: 0;
             padding: 0;
-        }
-        *, *::before, *::after {
-            box-sizing: border-box;
         }
         img {
             max-width: 100%;
@@ -48,13 +43,26 @@
             border-radius: 4px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            pointer-events: none;
             z-index: 40;
+        }
+        .builder-heading {
+            font-family: inherit;
+        }
+        .builder-btn {
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .builder-btn:hover {
+            opacity: 0.92;
+            transform: translateY(-1px);
+        }
+        .builder-video-wrapper iframe {
+            border: 0;
         }
         {!! $css !!}
     </style>
 </head>
-<body class="antialiased min-h-screen">
+<body class="{{ \App\Support\ThemeAssets::bodyClass() }} antialiased min-h-screen">
     @if(!empty($headerHtml))
         <header id="client-page-header" class="border-b border-gray-100">{!! $headerHtml !!}</header>
     @endif

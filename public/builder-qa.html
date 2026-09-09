@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bảng Kiểm Thử & Nghiệm Thu UI/UX Builder - LuxLight</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --bg-primary: #0b0f19;
+      --bg-surface: #111827;
+      --bg-card: #1f2937;
+      --bg-card-hover: #263345;
+      --border-color: #374151;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --accent-glow: rgba(59, 130, 246, 0.25);
+      --success: #10b981;
+      --success-glow: rgba(16, 185, 129, 0.2);
+      --danger: #ef4444;
+      --danger-glow: rgba(239, 68, 68, 0.2);
+      --warning: #f59e0b;
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --text-dim: #6b7280;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding-bottom: 80px;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 32px 20px;
+    }
+
+    /* Top Header */
+    .header {
+      background: linear-gradient(180deg, rgba(31, 41, 55, 0.7) 0%, rgba(17, 24, 39, 0.9) 100%);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 28px 32px;
+      margin-bottom: 28px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header::after {
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .title-group h1 {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #fff;
+    }
+
+    .title-group h1 i {
+      color: var(--accent);
+      filter: drop-shadow(0 0 10px var(--accent));
+    }
+
+    .title-group p {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-top: 6px;
+    }
+
+    .badge-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-live::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    /* Progress section */
+    .progress-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .progress-info {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .progress-stats {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .progress-stats span {
+      color: var(--accent);
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .progress-bar-container {
+      flex: 1;
+      min-width: 200px;
+      height: 10px;
+      background: #374151;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #3b82f6, #10b981);
+      border-radius: 10px;
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-action {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .btn-action:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--text-muted);
+      transform: translateY(-1px);
+    }
+
+    .btn-action.btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .btn-action.btn-primary:hover {
+      background: var(--accent-hover);
+      box-shadow: 0 4px 14px var(--accent-glow);
+    }
+
+    /* Quick Launch Bar */
+    .quick-launch {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 16px 20px;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .quick-launch-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .launch-pill {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: #fff;
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .launch-pill:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px var(--accent-glow);
+    }
+
+    .launch-pill i {
+      font-size: 12px;
+      opacity: 0.8;
+    }
+
+    /* Checklist Cards */
+    .checklist-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .test-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 22px 24px;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+    }
+
+    .test-card:hover {
+      border-color: #4b5563;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    }
+
+    .test-card.passed {
+      border-color: rgba(16, 185, 129, 0.4);
+      background: linear-gradient(180deg, rgba(16, 185, 129, 0.04) 0%, var(--bg-surface) 100%);
+    }
+
+    .test-card.failed {
+      border-color: rgba(239, 68, 68, 0.4);
+      background: linear-gradient(180deg, rgba(239, 68, 68, 0.04) 0%, var(--bg-surface) 100%);
+    }
+
+    .test-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .card-title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .test-number {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .test-card.passed .test-number {
+      background: rgba(16, 185, 129, 0.2);
+      border-color: var(--success);
+      color: var(--success);
+    }
+
+    .test-card.failed .test-number {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+
+    .test-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .test-tag {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+
+    .tag-critical {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .tag-feature {
+      background: rgba(59, 130, 246, 0.15);
+      color: #60a5fa;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+
+    /* Test Status Buttons */
+    .status-buttons {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .btn-status {
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid var(--border-color);
+      background: var(--bg-card);
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-status:hover {
+      background: var(--bg-card-hover);
+      color: var(--text-main);
+    }
+
+    .btn-status.active-pass {
+      background: var(--success);
+      border-color: var(--success);
+      color: #fff;
+      box-shadow: 0 2px 10px var(--success-glow);
+    }
+
+    .btn-status.active-fail {
+      background: var(--danger);
+      border-color: var(--danger);
+      color: #fff;
+      box-shadow: 0 2px 10px var(--danger-glow);
+    }
+
+    /* Test Body */
+    .test-body {
+      background: var(--bg-card);
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin-top: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .step-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13.5px;
+      color: #d1d5db;
+    }
+
+    .step-item i {
+      color: var(--accent);
+      margin-top: 4px;
+      font-size: 13px;
+    }
+
+    .expected-result {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border-color);
+      font-size: 13px;
+      color: #93c5fd;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .expected-result i {
+      color: #60a5fa;
+      margin-top: 2px;
+    }
+
+    /* Link in card */
+    .card-footer {
+      margin-top: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .direct-link {
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+
+    .direct-link:hover {
+      color: #93c5fd;
+      text-decoration: underline;
+    }
+
+    /* Notes Box */
+    .notes-input {
+      width: 100%;
+      background: #111827;
+      border: 1px solid var(--border-color);
+      color: #f3f4f6;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 13px;
+      margin-top: 10px;
+      display: none;
+      outline: none;
+      resize: vertical;
+      min-height: 50px;
+    }
+
+    .notes-input:focus {
+      border-color: var(--accent);
+    }
+
+    .test-card.failed .notes-input {
+      display: block;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--bg-surface);
+      border: 1px solid var(--success);
+      color: #fff;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 9999;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-top">
+        <div class="title-group">
+          <h1>
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            Bảng Nghiệm Thu UI/UX Builder
+          </h1>
+          <p>LuxLight Ecommerce Core &bull; Checklist kiểm tra chức năng trực quan theo chuẩn QA/Tester</p>
+        </div>
+        <div class="badge-live">
+          Hệ thống sẵn sàng test
+        </div>
+      </div>
+
+      <!-- Progress -->
+      <div class="progress-box">
+        <div class="progress-info">
+          <div class="progress-stats">
+            Tiến độ: <span id="progress-percent">0%</span>
+            (<span id="passed-count">0</span>/<span id="total-count">7</span> Đạt)
+          </div>
+          <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="progress-fill"></div>
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <button class="btn-action" onclick="resetAllTests()">
+            <i class="fa-solid fa-rotate-left"></i> Đặt lại
+          </button>
+          <button class="btn-action btn-primary" onclick="exportReport()">
+            <i class="fa-solid fa-clipboard-check"></i> Copy Báo Cáo
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Launch Bar -->
+    <div class="quick-launch">
+      <div class="quick-launch-label">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i> Mở nhanh:
+      </div>
+      <a href="/vi/admin/pages/6/builder?content_locale=vi" target="_blank" class="launch-pill">
+        <i class="fa-solid fa-heading"></i> Sửa Header (ID 6)
+      </a>
+      <a href="/vi/admin/pages/7/builder?content_locale=vi" target="_blank" class="launch-pill">
+        <i class="fa-solid fa-shoe-prints"></i> Sửa Footer (ID 7)
+      </a>
+      <a href="/vi/admin/pages/2/builder?content_locale=vi" target="_blank" class="launch-pill">
+        <i class="fa-solid fa-file-lines"></i> Sửa Trang Giới Thiệu
+      </a>
+      <a href="/vi/admin/partials" target="_blank" class="launch-pill">
+        <i class="fa-solid fa-layer-group"></i> DS Khối Chung (Partials)
+      </a>
+      <a href="/vi" target="_blank" class="launch-pill">
+        <i class="fa-solid fa-globe"></i> Trang chủ Website
+      </a>
+      <a href="/vi/gioi-thieu" target="_blank" class="launch-pill">
+        <i class="fa-solid fa-eye"></i> Website: Giới Thiệu
+      </a>
+    </div>
+
+    <!-- Checklist Cards -->
+    <div class="checklist-grid" id="checklist-container">
+
+      <!-- TEST 1 -->
+      <div class="test-card" id="test-card-1" data-id="1">
+        <div class="test-card-header">
+          <div class="card-title-group">
+            <div class="test-number">1</div>
+            <div>
+              <div class="test-title">
+                Sửa & Xuất bản Footer (Đã sửa lỗi 500 MariaDB)
+                <span class="test-tag tag-critical">Quan trọng nhất</span>
+              </div>
+            </div>
+          </div>
+          <div class="status-buttons">
+            <button class="btn-status btn-pass" onclick="setTestStatus(1, 'pass')">
+              <i class="fa-solid fa-check"></i> Đạt
+            </button>
+            <button class="btn-status btn-fail" onclick="setTestStatus(1, 'fail')">
+              <i class="fa-solid fa-xmark"></i> Lỗi
+            </button>
+          </div>
+        </div>
+
+        <div class="test-body">
+          <ul class="step-list">
+            <li class="step-item">
+              <i class="fa-solid fa-play"></i>
+              <span>Bấm link <b>"Mở Footer Builder"</b> bên dưới để vào màn hình thiết kế Footer (ID 7).</span>
+            </li>
+            <li class="step-item">
+              <i class="fa-solid fa-play"></i>
+              <span>Click đúp vào dòng chữ bản quyền (ví dụ <i>"© 2025 LuxLight"</i>) và sửa nhẹ nội dung.</span>
+            </li>
+            <li class="step-item">
+              <i class="fa-solid fa-play"></i>
+              <span>Bấm nút <b>"Xuất bản"</b> ở góc trên bên phải thanh công cụ.</span>
+            </li>
+          </ul>
+          <div class="expected-result">
+            <i class="fa-solid fa-circle-check"></i>
+            <span><b>Kết quả mong đợi:</b> Hiện thông báo "Đã xuất bản trang thành công", KHÔNG bị lỗi 500 Save Error như trước.</span>
+          </div>
+          <textarea class="notes-input" id="notes-1" placeholder="Ghi chú mô tả lỗi nếu có..." oninput="saveNotes(1)"></textarea>
+        </div>
+
+        <div class="card-footer">
+          <a href="/vi/admin/pages/7/builder?content_locale=vi" target="_blank" class="direct-link">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Mở Footer Builder (ID 7)
+          </a>
+        </div>
+      </div>
+
+      <!-- TEST 2 -->
+      <div class="test-card" id="test-card-2" data-id="2">
+        <div class="test-card-header">
+          <div class="card-title-group">
+            <div class="test-number">2</div>
+            <div>
+              <div class="test-title">
+                Sửa & Xuất bản Header mặc định
+                <span class="test-tag tag-critical">Quan trọng</span>
+              </div>
+            </div>
+          </div>
+          <div class="status-buttons">
+            <button class="btn-status btn-pass" onclick="setTestStatus(2, 'pass')">
+              <i class="fa-solid fa-check"></i> Đạt
+            </button>
+            <button class="btn-status btn-fail" onclick="setTestStatus(2, 'fail')">
+              <i class="fa-solid fa-xmark"></i> Lỗi
+            </button>
+          </div>
+        </div>
+
+        <div class="test-body">
+          <ul class="step-list">
+            <li class="step-item">
+              <i class="fa-solid fa-play"></i>
+              <span>Bấm mở <b>Header Builder (ID 6)</b>.</span>
+            </li>
+            <li class="step-item">
+              <i class="fa-solid fa-play"></i>
+              <span>Canvas hiển thị Header cùng các mục Menu, Logo, Số hotline. Chỉnh sửa một mục bất kỳ.</span>
+            </li>
+            <li class="step-item">
+              <i class="fa-solid fa-play"></i>
+              <span>Bấm <b>"Lưu bản nháp"</b> rồi bấm <b>"Xuất bản"</b>.</span>
+            </li>
+          </ul>
+          <div class="expected-result">
+            <i class="fa-solid fa-circle-check"></i>
+            <span><b>Kết quả mong đợi:</b> Cả 2 nút Lưu nháp và Xuất bản đều phản hồi thành công (mã 200 OK), toast xanh xuất hiện.</span>
+          </div>
+          <textarea class="notes-input" id="notes-2" placeholder="Ghi chú mô tả lỗi nếu có..." oninput="saveNotes(2)"></textarea>
+        </div>
+
+        <div class="card-footer">
+          <a href="/vi/admin/pages/6/builder?content_locale=vi" target="_blank" class="direct-link">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Mở Header Builder (ID 6)
+          </a>
+        </div>
+      </div>
+
+      <!-- TEST 3 -->
+      <div class="test-card" id="test-card-3" data-id="3">
+        <div class="test-card-header">
+          <div class="card-title-group">
+            <div class="test-number">3</div>
+            <div>
+              <div class="test-title">
+                Nút chuyển nhanh Header / Footer ngay trong Canvas
+                <span class="test-tag tag-feature">UI/UX</span>
+              </div>
+            </div>
+          </div>
+          <div class="status-buttons">
+            <button class="btn-status btn-pass" onclick="setTestStatus(3, 'pass')">
+              <i class="fa-solid fa-check"></i> Đạt
+            </button>
+            <button class="btn-status btn-fail" onclick="setTestStatus(3, 'fail')">
+              <i class="fa-solid fa-xmark"></i> Lỗi
+            </button>
+          </div>
+        </div>
+
+        <div class="test-body">
+          <ul class="step-list">
+            <li class="step-item">
+              <i class="fa-solid fa-play"></i>
+              <span>Mở Builder của một trang bất kỳ (ví dụ trang <b>Giới thiệu ID 2</b>).</span>
+            </li>
+            <li class="step-item">
+              <i class="fa-solid fa-play"></i>
+              <span>Quan sát trên Topbar: kiểm tra xem có 2 nút <b>[ ✏️ Header ]</b> và <b>[ ✏️ Footer ]</b> không.</span>
+            </li>
+            <li class="step-item">
+              <i class="fa-solid fa-play"></i>
+              <span>Nhìn vào khung Canvas: rê chuột lên đầu trang (khu Header) hoặc chân trang (khu Footer) xem có khung viền cam kèm nút <b>[ ✏️ Chỉnh sửa Header ]</b> không. Bấm thử nút đó.</span>
+            </li>
+          </ul>
+          <div class="expected-result">
+            <i class="fa-solid fa-circle-check"></i>
+            <span><b>Kết quả mong đợi:</b> Hệ thống tự động chuyển mượt mà sang giao diện sửa Header/Footer tương ứng.</span>
+          </div>
+          <textarea class="notes-input" id="notes-3" placeholder="Ghi chú mô tả lỗi nếu có..." oninput="saveNotes(3)"></textarea>
+        </div>
+
+        <div class="card-footer">
+          <a href="/vi/admin/pages/2/builder?content_locale=vi" target="_blank" class="direct-link">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Mở Trang Giới Thiệu Builder
+          </a>
+        </div>
+      </div>
+
+      <!-- TEST 4 -->
+      <div class="test-card" id="test-card-4" data-id="4">
+        <div class="test-card-header">
+          <div class="card-title-group">
+            <div class="test-number">4</div>
+            <div>
+              <div class="test-title">
+                Kéo thả Block, Chỉnh Typography & Thay thế ảnh
+                <span class="test-tag tag-feature">Tính năng cốt lõi</span>
+              </div>
+            </div>
+          </div>
+          <div class="status-buttons">
+            <button class="btn-status btn-pass" onclick="setTestStatus(4, 'pass')">
+              <i class="fa-solid fa-check"></i> Đạt
+            </button>
+            <button class="btn-status btn-fail" onclick="setTestStatus(4, 'fail')">
+              <i class="fa-solid fa-xmark"></i> Lỗi
+            </button>
+          </div>
+        </div>
+
+        <div class="test-body">
+          <ul class="step-list">
+            <li class="step-item">
+              <i class="fa-solid fa-play"></i>
+              <span>Trong Builder, mở tab <b>Blocks</b> (bên phải) -> Kéo một khối <b>Tiêu đề</b> hoặc <b>Section 2 cột</b> vào thân trang.</span>
+            </li>
+            <li class="step-item">
+              <i class="fa-solid fa-play"></i>
+              <span>Mở tab <b>Kiểu dáng (Style)</b>: Đổi màu chữ (Color) và cỡ chữ (Font size) của tiêu đề.</span>
+            </li>
+            <li class="step-item">
+              <i class="fa-solid fa-play"></i>
+              <span>Click đúp vào 1 tấm ảnh bất kỳ: Modal thư viện Media mở ra -> Chọn ảnh khác -> Ảnh trên canvas đổi ngay lập tức.</span>
+            </li>
+          </ul>
+          <div class="expected-result">
+            <i class="fa-solid fa-circle-check"></i>
+            <span><b>Kết quả mong đợi:</b> Kéo thả mượt mà, định dạng kiểu dáng trực quan, thư viện media chọn ảnh chuẩn xác.</span>
+          </div>
+          <textarea class="notes-input" id="notes-4" placeholder="Ghi chú mô tả lỗi nếu có..." oninput="saveNotes(4)"></textarea>
+        </div>
+
+        <div class="card-footer">
+          <a href="/vi/admin/pages/2/builder?content_locale=vi" target="_blank" class="direct-link">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Test kéo thả trên Trang Giới Thiệu
+          </a>
+        </div>
+      </div>
+
+      <!-- TEST 5 -->
+      <div class="test-card" id="test-card-5" data-id="5">
+        <div class="test-card-header">
+          <div class="card-title-group">
+            <div class="test-number">5</div>
+            <div>
+              <div class="test-title">
+                Chuyển chế độ xem Responsive (Desktop / Tablet / Mobile)
+                <span class="test-tag tag-feature">Giao diện</span>
+              </div>
+            </div>
+          </div>
+          <div class="status-buttons">
+            <button class="btn-status btn-pass" onclick="setTestStatus(5, 'pass')">
+              <i class="fa-solid fa-check"></i> Đạt
+            </button>
+            <button class="btn-status btn-fail" onclick="setTestStatus(5, 'fail')">
+              <i class="fa-solid fa-xmark"></i> Lỗi
+            </button>
+          </div>
+        </div>
+
+        <div class="test-body">
+          <ul class="step-list">
+            <li class="step-item">
+              <i class="fa-solid fa-play"></i>
+              <span>Trên Topbar của Builder, lần lượt bấm các icon: <b>Desktop (Màn hình lớn)</b>, <b>Tablet (Máy tính bảng)</b>, <b>Mobile (Điện thoại)</b>.</span>
+            </li>
+            <li class="step-item">
+              <i class="fa-solid fa-play"></i>
+              <span>Kiểm tra xem khung canvas có co lại chuẩn kích thước: Tablet (768px) và Mobile (375px) không.</span>
+            </li>
+          </ul>
+          <div class="expected-result">
+            <i class="fa-solid fa-circle-check"></i>
+            <span><b>Kết quả mong đợi:</b> Canvas chuyển kích thước mượt mà, không bị vỡ layout, bố cục tự động xếp chồng trên mobile.</span>
+          </div>
+          <textarea class="notes-input" id="notes-5" placeholder="Ghi chú mô tả lỗi nếu có..." oninput="saveNotes(5)"></textarea>
+        </div>
+
+        <div class="card-footer">
+          <a href="/vi/admin/pages/2/builder?content_locale=vi" target="_blank" class="direct-link">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Mở Builder để test Responsive
+          </a>
+        </div>
+      </div>
+
+      <!-- TEST 6 -->
+      <div class="test-card" id="test-card-6" data-id="6">
+        <div class="test-card-header">
+          <div class="card-title-group">
+            <div class="test-number">6</div>
+            <div>
+              <div class="test-title">
+                Chuyển đổi Đa ngôn ngữ (VI - EN - KO)
+                <span class="test-tag tag-feature">Đa ngôn ngữ</span>
+              </div>
+            </div>
+          </div>
+          <div class="status-buttons">
+            <button class="btn-status btn-pass" onclick="setTestStatus(6, 'pass')">
+              <i class="fa-solid fa-check"></i> Đạt
+            </button>
+            <button class="btn-status btn-fail" onclick="setTestStatus(6, 'fail')">
+              <i class="fa-solid fa-xmark"></i> Lỗi
+            </button>
+          </div>
+        </div>
+
+        <div class="test-body">
+          <ul class="step-list">
+            <li class="step-item">
+              <i class="fa-solid fa-play"></i>
+              <span>Trên Topbar, bấm vào nút chuyển ngôn ngữ từ <b>VI (Tiếng Việt)</b> sang <b>EN (Tiếng Anh)</b>.</span>
+            </li>
+            <li class="step-item">
+              <i class="fa-solid fa-play"></i>
+              <span>Sửa một đoạn text sang Tiếng Anh rồi bấm <b>Xuất bản</b>.</span>
+            </li>
+            <li class="step-item">
+              <i class="fa-solid fa-play"></i>
+              <span>Bấm lại về nút <b>VI</b> để kiểm tra nội dung Tiếng Việt.</span>
+            </li>
+          </ul>
+          <div class="expected-result">
+            <i class="fa-solid fa-circle-check"></i>
+            <span><b>Kết quả mong đợi:</b> Nội dung 2 ngôn ngữ hoàn toàn độc lập, không bị ghi đè lên nhau.</span>
+          </div>
+          <textarea class="notes-input" id="notes-6" placeholder="Ghi chú mô tả lỗi nếu có..." oninput="saveNotes(6)"></textarea>
+        </div>
+
+        <div class="card-footer">
+          <a href="/vi/admin/pages/2/builder?content_locale=vi" target="_blank" class="direct-link">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Mở Builder test đa ngôn ngữ
+          </a>
+        </div>
+      </div>
+
+      <!-- TEST 7 -->
+      <div class="test-card" id="test-card-7" data-id="7">
+        <div class="test-card-header">
+          <div class="card-title-group">
+            <div class="test-number">7</div>
+            <div>
+              <div class="test-title">
+                Nghiệm thu hiển thị thực tế ngoài Website (Storefront)
+                <span class="test-tag tag-critical">Nghiệm thu cuối</span>
+              </div>
+            </div>
+          </div>
+          <div class="status-buttons">
+            <button class="btn-status btn-pass" onclick="setTestStatus(7, 'pass')">
+              <i class="fa-solid fa-check"></i> Đạt
+            </button>
+            <button class="btn-status btn-fail" onclick="setTestStatus(7, 'fail')">
+              <i class="fa-solid fa-xmark"></i> Lỗi
+            </button>
+          </div>
+        </div>
+
+        <div class="test-body">
+          <ul class="step-list">
+            <li class="step-item">
+              <i class="fa-solid fa-play"></i>
+              <span>Mở tab mới trang chủ ngoài website: <code>https://revoluxasia796.mbws.vn/vi</code>.</span>
+            </li>
+            <li class="step-item">
+              <i class="fa-solid fa-play"></i>
+              <span>Kiểm tra xem Header và Footer vừa chỉnh sửa có hiển thị đồng bộ ở trang chủ không.</span>
+            </li>
+            <li class="step-item">
+              <i class="fa-solid fa-play"></i>
+              <span>Mở trang Giới thiệu (<code>/vi/gioi-thieu</code>) xem cả Header, Thân trang và Footer có ăn khớp đẹp mắt không.</span>
+            </li>
+          </ul>
+          <div class="expected-result">
+            <i class="fa-solid fa-circle-check"></i>
+            <span><b>Kết quả mong đợi:</b> Giao diện hiển thị đúng 100% như những gì đã thiết kế và xuất bản trong Builder.</span>
+          </div>
+          <textarea class="notes-input" id="notes-7" placeholder="Ghi chú mô tả lỗi nếu có..." oninput="saveNotes(7)"></textarea>
+        </div>
+
+        <div class="card-footer">
+          <a href="/vi" target="_blank" class="direct-link">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Xem Trang Chủ Website
+          </a>
+          <a href="/vi/gioi-thieu" target="_blank" class="direct-link" style="margin-left: 16px;">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Xem Trang Giới Thiệu
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">
+    <i class="fa-solid fa-circle-check" style="color: #10b981; font-size: 18px;"></i>
+    <span id="toast-text">Đã sao chép báo cáo nghiệm thu vào clipboard!</span>
+  </div>
+
+  <script>
+    const TOTAL_TESTS = 7;
+    const STORAGE_KEY = 'luxlight_builder_qa_state_v1';
+
+    let testState = {
+      statuses: {},
+      notes: {}
+    };
+
+    function init() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try {
+          testState = JSON.parse(saved);
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      for (let i = 1; i <= TOTAL_TESTS; i++) {
+        if (testState.statuses[i]) {
+          renderTestCard(i, testState.statuses[i]);
+        }
+        if (testState.notes && testState.notes[i]) {
+          const textarea = document.getElementById(`notes-${i}`);
+          if (textarea) textarea.value = testState.notes[i];
+        }
+      }
+
+      updateProgress();
+    }
+
+    function setTestStatus(id, status) {
+      if (testState.statuses[id] === status) {
+        delete testState.statuses[id];
+      } else {
+        testState.statuses[id] = status;
+      }
+      saveState();
+      renderTestCard(id, testState.statuses[id]);
+      updateProgress();
+    }
+
+    function renderTestCard(id, status) {
+      const card = document.getElementById(`test-card-${id}`);
+      if (!card) return;
+
+      const btnPass = card.querySelector('.btn-pass');
+      const btnFail = card.querySelector('.btn-fail');
+
+      card.classList.remove('passed', 'failed');
+      btnPass.classList.remove('active-pass');
+      btnFail.classList.remove('active-fail');
+
+      if (status === 'pass') {
+        card.classList.add('passed');
+        btnPass.classList.add('active-pass');
+      } else if (status === 'fail') {
+        card.classList.add('failed');
+        btnFail.classList.add('active-fail');
+      }
+    }
+
+    function saveNotes(id) {
+      const textarea = document.getElementById(`notes-${id}`);
+      if (!testState.notes) testState.notes = {};
+      testState.notes[id] = textarea ? textarea.value : '';
+      saveState();
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(testState));
+    }
+
+    function updateProgress() {
+      const passed = Object.values(testState.statuses).filter(s => s === 'pass').length;
+      const percent = Math.round((passed / TOTAL_TESTS) * 100);
+
+      document.getElementById('passed-count').innerText = passed;
+      document.getElementById('total-count').innerText = TOTAL_TESTS;
+      document.getElementById('progress-percent').innerText = `${percent}%`;
+      document.getElementById('progress-fill').style.width = `${percent}%`;
+    }
+
+    function resetAllTests() {
+      if (confirm('Bạn có chắc chắn muốn đặt lại tất cả kết quả test về ban đầu không?')) {
+        testState = { statuses: {}, notes: {} };
+        localStorage.removeItem(STORAGE_KEY);
+        for (let i = 1; i <= TOTAL_TESTS; i++) {
+          renderTestCard(i, null);
+          const textarea = document.getElementById(`notes-${i}`);
+          if (textarea) textarea.value = '';
+        }
+        updateProgress();
+        showToast('Đã đặt lại bảng kiểm thử.');
+      }
+    }
+
+    function exportReport() {
+      let report = `📋 BÁO CÁO NGHIỆM THU UI/UX BUILDER (LUXLIGHT)\n`;
+      report += `Thời gian: ${new Date().toLocaleString('vi-VN')}\n`;
+      report += `--------------------------------------------------\n`;
+
+      const titles = [
+        "1. Sửa & Xuất bản Footer (Fix lỗi 500 MariaDB)",
+        "2. Sửa & Xuất bản Header mặc định",
+        "3. Chuyển nhanh Header / Footer trên Canvas",
+        "4. Kéo thả Block, Style & Thư viện ảnh Media",
+        "5. Chế độ Responsive (Desktop / Tablet / Mobile)",
+        "6. Chuyển đổi & Lưu Đa ngôn ngữ (VI - EN - KO)",
+        "7. Hiển thị thực tế ngoài Website (Storefront)"
+      ];
+
+      let passCount = 0;
+      let failCount = 0;
+
+      for (let i = 1; i <= TOTAL_TESTS; i++) {
+        const status = testState.statuses[i];
+        let statusText = "[ ] CHƯA TEST";
+        if (status === 'pass') {
+          statusText = "[✓] ĐẠT (PASS)";
+          passCount++;
+        } else if (status === 'fail') {
+          statusText = "[X] LỖI (FAIL)";
+          failCount++;
+        }
+
+        report += `${titles[i - 1]}: ${statusText}\n`;
+        if (testState.notes && testState.notes[i] && testState.notes[i].trim() !== '') {
+          report += `   ↳ Ghi chú: ${testState.notes[i].trim()}\n`;
+        }
+      }
+
+      report += `--------------------------------------------------\n`;
+      report += `TỔNG KẾT: ${passCount}/${TOTAL_TESTS} Đạt (${Math.round((passCount / TOTAL_TESTS) * 100)}%)`;
+      if (failCount > 0) {
+        report += ` | ${failCount} Mục cần kiểm tra lại`;
+      } else if (passCount === TOTAL_TESTS) {
+        report += ` -> CHẤP THUẬN NGHIỆM THU (PRODUCTION READY)`;
+      }
+
+      navigator.clipboard.writeText(report).then(() => {
+        showToast('Đã sao chép báo cáo nghiệm thu vào Clipboard!');
+      }).catch(() => {
+        showToast('Vui lòng chọn và sao chép thủ công.');
+      });
+    }
+
+    function showToast(text) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-text').innerText = text;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3500);
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>

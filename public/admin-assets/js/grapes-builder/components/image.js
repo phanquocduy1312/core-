@@ -5,6 +5,28 @@
 (function (global) {
     'use strict';
 
+    function isPlaceholder(src) {
+        if (!src || typeof src !== 'string') return true;
+        var trimmed = src.trim();
+        return trimmed === ''
+            || trimmed.charAt(0) === '<'
+            || trimmed.indexOf('data:image/svg+xml') === 0
+            || trimmed.indexOf('/<svg') !== -1;
+    }
+
+    function resolveImageUrl(src) {
+        if (isPlaceholder(src)) return '';
+        var trimmed = src.trim();
+        if (trimmed.indexOf('http://') === 0 || trimmed.indexOf('https://') === 0 || trimmed.indexOf('data:') === 0) {
+            return trimmed;
+        }
+        var base = (global.location && global.location.origin) ? global.location.origin : '';
+        if (trimmed.charAt(0) === '/') {
+            return base + trimmed;
+        }
+        return base + '/' + trimmed;
+    }
+
     function initImageComponent(editor) {
         var DomComponents = editor.DomComponents;
 
@@ -31,9 +53,10 @@
                             input.value = asset.src;
                             if (targetComponent) {
                                 targetComponent.removeAttributes(['srcset', 'sizes', 'data-src', 'data-srcset', 'data-lazy-src', 'data-lazy-srcset']);
-                                targetComponent.set('src', asset.src);
+                                var resolved = resolveImageUrl(asset.src);
+                                targetComponent.set('src', resolved);
                                 targetComponent.addAttributes({
-                                    'src': asset.src,
+                                    'src': resolved,
                                     'alt': targetComponent.getAttributes().alt || asset.alt || ''
                                 });
                                 targetComponent.set('mediaRef', asset.publicId || asset.id || '');
@@ -46,8 +69,9 @@
                     var targetComponent = editor.getSelected();
                     if (targetComponent) {
                         targetComponent.removeAttributes(['srcset', 'sizes', 'data-src', 'data-srcset', 'data-lazy-src', 'data-lazy-srcset']);
-                                targetComponent.set('src', input.value);
-                        targetComponent.addAttributes({ 'src': input.value });
+                        var resolved = resolveImageUrl(input.value);
+                        targetComponent.set('src', resolved);
+                        targetComponent.addAttributes({ 'src': resolved });
                     }
                 });
 
@@ -64,11 +88,21 @@
         });
 
         // Extend standard Image component
-        var imageType = DomComponents.getType('image');
         DomComponents.addType('image', {
+            extend: 'image',
+            isComponent: function (el) {
+                if (!el) return false;
+                if (el.type === 'image') return true;
+                var tag = (el.tagName || el.nodeName || '').toLowerCase();
+                return tag === 'img';
+            },
             model: {
-                defaults: Object.assign({}, imageType ? imageType.model.prototype.defaults : {}, {
+                defaults: {
                     name: 'Hình ảnh (Image)',
+                    tagName: 'img',
+                    type: 'image',
+                    src: '',
+                    void: true,
                     droppable: false,
                     resizable: true,
                     traits: [
@@ -132,9 +166,44 @@
                             ]
                         }
                     ]
-                }),
+                },
 
                 init: function () {
+                    // Ensure src attribute and model property are in lockstep and resolved
+                    var attr = this.getAttributes() || {};
+                    var rawSrc = '';
+                    if (attr.src && !isPlaceholder(attr.src)) {
+                        rawSrc = attr.src;
+                    } else if (this.get('src') && !isPlaceholder(this.get('src'))) {
+                        rawSrc = this.get('src');
+                    }
+
+                    if (rawSrc) {
+                        var resolved = resolveImageUrl(rawSrc);
+                        this.set('src', resolved, { silent: true });
+                        this.addAttributes({ src: resolved });
+                    } else {
+                        this.set('src', '', { silent: true });
+                    }
+
+                    this.on('change:src', function () {
+                        var currentSrc = this.get('src');
+                        if (currentSrc && !isPlaceholder(currentSrc)) {
+                            var res = resolveImageUrl(currentSrc);
+                            this.addAttributes({ src: res });
+                        }
+                    });
+
+                    this.on('change:attributes:src', function () {
+                        var attrSrc = (this.getAttributes() || {}).src;
+                        if (attrSrc && !isPlaceholder(attrSrc)) {
+                            var res = resolveImageUrl(attrSrc);
+                            if (this.get('src') !== res) {
+                                this.set('src', res);
+                            }
+                        }
+                    });
+
                     this.on('change:style-object-fit', this.handleObjectFitChange);
                     this.on('change:style-object-position', this.handleObjectPositionChange);
                 },
@@ -151,6 +220,50 @@
                     if (pos) {
                         this.addStyle({ 'object-position': pos });
                     }
+                }
+            },
+            view: {
+                init: function () {
+                    this.listenTo(this.model, 'change:src', this.updateSrc);
+                    this.listenTo(this.model, 'change:attributes:src', this.updateSrc);
+                },
+                updateSrc: function () {
+                    var attr = (this.model.getAttributes && this.model.getAttributes()) || {};
+                    var modelSrc = this.model.get('src') || '';
+                    var rawSrc = '';
+                    if (attr.src && !isPlaceholder(attr.src)) {
+                        rawSrc = attr.src;
+                    } else if (modelSrc && !isPlaceholder(modelSrc)) {
+                        rawSrc = modelSrc;
+                    }
+
+                    var src = resolveImageUrl(rawSrc);
+                    if (this.el) {
+                        if (src) {
+                            if (this.el.getAttribute('src') !== src) {
+                                this.el.setAttribute('src', src);
+                            }
+                            if (this.el.src !== src) {
+                                this.el.src = src;
+                            }
+                            this.el.classList.remove('gjs-plh-image');
+                        } else {
+                            this.el.removeAttribute('src');
+                            this.el.classList.add('gjs-plh-image');
+                        }
+                        this.el.removeAttribute('loading');
+                        this.el.removeAttribute('decoding');
+                    }
+                },
+                render: function () {
+                    if (this.constructor.__super__ && this.constructor.__super__.render) {
+                        this.constructor.__super__.render.apply(this, arguments);
+                    }
+                    this.updateSrc();
+                    return this;
+                },
+                onRender: function () {
+                    this.updateSrc();
                 }
             }
         });

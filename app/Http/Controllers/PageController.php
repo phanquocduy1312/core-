@@ -40,34 +40,71 @@ class PageController extends Controller
 
     public function hospitalityProjects()
     {
-        return view('pages.du-an-hospitality');
+        return $this->managedPage('hospitality-lighting-projects', 'pages.du-an-hospitality');
     }
 
     public function residentialProjects()
     {
-        return view('pages.du-an-residential');
+        return $this->managedPage('residential-lighting-projects', 'pages.du-an-residential');
     }
 
     public function commercialProjects()
     {
-        return view('pages.du-an-commercial');
+        return $this->managedPage('commercial-lighting-projects', 'pages.du-an-commercial');
     }
 
     public function otherProjects()
     {
-        return view('pages.du-an-other');
+        return $this->managedPage('other-lighting-projects', 'pages.du-an-other');
     }
 
     public function projectDetail(string $slug)
     {
+        $locale = app()->getLocale();
+        $project = null;
+
+        if (\Illuminate\Support\Facades\Schema::hasTable('projects')) {
+            $project = \App\Models\Project::query()->where('is_active', true)
+                ->where(function ($query) use ($slug, $locale) {
+                    $query->where('slug', $slug)
+                        ->orWhere("slug->{$locale}", $slug)
+                        ->orWhere('slug->vi', $slug)
+                        ->orWhere('slug->en', $slug);
+                })->first();
+
+            if (! $project && \Illuminate\Support\Facades\Schema::hasTable('localized_slugs')) {
+                $type = (new \App\Models\Project())->getMorphClass();
+                $localized = \App\Models\LocalizedSlug::query()
+                    ->where('sluggable_type', $type)
+                    ->where('slug', $slug)
+                    ->first();
+                if ($localized) {
+                    $project = \App\Models\Project::query()->where('is_active', true)->find($localized->sluggable_id);
+                }
+            }
+        }
+
+        if ($project) {
+            $relatedProjects = \App\Models\Project::query()
+                ->where('is_active', true)
+                ->where('id', '!=', $project->id)
+                ->where('category', $project->category)
+                ->orderBy('sort_order')
+                ->latest('id')
+                ->limit(3)
+                ->get();
+
+            return view('pages.projects.detail', compact('project', 'relatedProjects'));
+        }
+
         $viewName = "pages.projects.{$slug}";
         if (View::exists($viewName)) {
             return view($viewName);
         }
 
-        // Generic fallback or 404
-        return view('pages.du-an');
+        return redirect()->route('projects.list');
     }
+
 
     public function technicalSupport()
     {
@@ -86,11 +123,37 @@ class PageController extends Controller
 
     public function privacyPolicy()
     {
-        return view('pages.privacy-policy');
+        return $this->managedPage('privacy-policy', 'pages.privacy-policy');
     }
 
     public function termsOfUse()
     {
-        return view('pages.terms-of-use');
+        return $this->managedPage('terms-of-use', 'pages.terms-of-use');
+    }
+
+    public function subscribeNewsletter(Request $request)
+    {
+        $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
+            'first_name' => 'required|string|max:100',
+            'last_name' => 'required|string|max:100',
+            'email' => 'required|email|max:255',
+            'company' => 'nullable|string|max:255',
+            'referral' => 'nullable|string|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Please fill in all required fields properly.',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        \Illuminate\Support\Facades\Log::info('Newsletter subscriber:', $request->only(['first_name', 'last_name', 'email', 'company', 'referral']));
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Thank you for subscribing to LuxLight!',
+        ]);
     }
 }

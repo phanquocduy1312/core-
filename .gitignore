@@ -34,3 +34,5 @@ Thumbs.db
 
 # CodeGraph local index (không commit)
 .codegraph/
+scratch/
+

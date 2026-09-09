@@ -3,7 +3,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npx @tailwindcss/cli -i resources/css/admin.css -o public/build/assets/admin.css && npx @tailwindcss/cli -i resources/css/builder.css -o public/build/assets/builder.css && npx esbuild resources/js/admin.js --bundle --outfile=public/build/assets/admin.js --minify"
+    "build": "vite build"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.3",

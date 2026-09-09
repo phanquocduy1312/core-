@@ -18,12 +18,22 @@ class PageHtmlSanitizer
         'tbody', 'td', 'tfoot', 'th', 'thead', 'tr', 'u', 'ul',
     ];
 
+    private const FORM_TAGS = [
+        'form', 'input', 'textarea', 'select', 'option', 'optgroup', 'label', 'fieldset', 'legend',
+    ];
+
     private const ALLOWED_ATTRIBUTES = [
         'allowfullscreen', 'alt', 'class', 'colspan', 'd', 'fill', 'frameborder', 'height', 'href',
         'icon', 'id', 'loading', 'points', 'preserveaspectratio', 'referrerpolicy',
         'rel', 'role', 'rowspan', 'sandbox', 'scope', 'src', 'srcset', 'stroke', 'stroke-linecap',
         'stroke-linejoin', 'stroke-width', 'style', 'target', 'title', 'type', 'viewbox',
         'width', 'xmlns',
+    ];
+
+    private const FORM_ATTRIBUTES = [
+        'action', 'method', 'enctype', 'novalidate', 'name', 'value', 'placeholder',
+        'rows', 'cols', 'required', 'for', 'selected', 'disabled', 'readonly',
+        'checked', 'autocomplete', 'tabindex', 'maxlength', 'minlength',
     ];
 
     public const ALLOWED_DATA_ATTRIBUTES = [
@@ -37,9 +47,15 @@ class PageHtmlSanitizer
         'data-partial-id',
         'data-tab',
         'data-cat',
+        'data-id',
+        'data-element_type',
+        'data-settings',
+        'data-e-type',
+        'data-dce-background-image-url',
+        'data-dce-background-overlay-color',
     ];
 
-    public function clean(?string $html): string
+    public function clean(?string $html, bool $allowForms = false): string
     {
         $document = new DOMDocument('1.0', 'UTF-8');
         $previous = libxml_use_internal_errors(true);
@@ -51,7 +67,11 @@ class PageHtmlSanitizer
         libxml_use_internal_errors($previous);
 
         $xpath = new DOMXPath($document);
-        foreach (iterator_to_array($xpath->query('//script|//object|//embed|//form|//input|//textarea|//select') ?: []) as $node) {
+        $disallowedNodesQuery = $allowForms
+            ? '//script|//object|//embed'
+            : '//script|//object|//embed|//form|//input|//textarea|//select';
+
+        foreach (iterator_to_array($xpath->query($disallowedNodesQuery) ?: []) as $node) {
             $node->parentNode?->removeChild($node);
         }
 
@@ -65,11 +85,19 @@ class PageHtmlSanitizer
             $iframe->setAttribute('sandbox', 'allow-scripts allow-same-origin allow-presentation allow-popups');
         }
 
+        $allowedTags = $allowForms
+            ? array_merge(self::ALLOWED_TAGS, self::FORM_TAGS)
+            : self::ALLOWED_TAGS;
+
+        $allowedAttributes = $allowForms
+            ? array_merge(self::ALLOWED_ATTRIBUTES, self::FORM_ATTRIBUTES)
+            : self::ALLOWED_ATTRIBUTES;
+
         foreach (iterator_to_array($xpath->query('//*') ?: []) as $element) {
             if (! $element instanceof DOMElement || $element->getAttribute('id') === 'page-builder-root') {
                 continue;
             }
-            if (! in_array(strtolower($element->tagName), self::ALLOWED_TAGS, true)) {
+            if (! in_array(strtolower($element->tagName), $allowedTags, true)) {
                 $this->unwrap($element);
                 continue;
             }
@@ -77,12 +105,12 @@ class PageHtmlSanitizer
             foreach (iterator_to_array($element->attributes) as $attribute) {
                 $name = strtolower($attribute->name);
                 $isAllowedDataAttr = in_array($name, self::ALLOWED_DATA_ATTRIBUTES, true);
-                $allowedAttribute = in_array($name, self::ALLOWED_ATTRIBUTES, true)
+                $allowedAttribute = in_array($name, $allowedAttributes, true)
                     || str_starts_with($name, 'aria-')
                     || $isAllowedDataAttr;
                 if (! $allowedAttribute
                     || str_starts_with($name, 'on')
-                    || (in_array($name, ['href', 'src', 'srcset'], true) && ! $this->safeUrl($attribute->value))
+                    || (in_array($name, ['href', 'src', 'srcset', 'action'], true) && ! $this->safeUrl($attribute->value))
                     || ($name === 'style' && $this->containsDangerousCss($attribute->value))) {
                     $element->removeAttribute($attribute->name);
                 }

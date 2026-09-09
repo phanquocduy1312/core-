@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\PagePartialController;
 use App\Http\Controllers\Admin\PaymentMethodController;
 use App\Http\Controllers\Admin\PostCategoryController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\RoleController;
@@ -114,6 +115,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
         Route::post('partials/from-selection', [PagePartialController::class, 'storeFromSelection'])->name('partials.from-selection');
         Route::post('partials/{partial}/revisions/{revision}/restore', [PagePartialController::class, 'restore'])->name('partials.revisions.restore');
         Route::resource('partials', PagePartialController::class)->except(['show']);
+
+        Route::patch('projects/bulk', [ProjectController::class, 'bulk'])->name('projects.bulk');
+        Route::resource('projects', ProjectController::class)->except(['show']);
     });
 
     Route::middleware(['feature:voucher', 'can:manage_vouchers'])->group(function () {

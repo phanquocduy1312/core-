@@ -25,15 +25,6 @@
                         title: ''
                     },
                     classes: ['builder-link'],
-                    style: {
-                        'color': '#00a0d2',
-                        'text-decoration': 'underline',
-                        'font-weight': '600',
-                        'font-size': '15px',
-                        'cursor': 'pointer',
-                        'display': 'inline-block',
-                        'transition': 'all 0.2s ease'
-                    },
                     traits: [
                         {
                             type: 'text',

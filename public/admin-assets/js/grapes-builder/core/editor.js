@@ -175,16 +175,113 @@
         // point the head holds no theme stylesheets and the body holds no
         // wrapper — body classes landed on nothing and the injected <style> was
         // outranked by every sheet appended after it.
+        // Direct DOM healing for all <img> tags inside the canvas iframe
         editor.on('canvas:frame:load:body', function () {
             if (global.GrapesCanvasContext) {
                 global.GrapesCanvasContext.apply(editor, config);
             }
+            healCanvasImages(editor);
+            setTimeout(function () { healCanvasImages(editor); }, 100);
+            setTimeout(function () { healCanvasImages(editor); }, 500);
         });
 
         loadInitialContent(editor, config);
         bindEditorBehaviour(editor);
 
         return editor;
+    }
+
+    function isPlaceholder(src) {
+        if (!src || typeof src !== 'string') return true;
+        var trimmed = src.trim();
+        return trimmed === ''
+            || trimmed.charAt(0) === '<'
+            || trimmed.indexOf('data:image/svg+xml') === 0
+            || trimmed.indexOf('/<svg') !== -1;
+    }
+
+    function healCanvasImages(editor) {
+        try {
+            var doc = editor.Canvas.getDocument();
+            if (!doc) return;
+            var origin = (global.location && global.location.origin) ? global.location.origin : '';
+            var imgs = doc.querySelectorAll('img');
+            imgs.forEach(function (img) {
+                img.removeAttribute('loading');
+                img.removeAttribute('decoding');
+                var rawSrc = img.getAttribute('src');
+                if (rawSrc && !isPlaceholder(rawSrc)) {
+                    var resolvedSrc = rawSrc;
+                    if (resolvedSrc.charAt(0) === '/' && origin) {
+                        resolvedSrc = origin + resolvedSrc;
+                    }
+                    if (img.src !== resolvedSrc) {
+                        img.src = resolvedSrc;
+                    }
+                    img.classList.remove('gjs-plh-image');
+                }
+            });
+        } catch (canvasImgErr) {
+            // ignore
+        }
+    }
+
+    function traverseComponents(comp, callback) {
+        if (!comp) return;
+        callback(comp);
+        var children = comp.components();
+        if (children) {
+            if (typeof children.forEach === 'function') {
+                children.forEach(function (child) {
+                    traverseComponents(child, callback);
+                });
+            } else if (Array.isArray(children)) {
+                children.forEach(function (child) {
+                    traverseComponents(child, callback);
+                });
+            } else if (children.models && Array.isArray(children.models)) {
+                children.models.forEach(function (child) {
+                    traverseComponents(child, callback);
+                });
+            }
+        }
+    }
+
+    function reconcileImageComponents(editor) {
+        try {
+            var wrapper = editor.getWrapper();
+            if (!wrapper) return;
+            var origin = (global.location && global.location.origin) ? global.location.origin : '';
+
+            traverseComponents(wrapper, function (c) {
+                var tag = (c.get('tagName') || '').toLowerCase();
+                var type = c.get('type');
+                if (tag === 'img' || type === 'image') {
+                    var attr = c.getAttributes() || {};
+                    var rawSrc = '';
+                    if (attr.src && !isPlaceholder(attr.src)) {
+                        rawSrc = attr.src;
+                    } else if (c.get('src') && !isPlaceholder(c.get('src'))) {
+                        rawSrc = c.get('src');
+                    }
+                    if (rawSrc && typeof rawSrc === 'string') {
+                        var resolvedSrc = rawSrc;
+                        if (resolvedSrc.charAt(0) === '/' && origin) {
+                            resolvedSrc = origin + resolvedSrc;
+                        }
+                        if (c.get('type') !== 'image') {
+                            c.set('type', 'image');
+                        }
+                        c.set('src', resolvedSrc);
+                        c.addAttributes({ src: resolvedSrc });
+                    }
+                }
+            });
+
+            healCanvasImages(editor);
+        } catch (syncErr) {
+            // ignore
+        }
     }
 
     /**
@@ -223,10 +320,19 @@
         }
 
         if (!loaded) {
-            editor.setComponents(config.initialHtml || '');
+            var safeHtml = (config.initialHtml || '').replace(/<img\b([^>]*?)\bloading=["']lazy["']/gi, '<img$1loading="eager"');
+            editor.setComponents(safeHtml);
             // Only meaningful on this path — project data carries its own rules.
             if (config.initialCss) editor.setStyle(config.initialCss);
         }
+
+        // Reconcile and synchronize all <img> components so images render reliably
+        reconcileImageComponents(editor);
+        healCanvasImages(editor);
+
+        setTimeout(function () { healCanvasImages(editor); }, 100);
+        setTimeout(function () { healCanvasImages(editor); }, 500);
+        setTimeout(function () { healCanvasImages(editor); }, 1500);
 
         // Loading is not an edit: keep it off the undo stack and out of the
         // dirty state, otherwise every page opens "unsaved" and one undo is
@@ -264,11 +370,18 @@
         var armed = false;
 
         editor.on('load', function () {
+            reconcileImageComponents(editor);
+            healCanvasImages(editor);
             // A tick after load: loadProjectData's own events have drained.
             setTimeout(function () {
+                reconcileImageComponents(editor);
+                healCanvasImages(editor);
                 armed = true;
                 isDirty = false;
-            }, 0);
+            }, 50);
+            setTimeout(function () {
+                healCanvasImages(editor);
+            }, 300);
         });
 
         editor.on('component:update component:add component:remove style:update trait:value', function () {

@@ -126,7 +126,7 @@
         <!-- Page Management Submenu -->
         @if($sidebarFeatures->availableTo($sidebarUser, 'cms_page'))
             @can('manage_pages')
-            <div x-data="{ open: {{ (request()->routeIs('admin.pages.*') || request()->routeIs('admin.partials.*')) ? 'true' : 'false' }} }">
+            <div x-data="{ open: {{ (request()->routeIs('admin.pages.*') || request()->routeIs('admin.partials.*') || request()->routeIs('admin.projects.*')) ? 'true' : 'false' }} }">
                 <button @click="open = !open" class="flex items-center w-full gap-3 px-4 py-2.5 rounded-lg text-sm font-semibold transition-colors text-gray-700 hover:bg-gray-50">
                     <i class="ti ti-file-text text-xl" aria-hidden="true"></i>
                     <span>{{ __('admin.sidebar.page_management') }}</span>
@@ -139,8 +139,12 @@
                     <a href="{{ route('admin.partials.index') }}" class="block py-2 text-sm font-medium transition-colors {{ request()->routeIs('admin.partials.*') ? 'text-primary font-bold' : 'text-gray-600 hover:text-gray-900' }}">
                         {{ __('admin.sidebar.page_partials') }}
                     </a>
+                    <a href="{{ route('admin.projects.index') }}" class="block py-2 text-sm font-medium transition-colors {{ request()->routeIs('admin.projects.*') ? 'text-primary font-bold' : 'text-gray-600 hover:text-gray-900' }}">
+                        {{ __('admin.projects.title') }}
+                    </a>
                 </div>
             </div>
+
             @endcan
         @endif
 

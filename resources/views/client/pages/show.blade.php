@@ -48,6 +48,15 @@
                 }
             });
         });
+        // Mobile / Touch interaction for Elementor Flip Boxes
+        document.body.addEventListener('click', function(e) {
+            const flipBox = e.target.closest('.elementor-flip-box');
+            if (!flipBox) return;
+            if (e.target.closest('.elementor-flip-box__button')) return;
+            if (window.innerWidth <= 1024) {
+                flipBox.classList.toggle('is-flipped');
+            }
+        });
     });
     </script>
 @endpush

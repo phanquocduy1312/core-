@@ -24,7 +24,7 @@
 
     <style>
         :root {
-            --gjs-left-width: 320px;
+            --gjs-left-width: 350px;
             --gjs-primary-color: #22272e;
             --gjs-secondary-color: #adbac7;
             --gjs-tertiary-color: #00a0d2;
@@ -92,6 +92,7 @@
             padding: 10px !important;
             box-sizing: border-box !important;
             color: #cdd9e5 !important;
+            overflow-y: auto !important;
         }
 
         .gjs-cv-canvas {
@@ -282,6 +283,69 @@
             background-color: #00a0d2 !important;
             border-radius: 4px 4px 0 0 !important;
         }
+
+        /* Style Manager Polishing */
+        .gjs-sm-sector .gjs-sm-title {
+            background: #181b1f !important;
+            color: #94a3b8 !important;
+            font-size: 11.5px !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.5px !important;
+            padding: 10px 14px !important;
+            border-bottom: 1px solid #282f37 !important;
+            text-transform: uppercase !important;
+            cursor: pointer !important;
+        }
+        .gjs-sm-sector.gjs-open .gjs-sm-title {
+            color: #38bdf8 !important;
+            border-bottom: 1px solid rgba(56, 189, 248, 0.25) !important;
+        }
+        .gjs-sm-property {
+            padding: 6px 8px !important;
+            box-sizing: border-box !important;
+        }
+        .gjs-sm-property .gjs-sm-label {
+            font-size: 11px !important;
+            font-weight: 600 !important;
+            color: #cbd5e1 !important;
+            white-space: normal !important;
+            line-height: 1.3 !important;
+            word-break: break-word !important;
+            margin-bottom: 4px !important;
+        }
+        .gjs-sm-property.gjs-sm-composite .gjs-sm-properties {
+            display: grid !important;
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 6px !important;
+            padding: 4px 0 !important;
+        }
+        .gjs-sm-property.gjs-sm-composite .gjs-sm-properties .gjs-sm-property {
+            padding: 3px !important;
+            width: 100% !important;
+        }
+        .gjs-sm-property select,
+        .gjs-sm-property input {
+            background: #181b1f !important;
+            border: 1px solid #333940 !important;
+            border-radius: 6px !important;
+            color: #f1f5f9 !important;
+            font-size: 12px !important;
+            min-height: 30px !important;
+            padding: 4px 8px !important;
+            box-sizing: border-box !important;
+            width: 100% !important;
+        }
+        .gjs-sm-property select:focus,
+        .gjs-sm-property input:focus {
+            border-color: #00a0d2 !important;
+            outline: none !important;
+            box-shadow: 0 0 0 2px rgba(0, 160, 210, 0.2) !important;
+        }
+        .gjs-sm-property .gjs-sm-preview {
+            max-height: 50px !important;
+            border-radius: 4px !important;
+            border: 1px solid #333940 !important;
+        }
     </style>
 </head>
 <body>
@@ -332,6 +396,7 @@
 <script src="{{ asset('admin-assets/js/grapes-builder/dynamic/product-tabs.js').'?v='.$builderVersion }}"></script>
 <script src="{{ asset('admin-assets/js/grapes-builder/dynamic/category-grid.js').'?v='.$builderVersion }}"></script>
 <script src="{{ asset('admin-assets/js/grapes-builder/dynamic/post-list.js').'?v='.$builderVersion }}"></script>
+<script src="{{ asset('admin-assets/js/grapes-builder/dynamic/project-grid.js').'?v='.$builderVersion }}"></script>
 <script src="{{ asset('admin-assets/js/grapes-builder/dynamic/latest-reviews.js').'?v='.$builderVersion }}"></script>
 <script src="{{ asset('admin-assets/js/grapes-builder/dynamic/contact-form.js').'?v='.$builderVersion }}"></script>
 <script src="{{ asset('admin-assets/js/grapes-builder/dynamic/partial.js').'?v='.$builderVersion }}"></script>

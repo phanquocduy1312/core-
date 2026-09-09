@@ -40,7 +40,16 @@
                 var existingUrl = null;
                 if (target) {
                     if (typeof target.get === 'function') {
-                        existingUrl = target.get('src') || (target.getAttributes && target.getAttributes().src);
+                        var targetAttrSrc = (target.getAttributes && target.getAttributes().src);
+                        var targetSrc = target.get('src');
+                        var isPlh = function (s) {
+                            return !s || typeof s !== 'string' || s.trim() === '' || s.trim().charAt(0) === '<' || s.indexOf('data:image/svg+xml') === 0 || s.indexOf('/<svg') !== -1;
+                        };
+                        if (targetAttrSrc && !isPlh(targetAttrSrc)) {
+                            existingUrl = targetAttrSrc;
+                        } else if (targetSrc && !isPlh(targetSrc)) {
+                            existingUrl = targetSrc;
+                        }
                     }
                     if (!existingUrl && typeof target.getStyle === 'function') {
                         var style = target.getStyle() || {};

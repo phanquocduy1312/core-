@@ -58,7 +58,7 @@ class PageBuilderService
             $projects = $this->projects($page);
             $project = $data['builder_data'];
             $project['_draft'] = [
-                'html' => $this->htmlSanitizer->clean($data['published_html'] ?? ''),
+                'html' => $this->htmlSanitizer->clean($data['published_html'] ?? '', allowForms: $page->isPartial()),
                 'css' => $this->cleanCss($data['published_css'] ?? ''),
             ];
             $projects[$locale] = $this->cleanBuilderData($project);
@@ -105,7 +105,7 @@ class PageBuilderService
             $builderData[$locale] = $this->cleanBuilderData($project);
 
             $html = $page->getTranslations('published_html');
-            $html[$locale] = $this->htmlSanitizer->clean($data['published_html']);
+            $html[$locale] = $this->htmlSanitizer->clean($data['published_html'], allowForms: $page->isPartial());
 
             $css = $page->getTranslations('published_css');
             $css[$locale] = $this->cleanCss((string) ($data['published_css'] ?? ''));
@@ -154,6 +154,8 @@ class PageBuilderService
             ?? Str::slug($titles[$this->languages->defaultLocale()]);
         $active = (bool) $data['is_active'];
 
+        $isPartial = ($data['type'] ?? $page?->type) === 'partial';
+
         return [
             'type' => $data['type'] ?? $page?->type ?? 'page',
             'partial_role' => $data['partial_role'] ?? $page?->partial_role,
@@ -165,7 +167,7 @@ class PageBuilderService
             'slug' => $this->uniqueLegacySlug($baseSlug, $page?->id),
             'schema_version' => (int) ($data['builder_data']['version'] ?? 1),
             'builder_data' => $this->cleanBuilderData($data['builder_data'] ?? []),
-            'published_html' => $this->cleanHtmlByLocale($data['published_html'] ?? []),
+            'published_html' => $this->cleanHtmlByLocale($data['published_html'] ?? [], allowForms: $isPartial),
             'published_css' => $this->cleanCssByLocale($data['published_css'] ?? []),
             'meta_title' => $this->localizedStrings($data['meta_title'] ?? []),
             'meta_description' => $this->localizedStrings($data['meta_description'] ?? []),
@@ -193,11 +195,11 @@ class PageBuilderService
             ->all();
     }
 
-    private function cleanHtmlByLocale(array $values): array
+    private function cleanHtmlByLocale(array $values, bool $allowForms = false): array
     {
         return collect($values)
             ->filter(fn ($value, $locale) => $this->languages->supports((string) $locale) && is_string($value))
-            ->map(fn (string $value) => $this->htmlSanitizer->clean($value))
+            ->map(fn (string $value) => $this->htmlSanitizer->clean($value, allowForms: $allowForms))
             ->all();
     }
 

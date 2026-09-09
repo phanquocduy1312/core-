@@ -14,11 +14,16 @@
                     name: 'Khung chứa (Container)',
                     tagName: 'div',
                     droppable: true,
-                    classes: ['mx-auto', 'w-full'],
+                    classes: ['builder-container'],
                     style: {
-                        'max-width': '1280px',
+                        'width': '100%',
+                        'max-width': '1200px',
+                        'margin-left': 'auto',
+                        'margin-right': 'auto',
                         'padding-left': '20px',
-                        'padding-right': '20px'
+                        'padding-right': '20px',
+                        'box-sizing': 'border-box',
+                        'min-height': '60px'
                     },
                     traits: [
                         {
@@ -26,12 +31,12 @@
                             name: 'container-max-width',
                             label: 'Độ rộng tối đa (Max Width)',
                             options: [
-                                { id: '1280px', label: 'Rộng chuẩn (1280px - 7XL)' },
-                                { id: '1140px', label: 'Vừa phải (1140px - 6XL)' },
-                                { id: '1024px', label: 'Thu gọn (1024px - 5XL)' },
-                                { id: '768px', label: 'Hẹp đọc bài viết (768px - 3XL)' },
+                                { id: '1200px', label: 'Rộng chuẩn (1200px)' },
+                                { id: '1024px', label: 'Vừa phải (1024px)' },
+                                { id: '800px', label: 'Thu gọn đọc bài (800px)' },
                                 { id: '100%', label: 'Tràn viền (100% Full Width)' }
                             ],
+                            default: '1200px',
                             changeProp: 1
                         },
                         {
@@ -44,6 +49,7 @@
                                 { id: '32px', label: '32px (Rộng)' },
                                 { id: '0px', label: '0px (Không lề)' }
                             ],
+                            default: '20px',
                             changeProp: 1
                         }
                     ]
@@ -54,7 +60,7 @@
                 },
 
                 handleStyles: function () {
-                    var mw = this.get('container-max-width') || '1280px';
+                    var mw = this.get('container-max-width') || '1200px';
                     var px = this.get('container-padding') || '20px';
                     this.addStyle({
                         'max-width': mw,

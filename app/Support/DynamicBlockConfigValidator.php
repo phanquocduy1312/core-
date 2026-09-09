@@ -8,11 +8,13 @@ class DynamicBlockConfigValidator
         'product-grid',
         'product-tabs',
         'post-list',
+        'project-grid',
         'category-grid',
         'latest-reviews',
         'contact-form',
         'partial',
     ];
+
 
     public static function isAllowedType(string $type): bool
     {
@@ -50,6 +52,18 @@ class DynamicBlockConfigValidator
         return [
             'category' => trim((string) ($config['category'] ?? '')),
             'limit' => max(1, min(12, (int) ($config['limit'] ?? 3))),
+            'columns' => max(1, min(6, (int) ($config['columns'] ?? 3))),
+            'gap' => max(0, min(100, (int) ($config['gap'] ?? 24))),
+            'align' => in_array($align, ['left', 'center', 'right'], true) ? $align : 'left',
+        ];
+    }
+
+    public static function validateProjectGrid(array $config): array
+    {
+        $align = $config['align'] ?? 'left';
+        return [
+            'category' => trim((string) ($config['category'] ?? '')),
+            'limit' => max(1, min(24, (int) ($config['limit'] ?? 6))),
             'columns' => max(1, min(6, (int) ($config['columns'] ?? 3))),
             'gap' => max(0, min(100, (int) ($config['gap'] ?? 24))),
             'align' => in_array($align, ['left', 'center', 'right'], true) ? $align : 'left',
@@ -128,7 +142,17 @@ class DynamicBlockConfigValidator
                 $attrs['data-align'] = $validated['align'];
                 break;
 
+            case 'project-grid':
+                $validated = self::validateProjectGrid($config);
+                if ($validated['category'] !== '') $attrs['data-category'] = $validated['category'];
+                $attrs['data-limit'] = (string) $validated['limit'];
+                $attrs['data-columns'] = (string) $validated['columns'];
+                $attrs['data-gap'] = (string) $validated['gap'];
+                $attrs['data-align'] = $validated['align'];
+                break;
+
             case 'category-grid':
+
                 $validated = self::validateCategoryGrid($config);
                 $attrs['data-limit'] = (string) $validated['limit'];
                 $attrs['data-columns'] = (string) $validated['columns'];

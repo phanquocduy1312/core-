@@ -214,10 +214,25 @@ class CloudinaryService
 
         $files = Storage::disk('public')->allFiles($dir);
         $resources = [];
+        $validFolders = $this->listFolders();
 
         foreach ($files as $file) {
             // Skip system files if any
             if (str_contains($file, '.gitignore') || str_contains($file, '.DS_Store') || str_contains($file, '/.') || str_starts_with($file, '.')) {
+                continue;
+            }
+
+            // Only include files in valid application folders when listing 'all'
+            if ($folder === 'all') {
+                $parts = explode('/', $file);
+                $topFolder = count($parts) > 1 ? $parts[0] : '';
+                if (!in_array($topFolder, $validFolders, true)) {
+                    continue;
+                }
+            }
+
+            // Exclude internal placeholder files from imported/
+            if (str_starts_with($file, 'imported/')) {
                 continue;
             }
 

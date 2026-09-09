@@ -1,0 +1,41 @@
+<?php
+
+return [
+    'projects' => [
+        'title' => '프로젝트 관리',
+        'create' => '프로젝트 추가',
+        'create_title' => '새 프로젝트 만들기',
+        'edit_title' => '프로젝트 편집',
+        'search_placeholder' => '이름, 슬러그, 고객사로 검색...',
+        'no_projects' => '등록된 프로젝트가 없습니다.',
+        'confirm_delete' => '이 프로젝트를 삭제하시겠습니까?',
+        'created_success' => ':title 프로젝트가 성공적으로 생성되었습니다.',
+        'updated_success' => ':title 프로젝트가 성공적으로 업데이트되었습니다.',
+        'deleted_success' => ':title 프로젝트가 성공적으로 삭제되었습니다.',
+        'bulk_success' => ':count개의 프로젝트가 성공적으로 처리되었습니다.',
+        'sections' => [
+            'general' => '프로젝트 정보',
+            'gallery' => '갤러리',
+            'settings' => '설정 & 분류',
+            'media' => '대표 이미지',
+        ],
+        'fields' => [
+            'project' => '프로젝트',
+            'title' => '프로젝트 이름',
+            'category' => '카테고리',
+            'location' => '위치',
+            'client' => '클라이언트 / 파트너',
+            'completion_year' => '완공 연도',
+            'summary' => '개요',
+            'scope_of_work' => '제공된 조명 솔루션',
+            'thumbnail' => '대표 이미지',
+            'banner' => '히어로 배너 이미지',
+            'upload_gallery' => '갤러리 이미지 업로드',
+            'sort_order' => '표시 순서',
+            'status' => '상태',
+            'active' => '활성',
+            'inactive' => '비활성',
+            'featured' => '추천',
+        ],
+    ],
+];

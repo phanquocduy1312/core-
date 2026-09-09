@@ -43,6 +43,27 @@
                 else seenIds.push(currentId);
             }
         }
+        // Ensure image nodes keep src in both model property and attributes object
+        var nodeTag = (node.tagName || (node.get && typeof node.get === 'function' ? node.get('tagName') : '') || '').toLowerCase();
+        var nodeType = node.type || (node.get && typeof node.get === 'function' ? node.get('type') : '') || '';
+        if (nodeTag === 'img' || nodeType === 'image') {
+            var imgSrc = node.src || (attrs && attrs.src) || (node.get && typeof node.get === 'function' ? (node.get('src') || (attrs && attrs.src)) : null);
+            if (imgSrc) {
+                if (typeof imgSrc === 'string' && imgSrc.charAt(0) === '/' && global.location && global.location.origin) {
+                    imgSrc = global.location.origin + imgSrc;
+                }
+                if (typeof node.set === 'function') {
+                    node.set('type', 'image');
+                    node.set('src', imgSrc);
+                    node.addAttributes({ src: imgSrc });
+                } else {
+                    node.type = 'image';
+                    node.src = imgSrc;
+                    if (!node.attributes) node.attributes = {};
+                    node.attributes.src = imgSrc;
+                }
+            }
+        }
 
         var children = node.components || (node.get && typeof node.get === 'function' ? node.get('components') : null);
         if (children) {
@@ -71,6 +92,9 @@
         var seenIds = new Set();
 
         projectData.pages.forEach(function (page) {
+            if (page.component) {
+                normalizeNodeIds(page.component, seenIds);
+            }
             if (page.frames && Array.isArray(page.frames)) {
                 page.frames.forEach(function (frame) {
                     if (frame.component) {

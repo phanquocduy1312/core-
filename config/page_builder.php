@@ -9,5 +9,7 @@ return [
         'www.youtube-nocookie.com',
         'player.vimeo.com',
         'www.google.com',
+        'maps.google.com',
+        'google.com',
     ],
 ];

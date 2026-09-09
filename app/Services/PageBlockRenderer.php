@@ -7,7 +7,9 @@ use App\Models\Page;
 use App\Models\Post;
 use App\Models\PostCategory;
 use App\Models\Product;
+use App\Models\Project;
 use App\Models\Review;
+
 use DOMDocument;
 use DOMElement;
 use DOMXPath;
@@ -61,6 +63,13 @@ class PageBlockRenderer
                 $this->replacePlaceholderOrChildren($document, $node, $this->renderPostList($node, $locale));
             }
         }
+
+        foreach (iterator_to_array($xpath->query('//*[@data-page-block="project-grid"]') ?: []) as $node) {
+            if ($node instanceof DOMElement) {
+                $this->replacePlaceholderOrChildren($document, $node, $this->renderProjectGrid($node, $locale));
+            }
+        }
+
 
         foreach (iterator_to_array($xpath->query('//*[@data-page-block="category-grid"]') ?: []) as $node) {
             if ($node instanceof DOMElement) {
@@ -367,7 +376,64 @@ class PageBlockRenderer
         return $style . $grid;
     }
 
+    private function renderProjectGrid(DOMElement $node, string $locale): string
+    {
+        $limit = max(1, min(24, (int) ($node->getAttribute('data-limit') ?: 6)));
+        $category = trim($node->getAttribute('data-category'));
+
+        $columns = max(1, min(6, (int) ($node->getAttribute('data-columns') ?: 3)));
+        $gap = max(0, min(100, (int) ($node->getAttribute('data-gap') ?: 24)));
+        $align = $this->alignment($node, 'left');
+
+        $query = Project::query()->where('is_active', true);
+        if ($category !== '') {
+            $query->where('category', $category);
+        }
+
+        $projects = $query->orderBy('sort_order')->latest('id')->limit($limit)->get();
+        if ($projects->isEmpty()) {
+            return $this->emptyState('Chưa có dự án nào để hiển thị.');
+        }
+
+        $gridId = 'project-grid-'.Str::random(8);
+
+        $style = '<style>'
+            .'#'.$gridId.' { display: grid; grid-template-columns: repeat('.$columns.', minmax(0, 1fr)); gap: '.$gap.'px; padding: 8px 0; }'
+            .'@media(max-width: 1024px) { #'.$gridId.' { grid-template-columns: repeat('.min(2, $columns).', minmax(0, 1fr)); } }'
+            .'@media(max-width: 640px) { #'.$gridId.' { grid-template-columns: 1fr; } }'
+            .'.premium-project-card:hover { transform: translateY(-5px); box-shadow: 0 16px 24px -4px rgba(0,0,0,0.08) !important; border-color: #cbd5e1 !important; }'
+            .'.premium-project-card:hover .project-card-img { transform: scale(1.06) !important; }'
+            .'</style>';
+
+        $cards = $projects->map(function (Project $project) use ($locale, $align) {
+            $title = e($project->getTranslation('title', $locale, false) ?: $project->getTranslation('title', 'en', false));
+            $location = e($project->getTranslation('location', $locale, false) ?: $project->getTranslation('location', 'en', false));
+            $image = e($project->image_url ?: '/wp-content/uploads/2021/12/Costance-Lemuria-Praslin_599x599.jpg');
+            $url = url('/projects/' . ($project->slug ?: $project->id));
+            $categoryLabel = e($project->categoryLabel($locale));
+
+            return '<a href="'.$url.'" class="premium-project-card" style="display:flex; flex-direction:column; text-decoration:none; color:inherit; background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; overflow:hidden; transition:all 0.3s ease; box-shadow:0 4px 6px -1px rgba(0,0,0,0.02); height:100%; text-align:'.$align.';">'
+                .'<div style="position:relative; overflow:hidden; padding-bottom:65%; background:#f8fafc;">'
+                .'<img src="'.$image.'" alt="'.$title.'" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; transition:transform 0.5s ease;" class="project-card-img" loading="lazy">'
+                .'<span style="position:absolute; top:12px; left:12px; background:rgba(15,23,42,0.75); backdrop-filter:blur(4px); color:#ffffff; font-size:11px; font-weight:700; padding:4px 10px; border-radius:9999px; text-transform:uppercase; letter-spacing:0.5px;">'.$categoryLabel.'</span>'
+                .'</div>'
+                .'<div style="padding:18px; flex-grow:1; display:flex; flex-direction:column; justify-content:space-between;">'
+                .'<div>'
+                .'<h4 style="font-size:16px; font-weight:700; color:#0f172a; margin:0 0 6px 0; line-height:1.35; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">'.$title.'</h4>'
+                .($location !== '' ? '<div style="font-size:13px; color:#64748b; font-weight:600; text-transform:uppercase; letter-spacing:0.5px;">'.$location.'</div>' : '')
+                .'</div>'
+                .'<div style="margin-top:14px; font-size:13px; font-weight:700; color:#172033; display:inline-flex; align-items:center; gap:4px;">'
+                .'<span>Xem dự án</span> <i class="ti ti-arrow-right"></i>'
+                .'</div>'
+                .'</div>'
+                .'</a>';
+        })->implode('');
+
+        return $style . '<div id="'.$gridId.'">'.$cards.'</div>';
+    }
+
     private function renderCategoryGrid(DOMElement $node, string $locale): string
+
     {
         $limit = max(1, min(24, (int) ($node->getAttribute('data-limit') ?: 8)));
 
