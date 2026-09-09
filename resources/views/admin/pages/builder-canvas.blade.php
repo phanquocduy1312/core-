@@ -59,6 +59,71 @@
         .builder-video-wrapper iframe {
             border: 0;
         }
+
+        /* Ẩn triệt để màn hình loader / preloader trong canvas để không che mất nội dung */
+        .loading__wrapper,
+        .preloader,
+        .page-loader,
+        #preloader {
+            display: none !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+        }
+
+        /* Định vị thẻ 3D Carousel trong canvas builder trực quan */
+        .lux-carousel .app {
+            min-height: 520px !important;
+            position: relative !important;
+            overflow: visible !important;
+        }
+        .lux-carousel .card {
+            --card-translateY-offset: 0 !important;
+            cursor: pointer !important;
+        }
+        .lux-carousel .card.current--card {
+            opacity: 1 !important;
+            transform: translate(-50%, -50%) scale(1.15) !important;
+            z-index: 10 !important;
+        }
+        .lux-carousel .card.previous--card {
+            opacity: 0.55 !important;
+            transform: translate(-50%, -50%) translateX(-300px) rotateY(25deg) scale(0.9) !important;
+            z-index: 5 !important;
+        }
+        .lux-carousel .card.next--card {
+            opacity: 0.55 !important;
+            transform: translate(-50%, -50%) translateX(300px) rotateY(-25deg) scale(0.9) !important;
+            z-index: 5 !important;
+        }
+        .lux-carousel .infoList {
+            position: absolute !important;
+            bottom: 20px !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            width: 100% !important;
+            height: auto !important;
+            text-align: center !important;
+            z-index: 15 !important;
+        }
+        .lux-carousel .info.current--info {
+            display: block !important;
+            opacity: 1 !important;
+            text-align: center !important;
+            margin: 0 auto !important;
+        }
+        .lux-carousel .info.current--info h3 {
+            color: #ffffff !important;
+            font-size: 32px !important;
+            font-family: "ACaslonPro", serif, sans-serif !important;
+            margin: 0 !important;
+        }
+        .lux-carousel .info.current--info p {
+            color: rgba(255, 255, 255, 0.85) !important;
+            font-size: 14px !important;
+            margin: 4px 0 0 0 !important;
+        }
+
         {!! $css !!}
     </style>
 </head>

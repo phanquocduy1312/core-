@@ -62,6 +62,22 @@ class ProjectPagesSeeder extends Seeder
             $css = trim($cm[1]);
         }
 
+        $css .= <<<'EXTRA_CSS'
+
+/* Ẩn preloader */
+.loading__wrapper { display: none !important; }
+
+/* Trình diễn 3D Carousel đẹp mắt trong builder */
+.lux-carousel .app { min-height: 520px; position: relative; overflow: visible; }
+.lux-carousel .card { --card-translateY-offset: 0 !important; cursor: pointer; }
+.lux-carousel .card.current--card { opacity: 1 !important; transform: translate(-50%, -50%) scale(1.15) !important; z-index: 10 !important; }
+.lux-carousel .card.previous--card { opacity: 0.55 !important; transform: translate(-50%, -50%) translateX(-300px) rotateY(25deg) scale(0.9) !important; z-index: 5 !important; }
+.lux-carousel .card.next--card { opacity: 0.55 !important; transform: translate(-50%, -50%) translateX(300px) rotateY(-25deg) scale(0.9) !important; z-index: 5 !important; }
+.lux-carousel .infoList { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); width: 100%; height: auto; text-align: center; z-index: 15; }
+.lux-carousel .info.current--info { display: block; opacity: 1; text-align: center; margin: 0 auto; }
+EXTRA_CSS;
+
+
         $titles = [
             'vi' => 'Dự án - Our Projects',
             'en' => 'Our Projects - Lighting Projects in Asia',

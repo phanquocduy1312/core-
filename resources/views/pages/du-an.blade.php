@@ -218,10 +218,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="loading__wrapper">
-                                                <div class="loader--text">Loading...</div>
-                                                <div class="loader"><span></span></div>
-                                            </div>
                                         </div>
                                     </div>
                                 </section>
