@@ -1,0 +1,552 @@
+[
+  {
+    "name": "Acolyte",
+    "country": "America",
+    "description": "Acolyte is one of the world’s leading providers of architectural LED lighting solutions. Through the collaboration with international designers, their products are found in major installations around the globe, from first-class hotels and high-end restaurants to luxury homes and sparkling modern sports stadiums.",
+    "website_url": "https://genledbrands.com/acolyte/",
+    "image_url": "/wp-content/uploads/2022/01/acolyte_png_re-1.png",
+    "showcase_image": "/wp-content/uploads/2021/12/Acolyte_800x1072.png",
+    "sort_order": 10,
+    "is_active": true
+  },
+  {
+    "name": "Aldabra",
+    "country": "Italy",
+    "description": "Aldabra's lighting solutions are proudly “Made in Italy” where they design, engineer and manufacturer under strict parameters to insure quality. It is a reference point for professional architectural and landscape exterior lighting. Through the use of innovative materials, Aldabra products are highly resistant to challenging environments, an essential element in an era of deep climate change.",
+    "website_url": "https://en.aldabra.it/",
+    "image_url": "/wp-content/uploads/2022/01/aldabra_png_re-1.png",
+    "showcase_image": "/wp-content/uploads/2021/12/Aldabra_800x1072-1.jpg",
+    "sort_order": 20,
+    "is_active": true
+  },
+  {
+    "name": "Apex",
+    "country": "China",
+    "description": "Inspired by the concept of simplicity and flexibility, apexLED provides quality LED lighting solutions that deliver the right ambience maximizing the architectural designs.\nDrawing on our expertise in various industries, our broad range of products improves the lighting executions for many hospitality, residential, retail outlets, commercial and architectural applications.",
+    "website_url": "",
+    "image_url": "/wp-content/uploads/2022/01/apex_re_opt1-1.jpg",
+    "showcase_image": "/wp-content/uploads/2022/01/apex_800x1072.png",
+    "sort_order": 30,
+    "is_active": true
+  },
+  {
+    "name": "Ares",
+    "country": "Italy",
+    "description": "In 2015 Ares enters the Flos group. Flos and Ares fully share not only advanced research and innovation processes, but also the concept of integration between lighting units, architecture and spaces, and the idea of experiencing light as an emotion.",
+    "website_url": "https://www.aresill.net/",
+    "image_url": "/wp-content/uploads/2022/01/ares_png_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2021/12/Ares_800x1072.png",
+    "sort_order": 40,
+    "is_active": true
+  },
+  {
+    "name": "Astro",
+    "country": "UK",
+    "description": "Since 1997, Astro's founders John Fearon and James Bassant, have shared a passion for British lighting design and a vision to create products with distinctive quality. Obsessive over the details, they refine elements others may overlook, challenging ourselves so we get it just right. The luminaires begin life here in the UK as simple drawings within our sketchbooks. Future-proofed designs with a pared-down aesthetic. It's a simplicity of form that ensures the products retain a timeless quality.",
+    "website_url": "https://www.astrolighting.com/site-version",
+    "image_url": "/wp-content/uploads/2022/01/astro_png_re-1.png",
+    "showcase_image": "/wp-content/uploads/2021/12/Astro_800x1072.jpg",
+    "sort_order": 50,
+    "is_active": true
+  },
+  {
+    "name": "Barthelme",
+    "country": "Germany",
+    "description": "Barthelme is an innovative owner-managed family business and one of the technology leaders for LED lighting systems. The Barthelme product line ranges from IP protected flexible LED stripes, to a variety of innovative profiles and customized luminaires through to intelligent controllers for comfortable lighting management. Luminaires from the “Made in Germany” collection are developed and manufactured with passion for the product and customer at the company headquarters in Nurnberg.",
+    "website_url": "https://www.barthelme.de/content/en/default.aspx",
+    "image_url": "/wp-content/uploads/2022/01/barthelme_logo_2015_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2021/12/Barthelme_2_800x1072.jpg",
+    "sort_order": 60,
+    "is_active": true
+  },
+  {
+    "name": "Brokis",
+    "country": "Czech Republic",
+    "description": "The Czech premium lighting brand, Brokis, stands for the synthesis of exquisite design, superior quality, and the remarkable craftsmanship of Bohemian glass artisans. Conceived by renowned Czech and foreign designers, the original BROKIS lighting collections have steadily earned international acclaim and recognition. The Brokis portfolio features modern functional lighting fixtures, decorative objects, and unique lighting solutions for architects and interior designers.",
+    "website_url": "https://www.brokis.cz/",
+    "image_url": "/wp-content/uploads/2022/01/brokis_logo2017_ALT_black_sRGB_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2021/12/Brokis_1_800x1072.png",
+    "sort_order": 70,
+    "is_active": true
+  },
+  {
+    "name": "Brownie",
+    "country": "Japan",
+    "description": "Brownie Ecotronics was founded in 2012 by Mr.Hideki Kataoka, driven by great passion and strong belief in developing professional architectural LED lighting.",
+    "website_url": "http://www.brownie-led.com/",
+    "image_url": "/wp-content/uploads/2022/01/brownie_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2022/01/Brownie_800x1072.png",
+    "sort_order": 80,
+    "is_active": true
+  },
+  {
+    "name": "Logo",
+    "country": "China",
+    "description": "CDN is a top lighting solution provider from China who has been providing well-designed quality lighting products and praised services to over 2500 hotels globally.\nMeanwhile, CDN also became a strategic lighting supplier of many big property developers, retail shops and shopping malls.\nCDN provides broad range of products including interior lighting, exterior lighting, decorative lighting, emergency lighting for hotels, retail shops, shopping malls, residential buildings, museums, public facilities, sports facilities, infrastructure facilities, etc.\nBesides our own standard items, CDN also has a very strong capacity to customize lighting for various projects according to specific designs.",
+    "website_url": "https://www.cdnlight.com/",
+    "image_url": "/wp-content/uploads/elementor/thumbs/LOGO-rhojzz21007lufwk0goy6zt81rktqeepomv8d61bsi.png",
+    "showcase_image": "/wp-content/uploads/2026/01/CDN-Project-Hilton-Hotel-Sri-Lanka-scaled.jpg",
+    "sort_order": 90,
+    "is_active": true
+  },
+  {
+    "name": "Delta Light",
+    "country": "Belgium",
+    "description": "At Delta Light – a Belgian family business – they design and manufacture architectural lighting and collaborate with architects, designers, contractors and investors to integrate light into their projects.",
+    "website_url": "https://www.deltalight.com/en",
+    "image_url": "/wp-content/uploads/2022/01/delta-light_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2021/12/Delta-Light_800x1072.jpg",
+    "sort_order": 100,
+    "is_active": true
+  },
+  {
+    "name": "Ecosense",
+    "country": "US",
+    "description": "Ecosense is an LED technology company. Recognized by the likes of Red Dot for innovation and design, as well as Inc. 500 and Deloitte Technology Fast 500 for consistently making their fastest growing companies lists, we serve a creative class of artists and designers and have been fortunate to light the most coveted spaces on earth. At Ecosense, we strive to pioneer in the areas of color science, hardware, software, and data science.",
+    "website_url": "https://www.ecosenselighting.com/",
+    "image_url": "/wp-content/uploads/2022/01/ecosense_logo_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2021/12/Ecosense_800x1072.jpg",
+    "sort_order": 110,
+    "is_active": true
+  },
+  {
+    "name": "Endo",
+    "country": "Japan",
+    "description": "ENDO Lighting is the pioneer of LED lighting. Succeeding in practical use of LED light devices first in the world, we will continue to pursue the possibilities of LED. The LED technology leads the industry, and their lighting devices have the excellent safety and reliability.\nLights of ENDO Lighting are being used everywhere, from shops, offices, and to world heritages.",
+    "website_url": "https://www.endo-lighting.com/",
+    "image_url": "/wp-content/uploads/2022/01/endo_logo_re_opt1-1.jpg",
+    "showcase_image": "/wp-content/uploads/2021/12/ENDO_800x1072.png",
+    "sort_order": 120,
+    "is_active": true
+  },
+  {
+    "name": "Erco",
+    "country": "Germany",
+    "description": "ERCO is a leading international specialist in architectural lighting, and is the first lighting manufacturer with a portfolio with 100% LED technology. Founded in 1934, ERCO operates as a global player with independent sales organisations and partners in 55 countries worldwide.",
+    "website_url": "https://www.erco.com/en/",
+    "image_url": "/wp-content/uploads/2022/01/erco_png_re-1.png",
+    "showcase_image": "/wp-content/uploads/2021/12/ERCO_800x1072.jpg",
+    "sort_order": 130,
+    "is_active": true
+  },
+  {
+    "name": "Esse-Ci",
+    "country": "Italy",
+    "description": "Since 1984 Esse-ci has designed and manufactured interior lighting solutions, thinking of light as a factor able to promote the growth of the customers’ business. Initially, their products were intended for the industrial market. Today, Esse-ci offers a complete architectural range of solutions for interiors, with an emphasis on continuous light lines to meet the specific needs of the service world: from offices to all kinds of stores, from large scale retail channels to large public and private infrastructures such as schools, hospitals, museums.",
+    "website_url": "https://www.esse-ci.com/en/",
+    "image_url": "/wp-content/uploads/2022/01/esse-ci_png_re-1.png",
+    "showcase_image": "/wp-content/uploads/2021/12/Esse-ci_800X1072.png",
+    "sort_order": 140,
+    "is_active": true
+  },
+  {
+    "name": "Exenia",
+    "country": "Italy",
+    "description": "Exenia is a significant player in the professional lighting sector, specialised in the production of LED lighting fixtures for indoor use, suitable for all types of installations, from residential to commercial, from museums to showrooms. A growing company, with an entrepreneurial culture solidly based on the principles of collaboration, transparency, respect, social responsibility, quality, research, innovation, sustainability, design and personalization.",
+    "website_url": "https://www.exenia.eu/",
+    "image_url": "/wp-content/uploads/2022/01/exenia-logo_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2021/12/Exenia_1_800X1072.jpg",
+    "sort_order": 150,
+    "is_active": true
+  },
+  {
+    "name": "Faro",
+    "country": "Spain",
+    "description": "Faro Barcelona is a Spanish company founded in 1945 that produces interior lamps and outdoor lighting.",
+    "website_url": "https://faro.es/en/",
+    "image_url": "/wp-content/uploads/2022/01/faro-logo_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2022/01/faro_800x1072.jpg",
+    "sort_order": 160,
+    "is_active": true
+  },
+  {
+    "name": "Filix",
+    "country": "Croatia",
+    "description": "FILIX Lighting was founded in 1990 with the main idea of developing illumination solutions.  With implementation of modern technology and trough research and development they are able to create LED products that minimize and optimize energy consumption, while delivering maximum light output and desired effects. The product range is currently based on high quality outdoor lighting fixtures whose main purpose is to decorate and illuminate outdoor spaces and areas.",
+    "website_url": "https://www.filixlighting.com/",
+    "image_url": "/wp-content/uploads/2022/01/filix_logo_1_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2021/12/Filix_1_800X1072.jpg",
+    "sort_order": 170,
+    "is_active": true
+  },
+  {
+    "name": "Flos",
+    "country": "Italy",
+    "description": "Established in 1962 in Merano, Italy, FLOS is recognised as a world leading manufacturer of innovative lighting solutions in the residential and architectural sectors, featuring high quality products and systems characterised by fine design. The company has grown significantly over more than fifty years in business, demonstrating its ongoing commitment to research and innovation in lighting, combined with an extraordinary ability to identify new creative talents.",
+    "website_url": "https://www.flos.com/",
+    "image_url": "/wp-content/uploads/2022/01/flos_logo_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2021/12/Flos_800X1072.jpg",
+    "sort_order": 180,
+    "is_active": true
+  },
+  {
+    "name": "Grunzell",
+    "country": "Malaysia",
+    "description": "Grunzell are a provider of high quality, well-designed and engineered LED lighting products and solutions.  Established by a team of passionate LED lighting experts and in partnership with their distinguished and experienced lighting designers, the company offers a range of innovative world class LED lighting exterior and interior products that represents real value without compromise on quality.",
+    "website_url": "https://www.grunzell.com/",
+    "image_url": "/wp-content/uploads/2022/01/Grunzell-Website-Logo_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2021/12/Grunzell_1_800X1072.png",
+    "sort_order": 190,
+    "is_active": true
+  },
+  {
+    "name": "Iguzzini",
+    "country": "Italy",
+    "description": "Established in 1959, iGuzzini is an international community at the service of architecture and lighting culture. It is a creative hub with a strong vocation for innovation, as well as a centre for excellence dedicated to the study, design and development of lighting. unanticipated level.",
+    "website_url": "https://www.iguzzini.com/",
+    "image_url": "/wp-content/uploads/2022/01/iGuzzini-logo_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2022/01/iguzzini_800x1072.jpg",
+    "sort_order": 200,
+    "is_active": true
+  },
+  {
+    "name": "Kkdc",
+    "country": "Korea",
+    "description": "KKDC is an established lighting manufacturer producing a wide range of specialist LED lighting solutions for high-end architectural markets worldwide.",
+    "website_url": "https://kkdc.lighting/en/",
+    "image_url": "/wp-content/uploads/2022/01/kkdc_logo_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2021/12/KKDC_800X1072.jpg",
+    "sort_order": 210,
+    "is_active": true
+  },
+  {
+    "name": "Klik",
+    "country": "Australia",
+    "description": "KLIK Systems manufacturers of bespoke fittings is an Australian owned lighting manufacturer that has been supplying the Australasian region with high quality architectural linear lighting for more than forty two years, within the KLIK design team alone, there are over sixty years combined experience.",
+    "website_url": "https://kliksystems.com.au/",
+    "image_url": "/wp-content/uploads/2022/01/klik-system_logo_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2021/12/Klik_800X1072.jpg",
+    "sort_order": 220,
+    "is_active": true
+  },
+  {
+    "name": "Kreon",
+    "country": "Belgium",
+    "description": "Kreon epitomises the language of form in present-day architecture, an architecture based on right angles and lines. It is to this same sober architecture that the appliances owe their universal and timeless character.",
+    "website_url": "http://www.kreon.com/",
+    "image_url": "/wp-content/uploads/2022/01/kreon_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2022/01/kreon_2_800x1072.jpg",
+    "sort_order": 230,
+    "is_active": true
+  },
+  {
+    "name": "Lamp Lighting",
+    "country": "Spain",
+    "description": "\"We advise, we design, we produce and make your technical lighting projects possible. \" For more than 45 years, Lamp has maintained its essential commitment: to bring to life functional and customized solutions for our customers' lighting challenges, adapted to any architectural project around the world. Lamp is work and attitude, Lamp is Worktitude for Light.",
+    "website_url": "https://www.lamp.es/en",
+    "image_url": "/wp-content/uploads/2022/01/lamp_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2021/12/Lamp_800X1072.jpg",
+    "sort_order": 240,
+    "is_active": true
+  },
+  {
+    "name": "Light Graphix",
+    "country": "UK",
+    "description": "LightGraphix design and manufacture lighting for architectural, marine and display use. The company started in 1979 in Dartford.  LightGraphix is very proud of the fact that all their products are manufactured in the UK which helps them ensure quality, flexibility on delivery and the production of custom lengths. They have supplied lighting for a wide variety of projects throughout the world, with 25% of the production exported.",
+    "website_url": "https://www.lightgraphix.co.uk/",
+    "image_url": "/wp-content/uploads/2022/01/Lightgraphix-logo_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2021/12/LightGraphix_800X1072.jpg",
+    "sort_order": 250,
+    "is_active": true
+  },
+  {
+    "name": "Linea Light",
+    "country": "Italy",
+    "description": "Linea Light Group simultaneously maintains its presence as a leader in professional lighting with the I-Lèd brand, acknowledged as one of the major innovators in the LED area. From 2019, they have been in the urban & industrial lighting segment with dedicated products, reinforcing the presence in the technical lighting market with efficient and innovative products. Precision, speed and reliability are the characteristics that have always defined Linea Light Group.",
+    "website_url": "http://www.linealight.com",
+    "image_url": "/wp-content/uploads/2022/01/linea-light-group_logo_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2021/12/Linea-Light_800x1072.png",
+    "sort_order": 260,
+    "is_active": true
+  },
+  {
+    "name": "Lombardo",
+    "country": "Italy",
+    "description": "Lombardo Lighting has been producing unique lighting products in Europe. They are the lighting manufacturer and designer based in the Villongo, Italy. Lombardo’s key focus is in the exterior lighting market.such as schools, hospitals, museums.",
+    "website_url": "https://www.lombardo.it/en",
+    "image_url": "/wp-content/uploads/2022/01/lombardo_logo_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2021/12/Lombardo_800X1072.png",
+    "sort_order": 270,
+    "is_active": true
+  },
+  {
+    "name": "Luce & Light",
+    "country": "Italy",
+    "description": "Luce & Light (L&L) specialises in designing and producing lighting systems using LED technology since 2007. They are proud to be an authentic example of the Made in Italy branding, with a flair for innovation and a profound appreciation of architectural projects. Their lighting fixtures integrate perfectly with both indoor and outdoor spaces and surfaces to recreate natural architectural illumination.",
+    "website_url": "https://www.lucelight.it/en/",
+    "image_url": "/wp-content/uploads/2022/01/luce_light_logo_opt2_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2021/12/Luce_Light_800x1072.png",
+    "sort_order": 280,
+    "is_active": true
+  },
+  {
+    "name": "Luci",
+    "country": "Japan",
+    "description": "The Luci Division of PROTERAS Co., Ltd., launched the Luci brand in 2004, and in 2005 the LED lighting business became a separate division from the space creation business. In 2009, they established a Chinese subsidiary, LUCI (SHANGHAI) LIGHTING TECHNOLOGY CO., LTD. (Offices in Shanghai and Beijing), in 2011 they opened a staffed office in Singapore and in 2012, they established a Singaporean subsidiary Luci Pte. Ltd. (Offices in Singapore and Hong Kong) to increasingly expand into overseas markets to make Luci a global brand.",
+    "website_url": "https://www.luci.co.jp/en/",
+    "image_url": "/wp-content/uploads/2022/01/luci_logo_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2021/12/Luci_1_800X1072.jpg",
+    "sort_order": 290,
+    "is_active": true
+  },
+  {
+    "name": "Lumascape",
+    "country": "Australia",
+    "description": "Lumascape transforms outdoor architectural spaces with precision engineered lighting solutions that are proven to perform.",
+    "website_url": "https://lumascape.net/",
+    "image_url": "/wp-content/uploads/2022/01/lumascape_logo_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2021/12/Lumascape_800X1072.jpg",
+    "sort_order": 300,
+    "is_active": true
+  },
+  {
+    "name": "Marset",
+    "country": "Italy",
+    "description": "It is through its design that Marset aims to convey its most essential values: Good design, high quality, technological rigor, innovation, sustainability, durability, authenticity.",
+    "website_url": "https://www.marset.com/",
+    "image_url": "/wp-content/uploads/2022/01/marset_logo_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2021/12/Marset_1_800X1072.png",
+    "sort_order": 310,
+    "is_active": true
+  },
+  {
+    "name": "Martin",
+    "country": "Denmark",
+    "description": "As a world leader in the creation of dynamic lighting solutions for the entertainment, architectural, and commercial sectors, Martin lighting and video systems are renowned the world over. Martin also offers a range of advanced lighting controllers and media servers, as well as a complete line of smoke machines as a complement to intelligent lighting. Martin operates the industry’s most complete and capable distributor network with local partners in nearly 100 countries. Founded in 1987 and based in Aarhus, Denmark, Martin is the lighting division of global infotainment and audio company HARMAN International Industries.",
+    "website_url": "https://www.martin.com/en-US",
+    "image_url": "/wp-content/uploads/2022/01/martin_png_re-1.png",
+    "showcase_image": "/wp-content/uploads/2021/12/Martin_800X1072.jpg",
+    "sort_order": 320,
+    "is_active": true
+  },
+  {
+    "name": "Odelic",
+    "country": "Japan",
+    "description": "ODELIC is a leading lighting manufacturer in Japan with 70 years of history. At ODELIC, we are dedicated to enriching lives and the future with advanced technology. Through ongoing R&D into people-friendly lighting solutions, we are helping to promote comfort, convenience and quality of life for all.",
+    "website_url": "https://www.odelic.com/",
+    "image_url": "/wp-content/uploads/2022/01/odelic_logo_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2021/12/ODELIC_800x1072.png",
+    "sort_order": 330,
+    "is_active": true
+  },
+  {
+    "name": "Orluna",
+    "country": "UK",
+    "description": "Established in 1973, Orluna manufactures the UK’s best-selling architectural downlight, Orluna is a major international lighting business. Origin luminiaire collection offers the finest quality of light and colour rendition of any downlight available across the world. Their aim is to help lighting and interior designers realise the full potential of their projects by offering unparalled quality of light. Origin enriches colours in fabrics and materials and the accurate beam control helps to achieve the desired scheme effect.",
+    "website_url": "https://www.orluna.com/",
+    "image_url": "/wp-content/uploads/2022/01/Orluna_logo_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2021/12/Orluna_2_800x1072.jpg",
+    "sort_order": 340,
+    "is_active": true
+  },
+  {
+    "name": "Osram",
+    "country": "Germany",
+    "description": "Osram offers innovative and sustainable lighting solutions. The product portfolio of Osram ranges from modules, LED lamps and luminaires to light management systems.",
+    "website_url": "https://www.osram.com/",
+    "image_url": "/wp-content/uploads/2022/01/osram_png_re-1.png",
+    "showcase_image": "/wp-content/uploads/2022/01/osram_800x1072.jpg",
+    "sort_order": 350,
+    "is_active": true
+  },
+  {
+    "name": "Panzeri",
+    "country": "Italy",
+    "description": "Panzeri has produced and sold lighting Made in Italy to over 50 countries worldwide since 1947. Panzeri lamps are made with care and attention to detail, designed to illuminate and decorate indoor and outdoor spaces offering multiple stylistic solutions, produced in Italy at an eco-compatible production plant almost entirely powered by solar energy.",
+    "website_url": "https://panzeri.it/en/",
+    "image_url": "/wp-content/uploads/2022/01/panzeri_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2021/12/Panzeri_800x1072.jpg",
+    "sort_order": 360,
+    "is_active": true
+  },
+  {
+    "name": "Platek",
+    "country": "Italy",
+    "description": "Platek is an international company projected to innovate in the field of architectural and decorative outdoor lighting. The range of products includes integrated architectural lighting systems consisting of floor recessed concealed lighting, appliques, suspensions, projectors and posts. All these products have an optical systems with LED technology, managed internally by the company.",
+    "website_url": "https://www.platek.eu/eng/",
+    "image_url": "/wp-content/uploads/2022/01/platek-logo-01_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2021/12/Platek_800x1072.png",
+    "sort_order": 370,
+    "is_active": true
+  },
+  {
+    "name": "Precision Lighting",
+    "country": "UK",
+    "description": "Precision Lighting is a British manufacturer with a proud legacy of collaborating with architects, lighting designers, interior designers and end-clients to deliver architectural luminaires and lighting systems that represent a fusion of optical excellence and aesthetic appreciation. From concept design through to prototype engineering, and delivery of finished product, the in-house London-based R+D team is committed to the development of luminaires and systems that deliver for specifier and end-users alike.",
+    "website_url": "http://precisionlighting.co.uk/",
+    "image_url": "/wp-content/uploads/2022/01/precision_logo_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2021/12/precision_800x1072.jpg",
+    "sort_order": 380,
+    "is_active": true
+  },
+  {
+    "name": "Prolicht",
+    "country": "Austria",
+    "description": "PROLICHT is a globally successful manufacturer of architectural premium-lighting-concepts.As internationally operating company, PROLICHT maintains a global sales network with specialized partners in more than 70 countries. PROLICHT specialises in the manufacturing of architectural luminaires and lighting systems for the retail industry, offices, public buildings, the hotel sector and gastronomy.",
+    "website_url": "https://www.prolicht.at/",
+    "image_url": "/wp-content/uploads/2022/01/Prolicht_logo_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2021/12/Prolicht_800x1072.png",
+    "sort_order": 390,
+    "is_active": true
+  },
+  {
+    "name": "Rcl",
+    "country": "UK",
+    "description": "Remote Controlled Lighting (RCL) is the pioneer of remote controlled motorised architectural spotlights. With over 18 years experience and over 100,000 fixtures installed worldwide, the family-owned British company produces luminaires that are intelligent, reliable and efficient. RCL’s passionate product designers and engineers are constantly striving to bring cutting-edge lighting technologies to an ever-evolving product portfolio.",
+    "website_url": "https://rclighting.com/",
+    "image_url": "/wp-content/uploads/2022/01/RCL_logo_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2021/12/RCL_800x1072.jpg",
+    "sort_order": 400,
+    "is_active": true
+  },
+  {
+    "name": "Revolux",
+    "country": "China",
+    "description": "REVOLUX is one of our in-house brands which produced from qualified manufactures from Asia countries such as China, Malaysia, Vietnam…etc\nWith REVOLUX solution we are very flexible in complying with our customer’s requirements from specifications to project’s budget but still ensure about quality of project.\nREVOLUX brings to our clients and partners the best of its expertise and experience, through reliable and customer-centric solutions.",
+    "website_url": "{{ url('/') }}",
+    "image_url": "/wp-content/uploads/elementor/thumbs/REVOLUX-1-r4uzmk86yh41iulmp6a569ygab8rspl3cuvh1uht6o.png",
+    "showcase_image": "/wp-content/uploads/2025/05/Marriot.jpg",
+    "sort_order": 410,
+    "is_active": true
+  },
+  {
+    "name": "Slv",
+    "country": "Germany",
+    "description": "Over the last 40 years, the SLV Lighting Group has perfected professional lighting solutions, selling in over 100 countries, with the support of 15 subsidiaries. Light is, and always has been the passion. A passion that is applied across the entire supply-chain: from in-house innovation, to quality assurance at the highest standard and an affordable price at the end.",
+    "website_url": "https://www.slv.com/en/",
+    "image_url": "/wp-content/uploads/2022/01/SLV_logo_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2021/12/SLV_800x1072.jpg",
+    "sort_order": 420,
+    "is_active": true
+  },
+  {
+    "name": "Soraa",
+    "country": "United States",
+    "description": "Our founder Shuji Nakamura, Nobel Prize winner and the father of modern day LED lighting, wanted to create a light source that would match the characteristics of our most natural illumination: the sun. It is why the company is called SORAA, which means “sky” in kanji.",
+    "website_url": "https://www.soraa.com/",
+    "image_url": "/wp-content/uploads/2022/01/soraa_re-2.jpg",
+    "showcase_image": "/wp-content/uploads/2022/01/soraa_800x1072.jpg",
+    "sort_order": 430,
+    "is_active": true
+  },
+  {
+    "name": "Stilnovo",
+    "country": "Italy",
+    "description": "In 2019, Stilnovo was acquired by Linea Light Group, inheriting a collection of simple and contemporary light fixtures.",
+    "website_url": "https://www.stilnovo.com/en/",
+    "image_url": "/wp-content/uploads/2022/01/stilnovo_png_re-1.png",
+    "showcase_image": "/wp-content/uploads/2022/01/stilnovo_800x1072.jpg",
+    "sort_order": 440,
+    "is_active": true
+  },
+  {
+    "name": "Targetti",
+    "country": "Italy",
+    "description": "Targetti has been designing and producing indoor and outdoor architectural light fixtures since 1928. For ninety years our products have been the epitome of innovation, research and attention to detail.",
+    "website_url": "https://www.targetti.com/en",
+    "image_url": "/wp-content/uploads/2022/01/TARGETT-LOGO_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2022/01/targetti_1_800x1072.jpg",
+    "sort_order": 450,
+    "is_active": true
+  },
+  {
+    "name": "Tokistar Lighting",
+    "country": "Japan",
+    "description": "TOKISTAR focuses on providing energy-efficient LED Systems. Their installations span the globe in hotels , malls , restaurants , casinos , amusement parks and many other locations.",
+    "website_url": "https://toki.co.jp/tokistar/en/",
+    "image_url": "/wp-content/uploads/2022/01/Tokistar_logo_opt2_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2021/12/Tokistar_800x1072.jpg",
+    "sort_order": 460,
+    "is_active": true
+  },
+  {
+    "name": "Traxon Logo-Luxlight Website 3",
+    "country": "Germany",
+    "description": "Traxon Technologies, an OSRAM business, together with its control brand, e:cue, is a global leader in solid state lighting and control systems providing complete, sustainable and intelligent lighting solutions.",
+    "website_url": "http://www.traxontechnologies.com/",
+    "image_url": "/wp-content/uploads/2024/02/Traxon-Logo-LuxLight-Website-3.jpg",
+    "showcase_image": "/wp-content/uploads/2022/01/traxon_800x1072.jpg",
+    "sort_order": 470,
+    "is_active": true
+  },
+  {
+    "name": "Unios",
+    "country": "Australia",
+    "description": "Unios believes in light as an extension of every surface, every structure – enriching everyday experiences through light. By blending precise design and engineering, we bring light to life in all its diversity. As agile makers of light, we shape and build luminaires that blend aesthetics and technology. Our luminaires help define and accentuate the environments we live and work in; now and in the future.",
+    "website_url": "https://unios.com/",
+    "image_url": "/wp-content/uploads/2022/01/unios_logo_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2021/12/Unios_800x1072.jpg",
+    "sort_order": 480,
+    "is_active": true
+  },
+  {
+    "name": "Vibia",
+    "country": "Spain",
+    "description": "Vibia is a global architectural lighting company based in Barcelona. From local knowledge they have built up a global business. They are present in 80 countries and have a subsidiary in New Jersey (USA). The Vibia community keeps growing. Today over a 100,000 professionals work on their lighting projects on vibia.com.",
+    "website_url": "https://www.vibia.com/en/int/",
+    "image_url": "/wp-content/uploads/2022/01/vibia_logo_320x103_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2022/01/Vibia_800x1072.jpg",
+    "sort_order": 490,
+    "is_active": true
+  },
+  {
+    "name": "Visual Feast",
+    "country": "China",
+    "description": "Visual Feast was founded in 2009 and is committed to the design, development, and manufacture of high-quality luminaires. The company’s creative designers have developed state-of-the-art collections incorporating new technology and materials, backed by an R&D team that draws on the expertise of invited consultants from Japan and Europe.",
+    "website_url": "https://www.vflighting.com/",
+    "image_url": "/wp-content/uploads/2022/01/visual-feast_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2022/01/Visual-Feast_800x1072.jpg",
+    "sort_order": 500,
+    "is_active": true
+  },
+  {
+    "name": "Wako",
+    "country": "Japan",
+    "description": "Wako Industries Co. Ltd provides LED lighting solution for Architectural and Interior Design application. They emphasis on color consistency, high Color Rendering Index (CRI), and accurate color temperature on our LED products. They also provide customized lighting fixture design for lighting designer to achieve innovatiove and creative application for their needs and realize their vision.",
+    "website_url": "",
+    "image_url": "/wp-content/uploads/2022/01/wako_logo_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2021/12/Wako_800x1072.png",
+    "sort_order": 510,
+    "is_active": true
+  },
+  {
+    "name": "We-Ef Logo - Luxlight Website 3",
+    "country": "Germany",
+    "description": "WE-EF is a global manufacturer of high-performance exterior lighting solutions. Since 1950 they have developed innovative luminaires of outstanding optical quality and sound mechanical engineering. From street and area luminaires to projectors and inground up lights, WE-EF offers a complete spectrum of lighting solutions for demanding outdoor environments.",
+    "website_url": "https://www.we-ef.com/",
+    "image_url": "/wp-content/uploads/2024/02/WE-EF-Logo-LuxLight-Website-3.jpg",
+    "showcase_image": "/wp-content/uploads/2022/02/Voiron-03resize.jpg",
+    "sort_order": 520,
+    "is_active": true
+  },
+  {
+    "name": "Wibre",
+    "country": "Germany",
+    "description": "WIBRE Elektrogeräte Edmund Breuninger GmbH & Co.KG is a company based in Leingarten, Baden-Württemberg, Germany. WIBRE is a leading manufacturer of underwater spotlights and exterior spotlights with IP68 protection system.",
+    "website_url": "https://www.wibre.de/en/start.html",
+    "image_url": "/wp-content/uploads/2022/01/wibre_png_re-1.png",
+    "showcase_image": "/wp-content/uploads/2021/12/Wibre_1_800x1072.jpg",
+    "sort_order": 530,
+    "is_active": true
+  },
+  {
+    "name": "Wila Logo 2",
+    "country": "UK",
+    "description": "WILA Lighting Ltd is part of Experience Brands and is based in Oxfordshire, UK. WILA specialises in personalised lighting solutions and believe that no two projects are the same.\n\nWILA prides itself on its ability to respond to project specific requirements with personalised lighting solutions, delivering exceptional customer service and manufacturing flexibility.",
+    "website_url": "https://www.wila.co.uk/",
+    "image_url": "/wp-content/uploads/2024/02/WILA-Logo-2.jpg",
+    "showcase_image": "/wp-content/uploads/2021/12/Wila_800x1072.png",
+    "sort_order": 540,
+    "is_active": true
+  },
+  {
+    "name": "Zero",
+    "country": "Sweden",
+    "description": "Zero Interiör was founded in 1978 with the vision of making unique light fixtures for a design-interested audience. These products, in combination with a deep understanding of how best to illuminate public indoor and outdoor environments, is at the heart of our identity.  Their local roots and manufacturing have built long-term relationships with customers and suppliers that are vital to them. More than 80% of manufacturing takes place within roughly 200 km of Nybro in Småland and all assembly occurs in the workshop in Nybro.",
+    "website_url": "https://www.zerolighting.com/",
+    "image_url": "/wp-content/uploads/2022/01/zero_logo_re-1.jpg",
+    "showcase_image": "/wp-content/uploads/2021/12/Zero_800x1072.png",
+    "sort_order": 550,
+    "is_active": true
+  }
+]

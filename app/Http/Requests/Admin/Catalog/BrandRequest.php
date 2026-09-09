@@ -23,10 +23,15 @@ class BrandRequest extends FormRequest
             ...$this->localizedStringRules('name', true, 255),
             ...$this->localizedStringRules('slug', false, 255),
             ...$this->localizedStringRules('description'),
-            'image_url' => ['nullable', 'string', 'max:255'],
-            'image_file' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp,gif', 'max:2048'],
+            'country' => ['nullable', 'string', 'max:255'],
+            'website_url' => ['nullable', 'string', 'max:1000'],
+            'showcase_image' => ['nullable', 'string', 'max:1000'],
+            'showcase_image_file' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp,gif', 'max:5120'],
+            'image_url' => ['nullable', 'string', 'max:1000'],
+            'image_file' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp,gif', 'max:5120'],
             'sort_order' => ['nullable', 'integer', 'min:0'],
             'is_active' => ['nullable', 'boolean'],
+            'is_featured' => ['nullable', 'boolean'],
         ];
     }
 

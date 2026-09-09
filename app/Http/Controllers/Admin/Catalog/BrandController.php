@@ -27,6 +27,7 @@ class BrandController extends Controller
                 $query->where(function ($query) use ($keyword) {
                     $query->where('slug', 'like', "%{$keyword}%")
                         ->orWhere('name', 'like', "%{$keyword}%")
+                        ->orWhere('country', 'like', "%{$keyword}%")
                         ->orWhere('description', 'like', "%{$keyword}%");
                 });
             })

@@ -147,6 +147,12 @@
                 <iconify-icon icon="solar:city-line-duotone" class="text-xl"></iconify-icon>
                 <span>{{ __('admin.sidebar.projects') }}</span>
             </a>
+
+            <!-- Brands Standalone Tab -->
+            <a href="{{ route('admin.brands.index') }}" class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-semibold transition-colors {{ request()->routeIs('admin.brands.*') ? 'bg-primary/10 text-primary font-bold' : 'text-gray-700 hover:bg-gray-50' }}">
+                <iconify-icon icon="solar:stars-line-duotone" class="text-xl"></iconify-icon>
+                <span>{{ __('admin.sidebar.brands') }}</span>
+            </a>
             @endcan
         @endif
 

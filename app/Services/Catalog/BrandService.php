@@ -60,13 +60,26 @@ class BrandService
         $baseSlug = $submittedSlugs[$this->languages->defaultLocale()] ?? $submittedSlugs[app()->getLocale()] ?? ($name[$this->languages->defaultLocale()] ?? $name[$this->fallbackLocale()] ?? reset($name));
         $imageUrl = $this->imageUrl($data['image_file'] ?? null, $data['image_url'] ?? null, $brand);
 
+        $showcaseImage = null;
+        if (!empty($data['showcase_image_file']) && $data['showcase_image_file'] instanceof UploadedFile) {
+            $showcaseImage = $this->cloudinaryService->uploadFile($data['showcase_image_file'], 'brands');
+        } elseif (filled($data['showcase_image'] ?? null)) {
+            $showcaseImage = trim($data['showcase_image']);
+        } else {
+            $showcaseImage = $brand?->showcase_image;
+        }
+
         return [
             'name' => $name,
             'slug' => $this->uniqueSlug((string) $baseSlug, $brand?->id),
+            'country' => filled($data['country'] ?? null) ? trim($data['country']) : $brand?->country,
             'description' => $this->translationValue($data['description'] ?? null, $brand, 'description'),
             'image_url' => $imageUrl,
+            'showcase_image' => $showcaseImage,
+            'website_url' => filled($data['website_url'] ?? null) ? trim($data['website_url']) : $brand?->website_url,
             'sort_order' => (int) ($data['sort_order'] ?? $brand?->sort_order ?? 0),
             'is_active' => (bool) ($data['is_active'] ?? false),
+            'is_featured' => (bool) ($data['is_featured'] ?? false),
         ];
     }
 

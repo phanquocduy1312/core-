@@ -63,19 +63,118 @@
 
         <hr class="border-gray-200 my-6">
 
-        <!-- General Form Fields -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-                <label class="block mb-2 text-sm font-semibold text-gray-900" for="image_file">{{ __('catalog.fields.image') }}</label>
-                <input type="file" class="block w-full text-sm text-gray-900 border border-gray-350 rounded-lg cursor-pointer bg-white focus:outline-none" id="image_file" name="image_file" accept="image/*" data-media-folder="brands">
-                <div class="mt-4 {{ $brand->image_url ? '' : 'd-none' }}" data-media-preview>
-                    <img src="{{ $brand->image_url ?: '' }}" alt="{{ $name }}" class="rounded-lg border border-gray-250 p-1 max-h-24 object-contain" style="max-height: 96px;" data-media-preview-image onerror="this.onerror=null;this.src='{{ asset('admin-assets/js/icons/404.png') }}';">
-                </div>
+        <!-- General & LuxLight Brand Fields -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+            <!-- Country & Website -->
+            <div class="md:col-span-6">
+                <label class="block mb-2 text-sm font-semibold text-gray-900" for="country">
+                    Quốc gia / Xuất xứ
+                </label>
+                <input type="text"
+                       class="block w-full p-2.5 text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-primary focus:border-primary focus:outline-none transition-colors"
+                       id="country"
+                       name="country"
+                       value="{{ old('country', $brand->country) }}"
+                       placeholder="Ví dụ: America, Italy, China, Germany, Japan...">
+                <p class="text-xs text-gray-500 mt-1">Hiển thị làm nhãn tag ở góc dưới ảnh thương hiệu.</p>
             </div>
-            <div class="md:col-span-2 flex items-center">
-                <input type="hidden" name="is_active" value="1">
-                <input class="w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded focus:ring-primary cursor-pointer" type="checkbox" name="is_active" value="0" id="is_active" @checked(! (bool) old('is_active', $brand->is_active))>
-                <label class="ml-2 text-sm font-semibold text-gray-900 cursor-pointer" for="is_active">{{ __('catalog.fields.save_draft') }}</label>
+
+            <div class="md:col-span-6">
+                <label class="block mb-2 text-sm font-semibold text-gray-900" for="website_url">
+                    Website thương hiệu (Visit Website)
+                </label>
+                <input type="url"
+                       class="block w-full p-2.5 text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-primary focus:border-primary focus:outline-none transition-colors"
+                       id="website_url"
+                       name="website_url"
+                       value="{{ old('website_url', $brand->website_url) }}"
+                       placeholder="https://en.aldabra.it/">
+                <p class="text-xs text-gray-500 mt-1">Đường dẫn khi khách bấm nút "Visit Website" ở mặt sau flipbox.</p>
+            </div>
+
+            <!-- Showcase Image (Front of Flip-box) -->
+            <div class="md:col-span-6 bg-gray-50/70 p-4 rounded-xl border border-gray-200">
+                <label class="block mb-2 text-sm font-bold text-gray-900" for="showcase_image_file">
+                    Ảnh công trình đại diện (Mặt trước Flip-box)
+                </label>
+                @if($brand->showcase_image)
+                    <div class="mb-3">
+                        <img src="{{ $brand->showcase_image }}" alt="Showcase" class="h-44 w-32 object-cover rounded-lg border border-gray-300 shadow-sm" onerror="this.onerror=null;this.src='{{ asset('admin-assets/js/icons/404.png') }}';">
+                    </div>
+                @endif
+                <input type="file"
+                       class="block w-full text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-white file:mr-3 file:py-2 file:px-3 file:border-0 file:text-xs file:bg-gray-100 file:text-gray-700"
+                       id="showcase_image_file"
+                       name="showcase_image_file"
+                       accept="image/*">
+                <input type="text"
+                       name="showcase_image"
+                       id="showcase_image"
+                       value="{{ old('showcase_image', $brand->showcase_image) }}"
+                       placeholder="Hoặc dán URL ảnh công trình..."
+                       class="mt-2 block w-full p-2 text-xs border border-gray-300 rounded-lg bg-white">
+                <p class="text-xs text-gray-500 mt-1">Khổ đứng tỷ lệ ~ 3:4 (800x1072). Hiển thị mặt trước thẻ.</p>
+            </div>
+
+            <!-- Brand Logo -->
+            <div class="md:col-span-6 bg-gray-50/70 p-4 rounded-xl border border-gray-200">
+                <label class="block mb-2 text-sm font-bold text-gray-900" for="image_file">
+                    Logo thương hiệu
+                </label>
+                @if($brand->image_url)
+                    <div class="mb-3 bg-white p-2 rounded-lg border border-gray-300 inline-block">
+                        <img src="{{ $brand->image_url }}" alt="Logo" class="max-h-16 max-w-xs object-contain" onerror="this.onerror=null;this.src='{{ asset('admin-assets/js/icons/404.png') }}';">
+                    </div>
+                @endif
+                <input type="file"
+                       class="block w-full text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-white file:mr-3 file:py-2 file:px-3 file:border-0 file:text-xs file:bg-gray-100 file:text-gray-700"
+                       id="image_file"
+                       name="image_file"
+                       accept="image/*">
+                <input type="text"
+                       name="image_url"
+                       id="image_url"
+                       value="{{ old('image_url', $brand->image_url) }}"
+                       placeholder="Hoặc dán URL logo thương hiệu..."
+                       class="mt-2 block w-full p-2 text-xs border border-gray-300 rounded-lg bg-white">
+                <p class="text-xs text-gray-500 mt-1">Logo hiển thị ngay dưới thẻ công trình.</p>
+            </div>
+
+            <!-- Sort Order & Settings -->
+            <div class="md:col-span-6">
+                <label class="block mb-2 text-sm font-semibold text-gray-900" for="sort_order">
+                    Thứ tự hiển thị
+                </label>
+                <input type="number"
+                       class="block w-full p-2.5 text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-primary focus:border-primary focus:outline-none transition-colors"
+                       id="sort_order"
+                       name="sort_order"
+                       value="{{ old('sort_order', $brand->sort_order ?? 0) }}"
+                       min="0">
+            </div>
+
+            <div class="md:col-span-6 flex items-center gap-6 pt-7">
+                <input type="hidden" name="is_active" value="0">
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input class="w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded focus:ring-primary cursor-pointer"
+                           type="checkbox"
+                           name="is_active"
+                           value="1"
+                           id="is_active"
+                           @checked((bool) old('is_active', $brand->is_active ?? true))>
+                    <span class="text-sm font-semibold text-gray-900">Hiển thị</span>
+                </label>
+
+                <input type="hidden" name="is_featured" value="0">
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input class="w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded focus:ring-primary cursor-pointer"
+                           type="checkbox"
+                           name="is_featured"
+                           value="1"
+                           id="is_featured"
+                           @checked((bool) old('is_featured', $brand->is_featured ?? false))>
+                    <span class="text-sm font-semibold text-gray-900">Nổi bật</span>
+                </label>
             </div>
         </div>
     </div>

@@ -30,7 +30,12 @@ class PageController extends Controller
 
     public function brands()
     {
-        return $this->managedPage('thuong-hieu', 'pages.thuong-hieu');
+        $brands = \App\Models\Brand::query()
+            ->active()
+            ->ordered()
+            ->get();
+
+        return view('pages.thuong-hieu', compact('brands'));
     }
 
     public function projects()

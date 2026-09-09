@@ -61,8 +61,10 @@
                                 <input type="checkbox" class="w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded focus:ring-primary cursor-pointer" data-bulk-select-all="bulk-brands-form" aria-label="Chọn tất cả thương hiệu">
                             </th>
                             <th class="px-6 py-3 font-bold">{{ __('catalog.fields.name') }}</th>
+                            <th class="px-6 py-3 font-bold">Quốc gia</th>
+                            <th class="px-6 py-3 font-bold">Ảnh công trình</th>
                             <th class="px-6 py-3 font-bold">{{ __('catalog.fields.status') }}</th>
-                            <th class="px-6 py-3 font-bold text-center">{{ __('catalog.fields.products_count') }}</th>
+                            <th class="px-6 py-3 font-bold text-center">Website</th>
                             <th class="px-6 py-3 text-right"></th>
                         </tr>
                     </thead>
@@ -83,7 +85,7 @@
                                         </span>
                                         <div class="w-11 h-11 rounded-lg border border-gray-200 bg-white p-0.5 flex items-center justify-center overflow-hidden mr-3">
                                             @if($brand->image_url)
-                                                <img src="{{ $brand->image_url }}" alt="{{ $brandName }}" class="w-full h-full object-cover rounded-md" onerror="this.onerror=null;this.src='{{ asset('admin-assets/js/icons/404.png') }}';">
+                                                <img src="{{ $brand->image_url }}" alt="{{ $brandName }}" class="w-full h-full object-contain rounded-md" onerror="this.onerror=null;this.src='{{ asset('admin-assets/js/icons/404.png') }}';">
                                             @else
                                                 <img src="{{ asset('admin-assets/js/icons/empty.png') }}" alt="empty" class="w-full h-full object-cover rounded-md">
                                             @endif
@@ -95,14 +97,44 @@
                                     </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
+                                    @if($brand->country)
+                                        <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200">
+                                            {{ $brand->country }}
+                                        </span>
+                                    @else
+                                        <span class="text-xs text-gray-400">—</span>
+                                    @endif
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    @if($brand->showcase_image)
+                                        <div class="w-12 h-16 rounded-md border border-gray-200 overflow-hidden bg-gray-100 shadow-sm">
+                                            <img src="{{ $brand->showcase_image }}" alt="Showcase" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='{{ asset('admin-assets/js/icons/404.png') }}';">
+                                        </div>
+                                    @else
+                                        <span class="text-xs text-gray-400">—</span>
+                                    @endif
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
                                     @if($brand->is_active)
                                         <x-admin.badge variant="success">{{ __('catalog.status.active') }}</x-admin.badge>
                                     @else
                                         <x-admin.badge variant="danger">{{ __('catalog.status.inactive') }}</x-admin.badge>
                                     @endif
+                                    @if($brand->is_featured)
+                                        <span class="ml-1 inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-purple-50 text-purple-700 border border-purple-200">
+                                            Nổi bật
+                                        </span>
+                                    @endif
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-bold text-primary">
-                                    {{ $brand->products_count }}
+                                <td class="px-6 py-4 whitespace-nowrap text-center">
+                                    @if($brand->website_url)
+                                        <a href="{{ $brand->website_url }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline" title="{{ $brand->website_url }}">
+                                            <iconify-icon icon="solar:link-circle-linear" class="text-base"></iconify-icon>
+                                            <span>Website</span>
+                                        </a>
+                                    @else
+                                        <span class="text-xs text-gray-400">—</span>
+                                    @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right">
                                     <x-admin.dropdown align="right" width="48">
