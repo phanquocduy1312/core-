@@ -7,7 +7,7 @@
 <link href="/wp-content/uploads/elementor/css/post-10052.css" id="elementor-post-10052-css" media="all" rel="stylesheet"/>
 <link href="/wp-content/uploads/premium-addons-elementor/pafe-10052.css" id="pafe-10052-css" media="all" rel="stylesheet"/>
 <style>
-    /* Projects Hero Banner Styling - Perfectly Balanced Size */
+    /* Projects Hero Banner Styling */
     .elementor-10052,
     .elementor-10052 *,
     .elementor-10052 .hero-projects-content {
@@ -61,10 +61,29 @@
         margin-top: 4px !important;
     }
 
-    /* Filter Bar Styling */
+    /* Filter Bar Section & Container */
     .elementor-10052 .project-filter-section {
         background-color: #FFFFFF !important;
-        padding: 50px 20px 30px 20px !important;
+        padding: 50px 0 80px 0 !important;
+        width: 100% !important;
+    }
+    .elementor-10052 .project-filter-section .elementor-container {
+        max-width: 1200px !important;
+        width: 100% !important;
+        margin: 0 auto !important;
+        padding: 0 15px !important;
+        display: block !important;
+    }
+    .elementor-10052 .project-filter-section .elementor-widget-wrap {
+        width: 100% !important;
+        display: block !important;
+    }
+
+    /* Filter Tabs List */
+    .elementor-10052 .filter-tabs-wrapper {
+        width: 100% !important;
+        margin-bottom: 45px !important;
+        text-align: center !important;
     }
     .elementor-10052 .elementor-icon-list-items {
         display: flex !important;
@@ -73,12 +92,13 @@
         flex-wrap: wrap !important;
         gap: 36px !important;
         padding: 0 !important;
-        margin: 0 auto 35px auto !important;
+        margin: 0 auto !important;
         list-style: none !important;
     }
     .elementor-10052 .elementor-icon-list-item {
         margin: 0 !important;
         padding: 0 !important;
+        display: inline-block !important;
     }
     .elementor-10052 .elementor-icon-list-item a {
         font-family: "DIN", sans-serif !important;
@@ -94,17 +114,22 @@
     .elementor-10052 .elementor-icon-list-item.active a,
     .elementor-10052 .elementor-icon-list-item a.active {
         color: #EAA931 !important;
-        font-weight: 500 !important;
+        font-weight: 600 !important;
     }
 
     /* 3-Column Premium Blog Grid Styling */
     .elementor-10052 .premium-blog-wrap {
         display: flex !important;
         flex-wrap: wrap !important;
+        width: 100% !important;
         margin: 0 -15px !important;
+        padding: 0 !important;
+        list-style: none !important;
     }
     .elementor-10052 .premium-blog-post-outer-container {
         width: 33.333333% !important;
+        max-width: 33.333333% !important;
+        flex: 0 0 33.333333% !important;
         padding: 0 15px 30px 15px !important;
         box-sizing: border-box !important;
         display: block !important;
@@ -115,7 +140,8 @@
         height: 380px !important;
         background-color: #0B1523 !important;
         border-radius: 4px !important;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.06) !important;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08) !important;
+        width: 100% !important;
     }
     .elementor-10052 .premium-blog-thumb-effect-wrapper {
         position: absolute !important;
@@ -128,7 +154,6 @@
     .elementor-10052 .premium-blog-thumbnail-container {
         width: 100% !important;
         height: 100% !important;
-        overflow: hidden !important;
     }
     .elementor-10052 .premium-blog-thumbnail-container img {
         width: 100% !important;
@@ -139,6 +164,12 @@
     }
     .elementor-10052 .premium-blog-post-container:hover .premium-blog-thumbnail-container img {
         transform: scale(1.08) !important;
+    }
+    .elementor-10052 .premium-blog-thumbnail-overlay {
+        position: absolute !important;
+        inset: 0 !important;
+        z-index: 2 !important;
+        display: block !important;
     }
     .elementor-10052 .premium-blog-content-wrapper {
         position: absolute !important;
@@ -185,11 +216,15 @@
     @media (max-width: 991px) {
         .elementor-10052 .premium-blog-post-outer-container {
             width: 50% !important;
+            max-width: 50% !important;
+            flex: 0 0 50% !important;
         }
     }
     @media (max-width: 640px) {
         .elementor-10052 .premium-blog-post-outer-container {
             width: 100% !important;
+            max-width: 100% !important;
+            flex: 0 0 100% !important;
         }
         .elementor-10052 .hero-projects-content h1 {
             font-size: 24px !important;
@@ -214,10 +249,10 @@
 
     <!-- Filter Bar & Projects Grid Section -->
     <section class="elementor-section elementor-top-section project-filter-section elementor-section-full_width elementor-section-height-default">
-        <div class="elementor-container elementor-column-gap-default" style="max-width: 1200px; margin: 0 auto; padding: 0 15px;">
-            <div class="elementor-widget-wrap" style="width: 100%;">
+        <div class="elementor-container elementor-column-gap-default">
+            <div class="elementor-widget-wrap">
                 <!-- Filter Tabs -->
-                <div class="elementor-widget elementor-widget-icon-list">
+                <div class="filter-tabs-wrapper">
                     <ul class="elementor-icon-list-items elementor-inline-items">
                         <li class="elementor-icon-list-item elementor-inline-item">
                             <a class="" href="{{ url('/hospitality-lighting-projects') }}">
@@ -261,11 +296,9 @@
                                              onerror="this.onerror=null;this.src='{{ asset('images/icons/default-product.png') }}';"
                                              loading="lazy" />
                                     </div>
-                                    <div class="premium-blog-thumbnail-overlay">
-                                        <a class="elementor-icon" href="{{ $detailUrl }}">
-                                            <span class="sr-only">{{ $title }}</span>
-                                        </a>
-                                    </div>
+                                    <a class="premium-blog-thumbnail-overlay" href="{{ $detailUrl }}">
+                                        <span class="sr-only">{{ $title }}</span>
+                                    </a>
                                 </div>
                                 <div class="premium-blog-content-wrapper">
                                     <div class="premium-blog-inner-container">

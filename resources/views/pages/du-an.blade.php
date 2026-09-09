@@ -240,10 +240,10 @@
 
     <!-- Dynamic Projects List Section -->
     <section class="elementor-section elementor-top-section project-filter-section elementor-section-full_width elementor-section-height-default" style="background-color: #ffffff; padding: 60px 0 80px 0;">
-        <div class="elementor-container elementor-column-gap-default" style="max-width: 1200px; margin: 0 auto; padding: 0 15px;">
-            <div class="elementor-widget-wrap" style="width: 100%;">
+        <div class="elementor-container elementor-column-gap-default" style="max-width: 1200px; margin: 0 auto; padding: 0 15px; display: block;">
+            <div class="elementor-widget-wrap" style="width: 100%; display: block;">
                 <!-- Filter Tabs -->
-                <div class="elementor-widget elementor-widget-icon-list" style="margin-bottom: 40px;">
+                <div class="elementor-widget elementor-widget-icon-list" style="margin-bottom: 45px; width: 100%; text-align: center;">
                     <ul class="elementor-icon-list-items elementor-inline-items" style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 36px; list-style: none; padding: 0; margin: 0;">
                         <li class="elementor-icon-list-item elementor-inline-item">
                             <a class="{{ empty($category) ? 'active' : '' }}" href="{{ url('/du-an') }}" style="font-family: 'DIN', sans-serif; font-size: 22px; font-weight: 500; color: {{ empty($category) ? '#EAA931' : '#0B1523' }}; text-decoration: none;">
@@ -274,7 +274,7 @@
                 </div>
 
                 <!-- Dynamic Projects Grid -->
-                <div class="premium-blog-wrap premium-blog-even" style="display: flex; flex-wrap: wrap; margin: 0 -15px;">
+                <div class="premium-blog-wrap premium-blog-even" style="display: flex; flex-wrap: wrap; width: 100%; margin: 0 -15px;">
                     @forelse($projects as $project)
                         @php
                             $locale = app()->getLocale();
@@ -283,21 +283,19 @@
                             $img = $project->image_url ?: asset('images/icons/default-product.png');
                             $detailUrl = url('/projects/' . ($project->slug ?: $project->id));
                         @endphp
-                        <div class="premium-blog-post-outer-container" style="width: 33.333333%; padding: 0 15px 30px 15px; box-sizing: border-box;">
-                            <div class="premium-blog-post-container" style="position: relative; overflow: hidden; height: 380px; background-color: #0B1523; border-radius: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.06);">
-                                <div class="premium-blog-thumb-effect-wrapper" style="position: absolute; inset: 0; overflow: hidden;">
+                        <div class="premium-blog-post-outer-container" style="width: 33.333333%; max-width: 33.333333%; flex: 0 0 33.333333%; padding: 0 15px 30px 15px; box-sizing: border-box; display: block;">
+                            <div class="premium-blog-post-container" style="position: relative; overflow: hidden; height: 380px; background-color: #0B1523; border-radius: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); width: 100%;">
+                                <div class="premium-blog-thumb-effect-wrapper" style="position: absolute; inset: 0; overflow: hidden; width: 100%; height: 100%;">
                                     <div class="premium-blog-thumbnail-container" style="width: 100%; height: 100%;">
                                         <img alt="{{ $title }}"
                                              src="{{ $img }}"
                                              onerror="this.onerror=null;this.src='{{ asset('images/icons/default-product.png') }}';"
-                                             style="width: 100%; height: 100%; object-fit: cover; display: block;"
+                                             style="width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);"
                                              loading="lazy" />
                                     </div>
-                                    <div class="premium-blog-thumbnail-overlay">
-                                        <a class="elementor-icon" href="{{ $detailUrl }}">
-                                            <span class="sr-only">{{ $title }}</span>
-                                        </a>
-                                    </div>
+                                    <a class="premium-blog-thumbnail-overlay" href="{{ $detailUrl }}" style="position: absolute; inset: 0; z-index: 2; display: block;">
+                                        <span class="sr-only">{{ $title }}</span>
+                                    </a>
                                 </div>
                                 <div class="premium-blog-content-wrapper" style="position: absolute; left: 0; right: 0; bottom: 0; padding: 30px 24px 20px 24px; background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(11, 21, 35, 0.75) 50%, rgba(11, 21, 35, 0.92) 100%); z-index: 3; display: flex; flex-direction: column; pointer-events: none;">
                                     <div class="premium-blog-inner-container">
