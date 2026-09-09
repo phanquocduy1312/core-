@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             FoundationSeeder::class,
             BrandSeeder::class,
+            ContactAndNewsletterSeeder::class,
         ]);
     }
 }
