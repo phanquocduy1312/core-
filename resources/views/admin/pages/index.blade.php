@@ -8,12 +8,7 @@
         <div class="px-6 py-4 flex flex-wrap items-center justify-between gap-4">
             <div>
                 <h4 class="text-xl font-bold mb-1 text-white">Trang nội dung</h4>
-                <div class="text-slate-350 text-sm">Tạo landing page và chỉnh sửa giao diện bằng kéo thả.</div>
-            </div>
-            <div>
-                <x-admin.button variant="primary" size="sm" href="{{ route('admin.pages.create') }}">
-                    <iconify-icon icon="solar:add-circle-linear" class="mr-1"></iconify-icon> Thêm trang
-                </x-admin.button>
+                <div class="text-slate-350 text-sm">Quản lý và chỉnh sửa giao diện các trang bằng UI/UX Builder.</div>
             </div>
         </div>
     </div>
