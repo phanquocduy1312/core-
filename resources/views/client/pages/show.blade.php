@@ -59,4 +59,33 @@
         });
     });
     </script>
+    @if(str_contains($renderedHtml, 'lux-carousel'))
+        <link rel="stylesheet" href="/wp-content/plugins/custom-lux/assets/custom.css">
+        <script src="/wp-content/plugins/custom-lux/assets/TweenLite.min.js"></script>
+        <script src="/wp-content/plugins/custom-lux/assets/imagesloaded.pkgd.min.js"></script>
+        <script src="/wp-content/plugins/custom-lux/assets/CSSPlugin.min.js"></script>
+        <script src="/wp-content/plugins/custom-lux/assets/gsap.min.js"></script>
+        <script src="/wp-content/plugins/custom-lux/assets/carousel.js"></script>
+    @endif
+    @if(str_contains($renderedHtml, 'project-carousel') || str_contains($renderedHtml, 'elementor-image-carousel'))
+        <link rel="stylesheet" href="/wp-content/plugins/elementor/assets/lib/swiper/v8/css/swiper.min.css"/>
+        <script src="/wp-content/plugins/elementor/assets/lib/swiper/v8/swiper.min.js"></script>
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.Swiper && document.querySelector('.swiper')) {
+                document.querySelectorAll('.swiper').forEach(function(el) {
+                    if (!el.swiper) {
+                        new Swiper(el, {
+                            slidesPerView: 1,
+                            loop: true,
+                            autoplay: { delay: 3000, disableOnInteraction: false },
+                            pagination: { el: el.querySelector('.swiper-pagination') || '.swiper-pagination', clickable: true }
+                        });
+                    }
+                });
+            }
+        });
+        </script>
+    @endif
 @endpush
+

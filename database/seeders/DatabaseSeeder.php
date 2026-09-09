@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             FoundationSeeder::class,
             BrandSeeder::class,
             ContactAndNewsletterSeeder::class,
+            ProjectPagesSeeder::class,
         ]);
     }
 }
