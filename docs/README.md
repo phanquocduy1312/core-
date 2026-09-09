@@ -41,5 +41,5 @@ Khi phát hiện một sự thật nghiệp vụ/quyết định chưa được 
 
 ### Sổ tay PDF UI/UX Builder — 09/09/2026
 
-- [PDF 24 trang thao tác trực tiếp trong Builder](uiux-builder/handbook/HUONG-DAN-UIUX-BUILDER.pdf) — ảnh giao diện được khoanh số/mũi tên, hướng dẫn sửa chữ, ảnh, khối, thiết bị, lưu và xuất bản.
+- [PDF 24 trang thao tác trực tiếp trong Builder](uiux-builder/handbook/HUONG-DAN-UIUX-BUILDER.pdf) — ảnh giao diện được khoanh số nhỏ, giải thích dưới ảnh để không che các nút/cài đặt, hướng dẫn sửa chữ, ảnh, khối, thiết bị, lưu và xuất bản.
 - [Bản HTML và cách cập nhật/in lại](uiux-builder/handbook/README.md).

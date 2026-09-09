@@ -2,7 +2,7 @@
 
 - [Mở PDF hướng dẫn](HUONG-DAN-UIUX-BUILDER.pdf): 24 trang A4, tập trung hoàn toàn vào thao tác trực tiếp trên Builder.
 - [Bản HTML để đọc và cập nhật](index.html): đi kèm thư mục `images/`, có thể mở trực tiếp bằng trình duyệt.
-- [Ảnh có khoanh số và mũi tên](images/annotated/): 22 ảnh chụp giao diện được chú thích trực tiếp.
+- [Ảnh có khoanh số](images/annotated/): 22 ảnh chụp giao diện được chú thích trực tiếp, không có hộp chữ che giao diện.
 
 PDF chỉ giữ các việc biên tập viên cần dùng: chọn phần tử, sửa chữ/ảnh/nút/video, thêm khối, dữ liệu động, kiểm tra thiết bị, lưu nháp, xuất bản và Header/Footer. Hướng dẫn tạo trang mới, SEO và HTML/CSS đã được bỏ khỏi bản này theo yêu cầu.
 
@@ -16,7 +16,7 @@ python3 docs/uiux-builder/handbook/render_pdf.py
 pdfinfo docs/uiux-builder/handbook/HUONG-DAN-UIUX-BUILDER.pdf
 ```
 
-`build_visual_handbook.py` thêm vòng tròn, mũi tên và nhãn lên bản sao của ảnh chụp trong `images/annotated/`. Script in PDF kiểm tra ảnh tải đủ và nội dung không đụng chân trang trước khi tạo PDF. `verification.json` ghi kết quả theo từng trang.
+`build_visual_handbook.py` thêm vòng tròn đánh số nhỏ lên bản sao của ảnh chụp trong `images/annotated/`; phần diễn giải số nằm dưới ảnh. Script in PDF kiểm tra ảnh tải đủ và nội dung không đụng chân trang trước khi tạo PDF. `verification.json` ghi kết quả theo từng trang.
 
 ## Nguồn ảnh và giới hạn
 

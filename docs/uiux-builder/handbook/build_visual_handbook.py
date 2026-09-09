@@ -2,13 +2,12 @@
 
 Chạy: python3 docs/uiux-builder/handbook/build_visual_handbook.py
 Sau đó chạy render_pdf.py để xuất PDF. Ảnh nguồn là ảnh chụp Builder hiện có;
-script chỉ thêm vòng tròn, mũi tên và nhãn hướng dẫn lên bản sao trong images/annotated.
+script chỉ thêm vòng tròn đánh số nhỏ lên bản sao trong images/annotated.
 """
 from __future__ import annotations
 
 from html import escape
 from pathlib import Path
-from textwrap import wrap
 
 from PIL import Image, ImageDraw, ImageFont
 
@@ -25,7 +24,7 @@ def font(size: int, bold: bool = False):
 
 
 def annotate(source: str, output: str, callouts: list[tuple[int, tuple[int, int], str, tuple[int, int]]]):
-    """Thêm số, mũi tên và nhãn. Toạ độ dùng ảnh chụp 1600 × 1000."""
+    """Thêm số nhỏ vào đúng vị trí. Diễn giải luôn được in bên dưới ảnh."""
     image = Image.open(IMAGES / source).convert("RGBA")
     draw = ImageDraw.Draw(image, "RGBA")
     scale_x, scale_y = image.width / 1600, image.height / 1000
@@ -33,30 +32,15 @@ def annotate(source: str, output: str, callouts: list[tuple[int, tuple[int, int]
     def point(pair):
         return int(pair[0] * scale_x), int(pair[1] * scale_y)
 
-    for number, target, label, box in callouts:
+    for number, target, _label, _box in callouts:
         tx, ty = point(target)
-        bx, by = point(box)
-        label_font = font(max(15, int(22 * min(scale_x, scale_y))), True)
-        text_lines = wrap(label, width=23)
-        line_height = label_font.getbbox("Ag")[3] + 5
-        width = max(draw.textbbox((0, 0), line, font=label_font)[2] for line in text_lines) + 26
-        height = line_height * len(text_lines) + 18
-        # Keep explanatory panels inside the screenshot.
-        bx = min(max(8, bx), image.width - width - 8)
-        by = min(max(8, by), image.height - height - 8)
-        ex = bx + width // 2
-        ey = by + height // 2
-        draw.line((tx, ty, ex, ey), fill=(226, 53, 53, 255), width=max(3, int(5 * scale_x)))
+        # The old large, dark labels hid the exact controls users needed to see.
+        # A small number is enough to bind the control to its explanation below.
         radius = max(16, int(24 * min(scale_x, scale_y)))
         draw.ellipse((tx - radius, ty - radius, tx + radius, ty + radius), fill=(226, 53, 53, 255), outline=(255, 255, 255, 255), width=3)
         number_font = font(max(15, int(24 * min(scale_x, scale_y))), True)
         number_box = draw.textbbox((0, 0), str(number), font=number_font)
         draw.text((tx - (number_box[2] - number_box[0]) / 2, ty - (number_box[3] - number_box[1]) / 2 - 2), str(number), fill="white", font=number_font)
-        draw.rounded_rectangle((bx, by, bx + width, by + height), radius=9, fill=(12, 36, 57, 238), outline=(255, 255, 255, 230), width=2)
-        y = by + 9
-        for line in text_lines:
-            draw.text((bx + 13, y), line, fill="white", font=label_font)
-            y += line_height
     image.convert("RGB").save(ANNOTATED / output, quality=93)
 
 
@@ -178,10 +162,12 @@ def build_annotations():
 
 def build_pages():
     page("Hướng dẫn sửa trang bằng UI/UX Builder", """
-        <p class="lead">Tài liệu này chỉ hướng dẫn những việc bạn cần làm trực tiếp trong Builder. Mỗi ảnh đã có số, mũi tên và nhãn chỉ vị trí cần bấm.</p>
+        <p class="lead">Tài liệu này chỉ hướng dẫn những việc bạn cần làm trực tiếp trong Builder. Mỗi ảnh có số đỏ nhỏ tại vị trí cần bấm; phần giải thích số nằm ngay dưới ảnh để không che giao diện.</p>
         <div class="rule"><b>Quy trình dùng hằng ngày:</b> chọn đúng phần → sửa → kiểm tra máy tính/điện thoại → Lưu nháp → Xuất bản.</div>
         """ + image("01-tong-quan.png", "Màn hình Builder hiện tại. Các số chỉ những vùng cần dùng thường xuyên.", [
-            "Chỉ sửa nội dung trong vùng giữa màn hình.", "Không rời trang khi chưa bấm Lưu nháp.", "Khi chưa chắc nội dung, chỉ lưu nháp; chưa xuất bản.",
+            "Số 1 là tên trang đang sửa. Số 2 là Lưu nháp; số 3 là Xuất bản.",
+            "Số 4 mở Kiểu dáng; số 5 mở Cây lớp; số 6 mở Khối để thêm nội dung.",
+            "Số 7 là vùng nội dung: bấm vào đây để chọn chữ, ảnh hoặc nút cần sửa.",
         ]))
     page("1. Chọn đúng phần trước khi sửa", image("04-cay-lop.png", "Dùng Cây lớp khi bấm trực tiếp chưa chọn đúng chữ, ảnh hoặc nút.", [
         "Bấm phần trên trang cần sửa. Nếu đã chọn đúng, phần đó có viền.", "Nếu chọn nhầm vùng lớn, bấm số 1 rồi tìm phần con ở số 2.", "Chỉ xóa khi bạn nhìn thấy đúng phần đang có viền.",

@@ -24,7 +24,7 @@
 
 ## Kết quả xác minh
 
-> Bản kế hoạch này được thay thế ngày 09/09/2026 theo phản hồi người dùng: PDF được rút gọn từ 40 còn 24 trang, bỏ nội dung tạo trang mới/SEO/HTML-CSS và chuyển trọng tâm sang ảnh chụp Builder có khoanh số, mũi tên và nhãn hướng dẫn trực tiếp.
+> Bản kế hoạch này được thay thế ngày 09/09/2026 theo phản hồi người dùng: PDF được rút gọn từ 40 còn 24 trang, bỏ nội dung tạo trang mới/SEO/HTML-CSS và chuyển trọng tâm sang ảnh chụp Builder có khoanh số nhỏ. Phần giải thích số đặt ngay dưới ảnh để không che giao diện.
 
 - PDF cuối: 24 trang A4; 22 ảnh giao diện có chú thích trực tiếp; font tiếng Việt được nhúng.
 - Playwright: mọi ảnh tải đủ, không có phần nội dung tràn chân trang.
