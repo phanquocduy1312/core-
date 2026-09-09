@@ -27,6 +27,8 @@ class SidebarNavigationTest extends TestCase
 
     public function test_sidebar_hides_links_the_admin_cannot_open(): void
     {
+        config(['admin.show_all_sidebar_tabs' => true]);
+
         $role = Role::query()->create([
             'name' => 'Settings only',
             'permissions' => ['manage_settings'],
@@ -51,8 +53,54 @@ class SidebarNavigationTest extends TestCase
         $response->assertDontSeeText('Cấu hình tính năng');
     }
 
+    public function test_sidebar_hides_ecommerce_and_system_tabs_by_default(): void
+    {
+        $role = Role::query()->create([
+            'name' => 'Superadmin',
+            'permissions' => ['*'],
+            'is_system' => true,
+        ]);
+        $superadmin = User::factory()->create(['role_id' => $role->id]);
+
+        $response = $this->actingAs($superadmin)->get('/vi/admin');
+        $links = $this->adminLinks($response->getContent());
+
+        $response->assertOk();
+        // Visible tabs by default
+        $this->assertContains('/vi/admin/pages', $links);
+        $this->assertContains('/vi/admin/partials', $links);
+        $this->assertContains('/vi/admin/projects', $links);
+        $this->assertContains('/vi/admin/brands', $links);
+        $this->assertContains('/vi/admin/media', $links);
+
+        // Hidden tabs by default (the photographed 10 sections)
+        $this->assertNotContains('/vi/admin/orders', $links);
+        $this->assertNotContains('/vi/admin/customers', $links);
+        $this->assertNotContains('/vi/admin/products', $links);
+        $this->assertNotContains('/vi/admin/reviews', $links);
+        $this->assertNotContains('/vi/admin/vouchers', $links);
+        $this->assertNotContains('/vi/admin/promotions', $links);
+        $this->assertNotContains('/vi/admin/banners', $links);
+        $this->assertNotContains('/vi/admin/posts', $links);
+        $this->assertNotContains('/vi/admin/users', $links);
+        $this->assertNotContains('/vi/admin/settings', $links);
+        $this->assertNotContains('/vi/admin/activity-logs', $links);
+        $this->assertNotContains('/vi/admin/logs', $links);
+
+        foreach ($links as $link) {
+            $linkResponse = $this->get($link);
+            $this->assertFalse(
+                $linkResponse->isRedirect('/vi/admin'),
+                "Sidebar link [{$link}] redirected to the dashboard.",
+            );
+            $this->assertLessThan(500, $linkResponse->getStatusCode(), "Sidebar link [{$link}] returned a server error.");
+        }
+    }
+
     public function test_every_rendered_superadmin_sidebar_link_opens_without_dashboard_feature_redirect(): void
     {
+        config(['admin.show_all_sidebar_tabs' => true]);
+
         $role = Role::query()->create([
             'name' => 'Superadmin',
             'permissions' => ['*'],
