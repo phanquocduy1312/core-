@@ -50,23 +50,22 @@
     </div>
 
     <!-- Search & Filter Card -->
-    <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-4 mb-6">
-        <form method="GET" class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
-            <!-- Keyword input -->
-            <div class="sm:col-span-5 relative">
+    <div class="bg-white border border-gray-200 rounded-xl shadow-xs p-5 mb-6">
+        <form method="GET" class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
+            <!-- Keyword search -->
+            <div class="col-span-12 md:col-span-5">
+                <label class="block mb-1.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">{{ __('catalog.actions.search') }}</label>
                 <input type="search" 
                        name="q" 
-                       class="block w-full pl-10 pr-3.5 py-2.5 text-sm text-slate-900 bg-white rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none transition-all" 
+                       class="block w-full p-2.5 text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-primary focus:border-primary focus:outline-none transition-colors" 
                        value="{{ request('q') }}" 
-                       placeholder="Tìm theo tên, quốc gia, slug...">
-                <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
-                    <iconify-icon icon="solar:magnifer-linear" class="text-lg"></iconify-icon>
-                </div>
+                       placeholder="Tìm theo tên thương hiệu, quốc gia, slug...">
             </div>
 
             <!-- Country filter -->
-            <div class="sm:col-span-3">
-                <select name="country" class="block w-full px-3 py-2.5 text-sm text-slate-700 bg-white rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none transition-all">
+            <div class="col-span-12 md:col-span-3">
+                <label class="block mb-1.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Quốc gia</label>
+                <select name="country" class="block w-full p-2.5 text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-primary focus:border-primary focus:outline-none">
                     <option value="">-- Tất cả quốc gia --</option>
                     @foreach($countries as $c)
                         <option value="{{ $c }}" @selected(request('country') === $c)>{{ $c }}</option>
@@ -75,23 +74,24 @@
             </div>
 
             <!-- Status filter -->
-            <div class="sm:col-span-2">
-                <select name="status" class="block w-full px-3 py-2.5 text-sm text-slate-700 bg-white rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none transition-all">
-                    <option value="">-- Trạng thái --</option>
+            <div class="col-span-12 md:col-span-2">
+                <label class="block mb-1.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Trạng thái</label>
+                <select name="status" class="block w-full p-2.5 text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-primary focus:border-primary focus:outline-none">
+                    <option value="">-- Tất cả trạng thái --</option>
                     <option value="active" @selected(request('status') === 'active')>Đang hiển thị</option>
                     <option value="inactive" @selected(request('status') === 'inactive')>Đang ẩn</option>
                     <option value="featured" @selected(request('status') === 'featured')>Thương hiệu nổi bật</option>
                 </select>
             </div>
 
-            <!-- Buttons -->
-            <div class="sm:col-span-2 flex items-center gap-2">
-                <button type="submit" class="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-4 text-sm font-bold text-white bg-primary hover:bg-primary-hover rounded-xl shadow-xs transition-colors focus:outline-none">
-                    <iconify-icon icon="solar:filter-linear" class="text-base"></iconify-icon>
+            <!-- Action buttons -->
+            <div class="col-span-12 md:col-span-2 flex items-center gap-2">
+                <button type="submit" class="flex-1 h-[42px] px-4 text-sm font-bold text-white bg-primary hover:bg-primary-hover rounded-lg shadow-xs transition-colors flex items-center justify-center gap-2 focus:outline-none" title="Lọc danh sách">
+                    <iconify-icon icon="solar:magnifer-linear" class="text-base"></iconify-icon>
                     <span>Lọc</span>
                 </button>
                 @if(request()->hasAny(['q', 'country', 'status']))
-                    <a href="{{ route('admin.brands.index') }}" class="p-2.5 text-slate-500 hover:text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors" title="Xóa bộ lọc">
+                    <a href="{{ route('admin.brands.index') }}" class="h-[42px] px-3.5 text-gray-500 hover:text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg flex items-center justify-center transition-colors shrink-0" title="Xóa bộ lọc">
                         <iconify-icon icon="solar:restart-linear" class="text-lg"></iconify-icon>
                     </a>
                 @endif
