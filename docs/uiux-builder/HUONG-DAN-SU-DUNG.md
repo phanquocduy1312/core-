@@ -1,5 +1,7 @@
 # Hướng dẫn sử dụng UI/UX Builder
 
+> Bản mở rộng ngày 09/09/2026: [Sổ tay PDF 40 trang cho người mới](handbook/HUONG-DAN-UIUX-BUILDER.pdf), có ảnh chụp mới và tra cứu đủ 38 khối của giao diện hiện tại. Phần dưới giữ nguyên hướng dẫn của đợt 08/09/2026.
+
 Ngày kiểm tra: 08/09/2026. Dành cho người quản trị nội dung website hiện tại.
 
 Ảnh trong tài liệu được chụp bằng Chromium từ giao diện thực, chạy trên bản kiểm thử localhost dùng cùng mã nguồn và bản sao nội dung CMS. Thao tác lưu/xuất bản trong kiểm thử dùng cơ sở dữ liệu tạm. Thư viện ảnh trong bản kiểm thử không có dữ liệu Media thật. Xem [báo cáo kiểm thử và các điểm còn tồn tại](BAO-CAO-KIEM-THU.md) trước khi nghiệm thu.

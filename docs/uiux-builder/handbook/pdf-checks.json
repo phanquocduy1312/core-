@@ -1,0 +1,19 @@
+{
+  "pages": 40,
+  "clickable_toc_links": 37,
+  "unique_embedded_images": 25,
+  "screenshot_files": 35,
+  "all_html_words_present_in_pdf": true,
+  "pdf_bytes": 7176443,
+  "visual_sample_pages": [
+    1,
+    3,
+    6,
+    11,
+    12,
+    15,
+    20,
+    25,
+    39
+  ]
+}

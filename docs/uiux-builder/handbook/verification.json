@@ -1,0 +1,390 @@
+{
+  "images": [
+    {
+      "src": "images/02-tong-quan-builder.png",
+      "ok": true
+    },
+    {
+      "src": "images/01-danh-sach-trang.png",
+      "ok": true
+    },
+    {
+      "src": "images/17-tao-trang.png",
+      "ok": true
+    },
+    {
+      "src": "images/26-thong-tin-chi-tiet.png",
+      "ok": true
+    },
+    {
+      "src": "images/02-tong-quan-builder.png",
+      "ok": true
+    },
+    {
+      "src": "images/18-thanh-cong-cu.png",
+      "ok": true
+    },
+    {
+      "src": "images/05-cay-lop.png",
+      "ok": true
+    },
+    {
+      "src": "images/19-sua-tieu-de-bang.png",
+      "ok": true
+    },
+    {
+      "src": "images/21-thuoc-tinh-nut-bang.png",
+      "ok": true
+    },
+    {
+      "src": "images/07-thu-vien-anh.png",
+      "ok": true
+    },
+    {
+      "src": "images/08-tai-anh.png",
+      "ok": true
+    },
+    {
+      "src": "images/20-thuoc-tinh-anh-bang.png",
+      "ok": true
+    },
+    {
+      "src": "images/03-kieu-dang.png",
+      "ok": true
+    },
+    {
+      "src": "images/06-thu-vien-khoi.png",
+      "ok": true
+    },
+    {
+      "src": "images/24-nhom-khoi-1.png",
+      "ok": true
+    },
+    {
+      "src": "images/24-nhom-khoi-2.png",
+      "ok": true
+    },
+    {
+      "src": "images/24-nhom-khoi-3.png",
+      "ok": true
+    },
+    {
+      "src": "images/24-nhom-khoi-4.png",
+      "ok": true
+    },
+    {
+      "src": "images/22-thuoc-tinh-video-bang.png",
+      "ok": true
+    },
+    {
+      "src": "images/23-du-lieu-dong-bang.png",
+      "ok": true
+    },
+    {
+      "src": "images/09-dien-thoai.png",
+      "ok": true
+    },
+    {
+      "src": "images/10-may-tinh-bang.png",
+      "ok": true
+    },
+    {
+      "src": "images/12-sua-header.png",
+      "ok": true
+    },
+    {
+      "src": "images/15-khoi-dung-chung.png",
+      "ok": true
+    },
+    {
+      "src": "images/11-xac-nhan-xuat-ban.png",
+      "ok": true
+    },
+    {
+      "src": "images/25-ma-nguon.png",
+      "ok": true
+    }
+  ],
+  "pages": [
+    {
+      "id": "p1",
+      "title": "Tự thiết kế trang web\nvới UI/UX Builder",
+      "bottom": 982.96875,
+      "limit": 1067.953125,
+      "overflow": false
+    },
+    {
+      "id": "p2",
+      "title": "Cách dùng cuốn sổ tay này",
+      "bottom": 1816.21875,
+      "limit": 2190.46875,
+      "overflow": false
+    },
+    {
+      "id": "p3",
+      "title": "Mục lục",
+      "bottom": 3065.046875,
+      "limit": 3312.984375,
+      "overflow": false
+    },
+    {
+      "id": "p4",
+      "title": "Bắt đầu nhanh: sửa một tiêu đề",
+      "bottom": 3847.4375,
+      "limit": 4435.5,
+      "overflow": false
+    },
+    {
+      "id": "p5",
+      "title": "Vào đúng trang trong admin",
+      "bottom": 5362.53125,
+      "limit": 5558.015625,
+      "overflow": false
+    },
+    {
+      "id": "p6",
+      "title": "Tạo trang mới: điền thông tin",
+      "bottom": 6542.6875,
+      "limit": 6680.53125,
+      "overflow": false
+    },
+    {
+      "id": "p7",
+      "title": "Sửa tên, đường dẫn, SEO và ngôn ngữ",
+      "bottom": 7445.6875,
+      "limit": 7803.046875,
+      "overflow": false
+    },
+    {
+      "id": "p8",
+      "title": "Nhìn tổng thể màn hình Builder",
+      "bottom": 8780.84375,
+      "limit": 8925.5625,
+      "overflow": false
+    },
+    {
+      "id": "p9",
+      "title": "Tra cứu nút trên thanh công cụ",
+      "bottom": 9803.296875,
+      "limit": 10048.078125,
+      "overflow": false
+    },
+    {
+      "id": "p10",
+      "title": "Chọn đúng phần cần sửa",
+      "bottom": 10986.4375,
+      "limit": 11170.59375,
+      "overflow": false
+    },
+    {
+      "id": "p11",
+      "title": "Sửa chữ và cấp tiêu đề",
+      "bottom": 11828.484375,
+      "limit": 12293.109375,
+      "overflow": false
+    },
+    {
+      "id": "p12",
+      "title": "Nút bấm và đường liên kết",
+      "bottom": 13091.796875,
+      "limit": 13415.625,
+      "overflow": false
+    },
+    {
+      "id": "p13",
+      "title": "Thay ảnh đang có",
+      "bottom": 14353.984375,
+      "limit": 14538.140625,
+      "overflow": false
+    },
+    {
+      "id": "p14",
+      "title": "Tải ảnh mới lên thư viện",
+      "bottom": 15546.34375,
+      "limit": 15660.65625,
+      "overflow": false
+    },
+    {
+      "id": "p15",
+      "title": "Ảnh nền và cách cắt ảnh",
+      "bottom": 16366.421875,
+      "limit": 16783.171875,
+      "overflow": false
+    },
+    {
+      "id": "p16",
+      "title": "Màu sắc, kiểu chữ và khoảng cách",
+      "bottom": 17858.375,
+      "limit": 17905.6875,
+      "overflow": false
+    },
+    {
+      "id": "p17",
+      "title": "Các nhóm kiểu dáng nâng cao",
+      "bottom": 18699.84375,
+      "limit": 19028.203125,
+      "overflow": false
+    },
+    {
+      "id": "p18",
+      "title": "Thêm khối và dựng bố cục",
+      "bottom": 20010.921875,
+      "limit": 20150.71875,
+      "overflow": false
+    },
+    {
+      "id": "p19",
+      "title": "Di chuyển, nhân bản, xóa, hoàn tác",
+      "bottom": 20794.453125,
+      "limit": 21273.234375,
+      "overflow": false
+    },
+    {
+      "id": "p20",
+      "title": "Tra cứu khối: Cơ bản",
+      "bottom": 22181.703125,
+      "limit": 22395.75,
+      "overflow": false
+    },
+    {
+      "id": "p21",
+      "title": "Tra cứu khối: Bố cục",
+      "bottom": 23382.015625,
+      "limit": 23518.265625,
+      "overflow": false
+    },
+    {
+      "id": "p22",
+      "title": "Tra cứu khối: Thẻ và nội dung",
+      "bottom": 24446.453125,
+      "limit": 24640.78125,
+      "overflow": false
+    },
+    {
+      "id": "p23",
+      "title": "Tra cứu khối: Tương tác và tiện ích",
+      "bottom": 25511.59375,
+      "limit": 25763.296875,
+      "overflow": false
+    },
+    {
+      "id": "p24",
+      "title": "Video: chèn và kiểm tra phát",
+      "bottom": 26398.71875,
+      "limit": 26885.8125,
+      "overflow": false
+    },
+    {
+      "id": "p25",
+      "title": "Khối dữ liệu động hoạt động ra sao?",
+      "bottom": 27566.359375,
+      "limit": 28008.328125,
+      "overflow": false
+    },
+    {
+      "id": "p26",
+      "title": "Tra cứu 8 khối dữ liệu động",
+      "bottom": 28799.953125,
+      "limit": 29130.84375,
+      "overflow": false
+    },
+    {
+      "id": "p27",
+      "title": "Biểu mẫu liên hệ: kiểm tra đủ luồng",
+      "bottom": 29794.296875,
+      "limit": 30253.359375,
+      "overflow": false
+    },
+    {
+      "id": "p28",
+      "title": "Kiểm tra điện thoại và máy tính bảng",
+      "bottom": 31263.296875,
+      "limit": 31375.875,
+      "overflow": false
+    },
+    {
+      "id": "p29",
+      "title": "Xem trước và mở rộng vùng làm việc",
+      "bottom": 32314.234375,
+      "limit": 32498.390625,
+      "overflow": false
+    },
+    {
+      "id": "p30",
+      "title": "Header/Footer: phần đầu và chân trang",
+      "bottom": 33469.78125,
+      "limit": 33620.90625,
+      "overflow": false
+    },
+    {
+      "id": "p31",
+      "title": "Chọn bố cục và tạo khối dùng chung",
+      "bottom": 34675.9375,
+      "limit": 34743.421875,
+      "overflow": false
+    },
+    {
+      "id": "p32",
+      "title": "Lưu nháp và xuất bản: khác nhau thế nào?",
+      "bottom": 35527.765625,
+      "limit": 35865.9375,
+      "overflow": false
+    },
+    {
+      "id": "p33",
+      "title": "Xuất bản và kiểm tra website",
+      "bottom": 36859.03125,
+      "limit": 36988.453125,
+      "overflow": false
+    },
+    {
+      "id": "p34",
+      "title": "Công cụ mã nguồn và kéo tự do",
+      "bottom": 37852.328125,
+      "limit": 38110.96875,
+      "overflow": false
+    },
+    {
+      "id": "p35",
+      "title": "Bài thực hành: trang giới thiệu showroom",
+      "bottom": 38785.65625,
+      "limit": 39233.484375,
+      "overflow": false
+    },
+    {
+      "id": "p36",
+      "title": "Bài thực hành: tự kiểm tra kết quả",
+      "bottom": 40137.171875,
+      "limit": 40356,
+      "overflow": false
+    },
+    {
+      "id": "p37",
+      "title": "Xử lý lỗi: chọn, sửa và hiển thị",
+      "bottom": 41148.703125,
+      "limit": 41478.515625,
+      "overflow": false
+    },
+    {
+      "id": "p38",
+      "title": "Xử lý lỗi: lưu, ảnh và trang công khai",
+      "bottom": 42271.171875,
+      "limit": 42601.03125,
+      "overflow": false
+    },
+    {
+      "id": "p39",
+      "title": "Phiếu kiểm tra trước khi bàn giao",
+      "bottom": 43377.265625,
+      "limit": 43723.546875,
+      "overflow": false
+    },
+    {
+      "id": "p40",
+      "title": "Từ điển nhỏ và phạm vi tài liệu",
+      "bottom": 44548.1875,
+      "limit": 44846.0625,
+      "overflow": false
+    }
+  ]
+}

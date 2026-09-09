@@ -38,3 +38,8 @@ Khi phát hiện một sự thật nghiệp vụ/quyết định chưa được 
 - [Hướng dẫn sử dụng có 16 ảnh chụp giao diện](uiux-builder/HUONG-DAN-SU-DUNG.md)
 - [Báo cáo kiểm thử, lỗi đã sửa và lỗi còn tồn tại](uiux-builder/BAO-CAO-KIEM-THU.md)
 - [Quy tắc nghiệp vụ nháp/xuất bản và phần dùng chung](knowledge/uiux-builder-workflow.md)
+
+### Sổ tay PDF UI/UX Builder — 09/09/2026
+
+- [PDF 40 trang dành cho người không biết code](uiux-builder/handbook/HUONG-DAN-UIUX-BUILDER.pdf) — ảnh mới, hướng dẫn từng bước, đủ 38 khối, bài thực hành và checklist.
+- [Bản HTML và cách cập nhật/in lại](uiux-builder/handbook/README.md).
