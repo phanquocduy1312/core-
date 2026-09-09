@@ -97,161 +97,161 @@
     {
       "id": "",
       "title": "Hướng dẫn sửa trang bằng UI/UX Builder",
-      "bottom": 931.546875,
+      "bottom": 839.828125,
       "limit": 1071.734375,
       "overflow": false
     },
     {
       "id": "",
       "title": "1. Chọn đúng phần trước khi sửa",
-      "bottom": 1840.09375,
+      "bottom": 1748.375,
       "limit": 2194.25,
       "overflow": false
     },
     {
       "id": "",
       "title": "2. Sửa tiêu đề và đoạn chữ",
-      "bottom": 2962.609375,
+      "bottom": 2870.890625,
       "limit": 3316.765625,
       "overflow": false
     },
     {
       "id": "",
       "title": "3. Đổi màu, cỡ chữ và khoảng cách",
-      "bottom": 4085.125,
+      "bottom": 3993.40625,
       "limit": 4439.28125,
       "overflow": false
     },
     {
       "id": "",
       "title": "4. Thêm khối mới vào trang",
-      "bottom": 5207.640625,
+      "bottom": 5115.921875,
       "limit": 5561.796875,
       "overflow": false
     },
     {
       "id": "",
       "title": "5. Chọn ảnh từ thư viện",
-      "bottom": 6330.15625,
+      "bottom": 6238.4375,
       "limit": 6684.3125,
       "overflow": false
     },
     {
       "id": "",
       "title": "6. Tải ảnh mới lên",
-      "bottom": 7452.671875,
+      "bottom": 7360.953125,
       "limit": 7806.828125,
       "overflow": false
     },
     {
       "id": "",
       "title": "7. Kiểm tra mô tả và cách cắt ảnh",
-      "bottom": 8575.1875,
+      "bottom": 8483.46875,
       "limit": 8929.34375,
       "overflow": false
     },
     {
       "id": "",
       "title": "8. Sửa nút và đường link",
-      "bottom": 9697.703125,
+      "bottom": 9605.984375,
       "limit": 10051.859375,
       "overflow": false
     },
     {
       "id": "",
       "title": "9. Chèn video",
-      "bottom": 10820.21875,
+      "bottom": 10728.5,
       "limit": 11174.375,
       "overflow": false
     },
     {
       "id": "",
       "title": "10. Dùng khối dữ liệu động",
-      "bottom": 11942.734375,
+      "bottom": 11851.015625,
       "limit": 12296.890625,
       "overflow": false
     },
     {
       "id": "",
       "title": "11. Kiểm tra điện thoại",
-      "bottom": 13065.25,
+      "bottom": 12973.53125,
       "limit": 13419.40625,
       "overflow": false
     },
     {
       "id": "",
       "title": "12. Kiểm tra máy tính bảng",
-      "bottom": 14156.78125,
+      "bottom": 14065.0625,
       "limit": 14541.921875,
       "overflow": false
     },
     {
       "id": "",
       "title": "13. Lưu nháp",
-      "bottom": 15310.28125,
+      "bottom": 15218.5625,
       "limit": 15664.4375,
       "overflow": false
     },
     {
       "id": "",
       "title": "14. Xuất bản trang",
-      "bottom": 16432.796875,
+      "bottom": 16341.078125,
       "limit": 16786.953125,
       "overflow": false
     },
     {
       "id": "",
       "title": "15. Sửa Header",
-      "bottom": 17555.3125,
+      "bottom": 17463.59375,
       "limit": 17909.46875,
       "overflow": false
     },
     {
       "id": "",
       "title": "16. Sửa Footer",
-      "bottom": 18677.828125,
+      "bottom": 18586.109375,
       "limit": 19031.984375,
       "overflow": false
     },
     {
       "id": "",
       "title": "17. Khối dùng chung",
-      "bottom": 19800.34375,
+      "bottom": 19708.625,
       "limit": 20154.5,
       "overflow": false
     },
     {
       "id": "",
       "title": "18. Nhóm khối Cơ bản",
-      "bottom": 21057.21875,
+      "bottom": 20929.90625,
       "limit": 21277.015625,
       "overflow": false
     },
     {
       "id": "",
       "title": "19. Nhóm khối Bố cục",
-      "bottom": 22179.734375,
+      "bottom": 21973.609375,
       "limit": 22399.53125,
       "overflow": false
     },
     {
       "id": "",
       "title": "20. Nhóm khối Thẻ và nội dung",
-      "bottom": 23302.25,
+      "bottom": 23096.125,
       "limit": 23522.046875,
       "overflow": false
     },
     {
       "id": "",
       "title": "21. Nhóm khối Tiện ích",
-      "bottom": 24424.765625,
+      "bottom": 24139.84375,
       "limit": 24644.5625,
       "overflow": false
     },
     {
       "id": "",
       "title": "22. Nhóm khối Dữ liệu động",
-      "bottom": 25547.28125,
+      "bottom": 25341.15625,
       "limit": 25767.078125,
       "overflow": false
     },

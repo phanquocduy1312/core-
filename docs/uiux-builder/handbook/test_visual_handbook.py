@@ -5,19 +5,21 @@ from pathlib import Path
 SOURCE = Path(__file__).with_name("build_visual_handbook.py").read_text()
 
 
-def test_annotations_never_draw_text_panels_on_top_of_the_ui():
-    """Chú thích trong ảnh chỉ được là số/mũi tên; diễn giải nằm dưới ảnh."""
-    assert "draw.rounded_rectangle" not in SOURCE
-    assert "draw.text((bx + 13" not in SOURCE
+def test_annotations_use_a_dedicated_rail_outside_the_screenshot():
+    """Nhãn phải nằm trong cột ngoài ảnh, không nằm đè lên giao diện."""
+    assert "CALLOUT_RAIL_WIDTH" in SOURCE
+    assert "image.width + rail_width" in SOURCE
+    assert "rail_x" in SOURCE
 
 
-def test_each_visual_instruction_has_an_outside_image_legend():
-    """Hàm tạo ảnh phải xuất danh sách hướng dẫn sau ảnh, không trên ảnh."""
-    assert "<ol>" in SOURCE
+def test_each_visual_instruction_has_a_rail_label_and_a_text_legend():
+    """Đường nối trong ảnh phải dẫn tới nhãn ở rail và có hướng dẫn bên dưới."""
+    assert "draw.line" in SOURCE
+    assert "draw.text((rail_x" in SOURCE
     assert "''.join(f'<li>{item}</li>' for item in steps)" in SOURCE
 
 
 if __name__ == "__main__":
-    test_annotations_never_draw_text_panels_on_top_of_the_ui()
-    test_each_visual_instruction_has_an_outside_image_legend()
-    print("PASS: annotated screenshots keep explanatory text outside the UI.")
+    test_annotations_use_a_dedicated_rail_outside_the_screenshot()
+    test_each_visual_instruction_has_a_rail_label_and_a_text_legend()
+    print("PASS: annotated screenshots use an external callout rail.")

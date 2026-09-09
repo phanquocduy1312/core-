@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from html import escape
 from pathlib import Path
+from textwrap import wrap
 
 from PIL import Image, ImageDraw, ImageFont
 
@@ -17,6 +18,7 @@ IMAGES = ROOT / "images"
 ANNOTATED = IMAGES / "annotated"
 FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 FONT_BOLD = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+CALLOUT_RAIL_WIDTH = 420
 
 
 def font(size: int, bold: bool = False):
@@ -24,24 +26,60 @@ def font(size: int, bold: bool = False):
 
 
 def annotate(source: str, output: str, callouts: list[tuple[int, tuple[int, int], str, tuple[int, int]]]):
-    """Thêm số nhỏ vào đúng vị trí. Diễn giải luôn được in bên dưới ảnh."""
+    """Nối vị trí trong ảnh tới nhãn ở dải riêng bên phải, không che giao diện."""
     image = Image.open(IMAGES / source).convert("RGBA")
-    draw = ImageDraw.Draw(image, "RGBA")
+    rail_width = max(CALLOUT_RAIL_WIDTH, int(image.width * 0.28))
+    canvas = Image.new("RGBA", (image.width + rail_width, image.height), (255, 255, 255, 255))
+    canvas.paste(image, (0, 0))
+    draw = ImageDraw.Draw(canvas, "RGBA")
+    rail_x = image.width
+    draw.rectangle((rail_x, 0, canvas.width, canvas.height), fill=(241, 247, 249, 255))
+    draw.line((rail_x, 0, rail_x, canvas.height), fill=(170, 194, 204, 255), width=2)
     scale_x, scale_y = image.width / 1600, image.height / 1000
 
     def point(pair):
         return int(pair[0] * scale_x), int(pair[1] * scale_y)
 
-    for number, target, _label, _box in callouts:
+    heading_font = font(max(14, int(18 * min(scale_x, scale_y))), True)
+    body_font = font(max(13, int(18 * min(scale_x, scale_y))))
+    draw.text((rail_x + 18, 18), "BẤM VÀO", fill=(23, 80, 100, 255), font=heading_font)
+
+    label_data = []
+    for number, target, label, _box in callouts:
+        lines = wrap(label, width=max(17, rail_width // max(12, body_font.size // 2)))
+        line_height = body_font.getbbox("Ag")[3] + 5
+        label_data.append((number, target, lines, line_height, line_height * len(lines) + 22))
+
+    available_height = image.height - 74
+    total_height = sum(item[4] for item in label_data)
+    gap = max(10, (available_height - total_height) // max(1, len(label_data) - 1))
+    y = 62
+
+    for number, target, lines, line_height, label_height in label_data:
         tx, ty = point(target)
-        # The old large, dark labels hid the exact controls users needed to see.
-        # A small number is enough to bind the control to its explanation below.
         radius = max(16, int(24 * min(scale_x, scale_y)))
         draw.ellipse((tx - radius, ty - radius, tx + radius, ty + radius), fill=(226, 53, 53, 255), outline=(255, 255, 255, 255), width=3)
         number_font = font(max(15, int(24 * min(scale_x, scale_y))), True)
         number_box = draw.textbbox((0, 0), str(number), font=number_font)
         draw.text((tx - (number_box[2] - number_box[0]) / 2, ty - (number_box[3] - number_box[1]) / 2 - 2), str(number), fill="white", font=number_font)
-    image.convert("RGB").save(ANNOTATED / output, quality=93)
+
+        label_y = min(y, image.height - label_height - 12)
+        label_x = rail_x + 18
+        line_end_x = rail_x + 10
+        line_end_y = label_y + label_height // 2
+        draw.line((tx + radius, ty, line_end_x, line_end_y), fill=(226, 53, 53, 220), width=max(2, int(3 * scale_x)))
+        draw.rounded_rectangle((label_x, label_y, canvas.width - 18, label_y + label_height), radius=9, fill=(255, 255, 255, 255), outline=(177, 200, 209, 255), width=2)
+        marker_x = label_x + 16
+        marker_y = label_y + label_height // 2
+        marker_radius = max(13, int(18 * min(scale_x, scale_y)))
+        draw.ellipse((marker_x - marker_radius, marker_y - marker_radius, marker_x + marker_radius, marker_y + marker_radius), fill=(226, 53, 53, 255))
+        draw.text((marker_x - 6, marker_y - 10), str(number), fill="white", font=heading_font)
+        text_y = label_y + 11
+        for line in lines:
+            draw.text((rail_x + 48, text_y), line, fill=(20, 47, 65, 255), font=body_font)
+            text_y += line_height
+        y = label_y + label_height + gap
+    canvas.convert("RGB").save(ANNOTATED / output, quality=93)
 
 
 def image(name: str, caption: str, steps: list[str]) -> str:
@@ -162,7 +200,7 @@ def build_annotations():
 
 def build_pages():
     page("Hướng dẫn sửa trang bằng UI/UX Builder", """
-        <p class="lead">Tài liệu này chỉ hướng dẫn những việc bạn cần làm trực tiếp trong Builder. Mỗi ảnh có số đỏ nhỏ tại vị trí cần bấm; phần giải thích số nằm ngay dưới ảnh để không che giao diện.</p>
+        <p class="lead">Tài liệu này chỉ hướng dẫn những việc bạn cần làm trực tiếp trong Builder. Mỗi ảnh giữ nguyên giao diện; nhãn nằm trong dải riêng bên phải và nối tới đúng vị trí bằng nét mảnh.</p>
         <div class="rule"><b>Quy trình dùng hằng ngày:</b> chọn đúng phần → sửa → kiểm tra máy tính/điện thoại → Lưu nháp → Xuất bản.</div>
         """ + image("01-tong-quan.png", "Màn hình Builder hiện tại. Các số chỉ những vùng cần dùng thường xuyên.", [
             "Số 1 là tên trang đang sửa. Số 2 là Lưu nháp; số 3 là Xuất bản.",
