@@ -5,178 +5,256 @@
 @push('styles')
     <link rel="stylesheet" href="{{ asset('admin-assets/libs/dragula/dist/dragula.min.css') }}">
     <link rel="stylesheet" href="{{ asset('admin-assets/libs/quill/dist/quill.snow.css') }}">
+    <style>
+        .brand-quick-quill .ql-toolbar.ql-snow {
+            border: 1px solid #e2e8f0 !important;
+            border-bottom: none !important;
+            border-top-left-radius: 0.75rem !important;
+            border-top-right-radius: 0.75rem !important;
+            background-color: #f8fafc !important;
+            padding: 6px 10px !important;
+        }
+        .brand-quick-quill .ql-container.ql-snow {
+            border: 1px solid #e2e8f0 !important;
+            border-bottom-left-radius: 0.75rem !important;
+            border-bottom-right-radius: 0.75rem !important;
+            font-family: inherit !important;
+        }
+        .brand-quick-quill .ql-editor {
+            min-height: 140px !important;
+            font-size: 14px !important;
+            line-height: 1.6 !important;
+            color: #0f172a !important;
+        }
+    </style>
 @endpush
 
 @section('content')
     <!-- Header Banner -->
-    <div class="relative overflow-hidden mb-6 bg-gradient-to-r from-slate-900 to-slate-800 text-white rounded-xl shadow-sm border border-slate-700/50">
-        <div class="px-6 py-4 flex flex-wrap items-center justify-between gap-4">
-            <div>
-                <h4 class="text-xl font-bold mb-1">{{ __('catalog.brands.title') }}</h4>
-                <nav class="flex text-sm text-slate-350" aria-label="Breadcrumb">
-                    <ol class="inline-flex items-center space-x-1 md:space-x-2">
-                        <li class="inline-flex items-center">
-                            <a href="{{ route('admin.dashboard') }}" class="hover:text-white transition-colors">{{ __('admin.home') }}</a>
-                        </li>
-                        <li>
-                            <div class="flex items-center">
-                                <iconify-icon icon="solar:alt-arrow-right-linear" class="mx-1 text-slate-500"></iconify-icon>
-                                <span class="text-slate-400">{{ __('catalog.brands.title') }}</span>
-                            </div>
-                        </li>
-                    </ol>
-                </nav>
+    <div class="relative overflow-hidden mb-6 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white rounded-2xl shadow-sm border border-slate-700/50">
+        <div class="px-6 py-5 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-3.5">
+                <div class="w-12 h-12 rounded-xl bg-amber-400/15 border border-amber-400/30 text-amber-400 flex items-center justify-center font-bold shadow-inner">
+                    <iconify-icon icon="solar:medal-ribbons-star-bold-duotone" class="text-2xl"></iconify-icon>
+                </div>
+                <div>
+                    <h4 class="text-xl font-bold mb-0.5 text-white tracking-tight">Quản lý thương hiệu (Our Brands)</h4>
+                    <p class="text-xs text-slate-300">Quản lý danh mục thương hiệu đèn chiếu sáng kiến trúc quốc tế hiển thị trên website</p>
+                </div>
             </div>
-            <x-admin.button variant="primary" size="sm" href="{{ route('admin.brands.create') }}">
-                <iconify-icon icon="solar:add-circle-linear" class="mr-1"></iconify-icon> {{ __('catalog.brands.create') }}
-            </x-admin.button>
+            <a href="{{ route('admin.brands.create') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary hover:bg-primary-hover text-white font-bold text-sm transition-all shadow-md shadow-primary/20 hover:shadow-lg focus:outline-none">
+                <iconify-icon icon="solar:add-circle-bold" class="text-lg"></iconify-icon>
+                <span>{{ __('catalog.brands.create') }}</span>
+            </a>
         </div>
     </div>
 
-    <!-- Search Form -->
-    <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-4 mb-6">
-        <form method="GET" class="flex flex-wrap items-end gap-3">
-            <div class="flex-1 min-w-[240px]">
-                <input type="search" name="q" class="block w-full p-2.5 text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-primary focus:border-primary focus:outline-none transition-colors" value="{{ request('q') }}" placeholder="{{ __('catalog.placeholders.brand_name') }}">
+    <!-- Search & Filter Card -->
+    <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-4 mb-6">
+        <form method="GET" class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
+            <!-- Keyword input -->
+            <div class="sm:col-span-5 relative">
+                <input type="search" 
+                       name="q" 
+                       class="block w-full pl-10 pr-3.5 py-2.5 text-sm text-slate-900 bg-white rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none transition-all" 
+                       value="{{ request('q') }}" 
+                       placeholder="Tìm theo tên, quốc gia, slug...">
+                <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
+                    <iconify-icon icon="solar:magnifer-linear" class="text-lg"></iconify-icon>
+                </div>
             </div>
-            <x-admin.button type="submit" variant="primary" size="md">
-                <iconify-icon icon="solar:magnifer-linear" class="mr-1.5"></iconify-icon> {{ __('catalog.actions.search') }}
-            </x-admin.button>
+
+            <!-- Country filter -->
+            <div class="sm:col-span-3">
+                <select name="country" class="block w-full px-3 py-2.5 text-sm text-slate-700 bg-white rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none transition-all">
+                    <option value="">-- Tất cả quốc gia --</option>
+                    @foreach($countries as $c)
+                        <option value="{{ $c }}" @selected(request('country') === $c)>{{ $c }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <!-- Status filter -->
+            <div class="sm:col-span-2">
+                <select name="status" class="block w-full px-3 py-2.5 text-sm text-slate-700 bg-white rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none transition-all">
+                    <option value="">-- Trạng thái --</option>
+                    <option value="active" @selected(request('status') === 'active')>Đang hiển thị</option>
+                    <option value="inactive" @selected(request('status') === 'inactive')>Đang ẩn</option>
+                    <option value="featured" @selected(request('status') === 'featured')>Thương hiệu nổi bật</option>
+                </select>
+            </div>
+
+            <!-- Buttons -->
+            <div class="sm:col-span-2 flex items-center gap-2">
+                <button type="submit" class="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-4 text-sm font-bold text-white bg-primary hover:bg-primary-hover rounded-xl shadow-xs transition-colors focus:outline-none">
+                    <iconify-icon icon="solar:filter-linear" class="text-base"></iconify-icon>
+                    <span>Lọc</span>
+                </button>
+                @if(request()->hasAny(['q', 'country', 'status']))
+                    <a href="{{ route('admin.brands.index') }}" class="p-2.5 text-slate-500 hover:text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors" title="Xóa bộ lọc">
+                        <iconify-icon icon="solar:restart-linear" class="text-lg"></iconify-icon>
+                    </a>
+                @endif
+            </div>
         </form>
     </div>
 
-    <!-- Brands List Card -->
-    <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden flex flex-col justify-between mb-8">
+    <!-- Brands Table Card -->
+    <div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden flex flex-col justify-between mb-8">
         <div>
             @include('admin.shared.bulk-actions', [
                 'bulkFormId' => 'bulk-brands-form',
                 'bulkActionUrl' => route('admin.brands.bulk'),
                 'bulkItemLabel' => 'thương hiệu',
             ])
+
             <div class="overflow-x-auto">
-                <table class="w-full text-sm text-left text-gray-500">
-                    <thead class="text-xs text-gray-400 uppercase bg-gray-50 border-b border-gray-200">
+                <table class="w-full text-sm text-left text-slate-600">
+                    <thead class="text-xs text-slate-500 uppercase bg-slate-50/80 border-b border-slate-200">
                         <tr>
-                            <th class="px-6 py-3" style="width: 44px;">
-                                <input type="checkbox" class="w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded focus:ring-primary cursor-pointer" data-bulk-select-all="bulk-brands-form" aria-label="Chọn tất cả thương hiệu">
+                            <th class="px-5 py-3.5 w-12 text-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary bg-white border-slate-300 rounded focus:ring-primary cursor-pointer" data-bulk-select-all="bulk-brands-form" aria-label="Chọn tất cả">
                             </th>
-                            <th class="px-6 py-3 font-bold">{{ __('catalog.fields.name') }}</th>
-                            <th class="px-6 py-3 font-bold">Quốc gia</th>
-                            <th class="px-6 py-3 font-bold">Ảnh công trình</th>
-                            <th class="px-6 py-3 font-bold">{{ __('catalog.fields.status') }}</th>
-                            <th class="px-6 py-3 font-bold text-center">Website</th>
-                            <th class="px-6 py-3 text-right"></th>
+                            <th class="px-5 py-3.5 font-bold text-slate-700">{{ __('catalog.fields.name') }}</th>
+                            <th class="px-5 py-3.5 font-bold text-slate-700">Quốc gia</th>
+                            <th class="px-5 py-3.5 font-bold text-slate-700">Ảnh công trình (3:4)</th>
+                            <th class="px-5 py-3.5 font-bold text-slate-700">{{ __('catalog.fields.status') }}</th>
+                            <th class="px-5 py-3.5 font-bold text-slate-700 text-center">Website</th>
+                            <th class="px-5 py-3.5 text-right font-bold text-slate-700 w-28">Thao tác</th>
                         </tr>
                     </thead>
-                    <tbody id="brand-table-sortable" class="divide-y divide-gray-150" data-start-order="{{ max(0, ($brands->firstItem() ?? 1) - 1) }}">
+                    <tbody id="brand-table-sortable" class="divide-y divide-slate-150" data-start-order="{{ max(0, ($brands->firstItem() ?? 1) - 1) }}">
                         @forelse($brands as $brand)
                             @php
                                 $brandName = $brand->getTranslation('name', app()->getLocale(), false) ?: $brand->name;
                                 $brandDescription = $brand->getTranslation('description', app()->getLocale(), false) ?: '';
                             @endphp
-                            <tr class="hover:bg-gray-50/50 transition-colors" data-brand-id="{{ $brand->id }}">
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <input type="checkbox" class="w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded focus:ring-primary cursor-pointer" name="ids[]" value="{{ $brand->id }}" form="bulk-brands-form" data-bulk-select="bulk-brands-form" aria-label="Chọn {{ $brandName }}">
+                            <tr class="hover:bg-slate-50/60 transition-colors group" data-brand-id="{{ $brand->id }}">
+                                <!-- Checkbox -->
+                                <td class="px-5 py-4 whitespace-nowrap text-center">
+                                    <input type="checkbox" class="w-4 h-4 text-primary bg-white border-slate-300 rounded focus:ring-primary cursor-pointer" name="ids[]" value="{{ $brand->id }}" form="bulk-brands-form" data-bulk-select="bulk-brands-form" aria-label="Chọn {{ $brandName }}">
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
+
+                                <!-- Tên & Logo -->
+                                <td class="px-5 py-4 whitespace-nowrap">
                                     <div class="flex items-center">
-                                        <span class="catalog-drag-handle mr-3 text-gray-400 hover:text-gray-600 cursor-grab flex items-center" title="{{ __('catalog.actions.drag_sort') }}">
-                                            <iconify-icon icon="solar:double-alt-arrow-up-down-linear" class="text-lg"></iconify-icon>
+                                        <span class="catalog-drag-handle mr-2.5 text-slate-300 hover:text-slate-600 cursor-grab flex items-center" title="{{ __('catalog.actions.drag_sort') }}">
+                                            <iconify-icon icon="solar:double-alt-arrow-up-down-linear" class="text-base"></iconify-icon>
                                         </span>
-                                        <div class="w-11 h-11 rounded-lg border border-gray-200 bg-white p-0.5 flex items-center justify-center overflow-hidden mr-3">
+                                        <div class="w-12 h-12 rounded-xl border border-slate-200 bg-white p-1 flex items-center justify-center overflow-hidden mr-3 shadow-2xs shrink-0">
                                             @if($brand->image_url)
-                                                <img src="{{ $brand->image_url }}" alt="{{ $brandName }}" class="w-full h-full object-contain rounded-md" onerror="this.onerror=null;this.src='{{ asset('admin-assets/js/icons/404.png') }}';">
+                                                <img src="{{ $brand->image_url }}" alt="{{ $brandName }}" class="max-h-10 max-w-full object-contain" onerror="this.onerror=null;this.src='{{ asset('admin-assets/js/icons/empty.png') }}';">
                                             @else
-                                                <img src="{{ asset('admin-assets/js/icons/empty.png') }}" alt="empty" class="w-full h-full object-cover rounded-md">
+                                                <img src="{{ asset('admin-assets/js/icons/empty.png') }}" alt="empty" class="w-full h-full object-cover opacity-50">
                                             @endif
                                         </div>
                                         <div>
-                                            <h6 class="font-bold text-gray-900">{{ $brandName }}</h6>
-                                            <span class="text-xs text-gray-500">{{ $brand->slug }}</span>
+                                            <a href="{{ route('admin.brands.edit', $brand) }}" class="font-bold text-slate-900 hover:text-primary transition-colors text-sm block">
+                                                {{ $brandName }}
+                                            </a>
+                                            <span class="text-xs text-slate-400 font-mono">{{ $brand->slug }}</span>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
+
+                                <!-- Quốc gia -->
+                                <td class="px-5 py-4 whitespace-nowrap">
                                     @if($brand->country)
-                                        <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200">
-                                            {{ $brand->country }}
+                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200/80 shadow-2xs">
+                                            <iconify-icon icon="solar:flag-2-linear" class="text-xs text-amber-600"></iconify-icon>
+                                            <span>{{ $brand->country }}</span>
                                         </span>
                                     @else
-                                        <span class="text-xs text-gray-400">—</span>
+                                        <span class="text-xs text-slate-400 italic">Chưa có</span>
                                     @endif
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
+
+                                <!-- Ảnh công trình 3:4 -->
+                                <td class="px-5 py-4 whitespace-nowrap">
                                     @if($brand->showcase_image)
-                                        <div class="w-12 h-16 rounded-md border border-gray-200 overflow-hidden bg-gray-100 shadow-sm">
-                                            <img src="{{ $brand->showcase_image }}" alt="Showcase" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='{{ asset('admin-assets/js/icons/404.png') }}';">
+                                        <div class="w-11 h-15 rounded-lg border border-slate-200 overflow-hidden bg-slate-100 shadow-2xs hover:scale-110 transition-transform duration-200 cursor-pointer" onclick="window.open('{{ $brand->showcase_image }}', '_blank')" title="Bấm để xem ảnh gốc">
+                                            <img src="{{ $brand->showcase_image }}" alt="Showcase" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='{{ asset('admin-assets/js/icons/empty.png') }}';">
                                         </div>
                                     @else
-                                        <span class="text-xs text-gray-400">—</span>
+                                        <span class="text-xs text-slate-400 italic">Chưa có</span>
                                     @endif
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    @if($brand->is_active)
-                                        <x-admin.badge variant="success">{{ __('catalog.status.active') }}</x-admin.badge>
-                                    @else
-                                        <x-admin.badge variant="danger">{{ __('catalog.status.inactive') }}</x-admin.badge>
-                                    @endif
-                                    @if($brand->is_featured)
-                                        <span class="ml-1 inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-purple-50 text-purple-700 border border-purple-200">
-                                            Nổi bật
-                                        </span>
-                                    @endif
+
+                                <!-- Trạng thái -->
+                                <td class="px-5 py-4 whitespace-nowrap">
+                                    <div class="flex items-center gap-1.5 flex-wrap">
+                                        @if($brand->is_active)
+                                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                                <span>{{ __('catalog.status.active') }}</span>
+                                            </span>
+                                        @else
+                                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-rose-50 text-rose-700 border border-rose-200">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+                                                <span>{{ __('catalog.status.inactive') }}</span>
+                                            </span>
+                                        @endif
+                                        @if($brand->is_featured)
+                                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-bold bg-purple-50 text-purple-700 border border-purple-200">
+                                                <iconify-icon icon="solar:star-bold" class="text-xs text-purple-500"></iconify-icon>
+                                                <span>Nổi bật</span>
+                                            </span>
+                                        @endif
+                                    </div>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-center">
+
+                                <!-- Website -->
+                                <td class="px-5 py-4 whitespace-nowrap text-center">
                                     @if($brand->website_url)
-                                        <a href="{{ $brand->website_url }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline" title="{{ $brand->website_url }}">
-                                            <iconify-icon icon="solar:link-circle-linear" class="text-base"></iconify-icon>
+                                        <a href="{{ $brand->website_url }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold text-primary bg-primary/5 hover:bg-primary hover:text-white border border-primary/20 transition-colors shadow-2xs" title="{{ $brand->website_url }}">
+                                            <iconify-icon icon="solar:link-circle-linear" class="text-sm"></iconify-icon>
                                             <span>Website</span>
                                         </a>
                                     @else
-                                        <span class="text-xs text-gray-400">—</span>
+                                        <span class="text-xs text-slate-400">—</span>
                                     @endif
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right">
-                                    <x-admin.dropdown align="right" width="48">
-                                        <x-slot name="trigger">
-                                            <button class="text-gray-400 hover:text-gray-600 focus:outline-none">
-                                                <iconify-icon icon="solar:menu-dots-bold" class="text-xl"></iconify-icon>
+
+                                <!-- Thao tác -->
+                                <td class="px-5 py-4 whitespace-nowrap text-right">
+                                    <div class="flex items-center justify-end gap-1">
+                                        <button type="button" 
+                                                class="p-2 text-slate-500 hover:text-primary hover:bg-primary/10 rounded-lg transition-colors js-brand-quick-edit"
+                                                title="Sửa nhanh"
+                                                data-id="{{ $brand->id }}"
+                                                data-name="{{ $brandName }}"
+                                                data-slug="{{ $brand->slug }}"
+                                                data-country="{{ $brand->country }}"
+                                                data-website-url="{{ $brand->website_url }}"
+                                                data-description="{{ $brandDescription }}"
+                                                data-is-active="{{ $brand->is_active ? 1 : 0 }}"
+                                                data-is-featured="{{ $brand->is_featured ? 1 : 0 }}"
+                                                data-image-url="{{ $brand->image_url }}"
+                                                data-showcase-image="{{ $brand->showcase_image }}">
+                                            <iconify-icon icon="solar:bolt-linear" class="text-base"></iconify-icon>
+                                        </button>
+                                        <a href="{{ route('admin.brands.edit', $brand) }}" 
+                                           class="p-2 text-slate-500 hover:text-primary hover:bg-primary/10 rounded-lg transition-colors"
+                                           title="Sửa chi tiết">
+                                            <iconify-icon icon="solar:pen-linear" class="text-base"></iconify-icon>
+                                        </a>
+                                        <form method="POST" action="{{ route('admin.brands.destroy', $brand) }}" class="js-delete-form inline-block">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors" title="Xóa thương hiệu">
+                                                <iconify-icon icon="solar:trash-bin-trash-linear" class="text-base"></iconify-icon>
                                             </button>
-                                        </x-slot>
-                                        <x-slot name="content">
-                                            <button type="button"
-                                                    class="flex items-center w-full gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors text-left js-brand-quick-edit"
-                                                    data-id="{{ $brand->id }}"
-                                                    data-name="{{ $brandName }}"
-                                                    data-slug="{{ $brand->slug }}"
-                                                    data-description="{{ $brandDescription }}"
-                                                    data-is-active="{{ $brand->is_active ? 1 : 0 }}"
-                                                    data-image-url="{{ $brand->image_url }}">
-                                                <iconify-icon icon="solar:bolt-linear" class="text-base text-gray-500"></iconify-icon>
-                                                <span>{{ __('catalog.actions.quick_edit') }}</span>
-                                            </button>
-                                            <a class="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors" href="{{ route('admin.brands.edit', $brand) }}">
-                                                <iconify-icon icon="solar:pen-linear" class="text-base text-gray-500"></iconify-icon>
-                                                <span>{{ __('catalog.actions.edit') }}</span>
-                                            </a>
-                                            <form method="POST" action="{{ route('admin.brands.destroy', $brand) }}" class="js-delete-form block border-t border-gray-100">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="flex items-center w-full gap-2 px-4 py-2.5 text-sm text-red-650 hover:bg-red-50 transition-colors text-left font-semibold">
-                                                    <iconify-icon icon="solar:trash-bin-trash-linear" class="text-base"></iconify-icon>
-                                                    <span>{{ __('catalog.actions.delete') }}</span>
-                                                </button>
-                                            </form>
-                                        </x-slot>
-                                    </x-admin.dropdown>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="text-center py-10 text-gray-400">
+                                <td colspan="7" class="text-center py-12 text-slate-400">
                                     <div class="flex flex-col items-center justify-center">
-                                        <img src="{{ asset('admin-assets/images/icons/emptydata.png') }}" alt="No data" class="h-14 w-auto mb-2 opacity-60">
-                                        <p class="text-sm font-semibold">{{ __('catalog.common.no_data') }}</p>
+                                        <iconify-icon icon="solar:box-minimalistic-linear" class="text-5xl text-slate-300 mb-2"></iconify-icon>
+                                        <p class="text-sm font-semibold text-slate-600">{{ __('catalog.common.no_data') }}</p>
+                                        <p class="text-xs text-slate-400 mt-1">Không tìm thấy thương hiệu nào phù hợp với bộ lọc.</p>
                                     </div>
                                 </td>
                             </tr>
@@ -184,83 +262,107 @@
                     </tbody>
                 </table>
             </div>
+
             @if(!$brands->isEmpty())
-                <div class="px-6 py-4 border-t border-gray-200">
+                <div class="px-6 py-4 border-t border-slate-200">
                     {{ $brands->links() }}
                 </div>
             @endif
         </div>
     </div>
 
-    <!-- Quick Edit Brand Modal (Alpine.js Modal Replacement) -->
+    <!-- Quick Edit Brand Modal -->
     <div x-data="{ open: false }" 
          @keydown.escape.window="open = false" 
          class="relative z-50" 
          id="quickEditBrandModal"
          style="display: none;"
          x-show="open" 
-         x-transition>
-        <div class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity"></div>
+         x-transition:enter="transition ease-out duration-200"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-150"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0">
+        <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"></div>
         <div class="fixed inset-0 z-10 overflow-y-auto">
-            <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                <form method="POST" action="" class="relative transform overflow-hidden rounded-xl bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-2xl border border-gray-150" enctype="multipart/form-data" id="quickEditBrandForm">
+            <div class="flex min-h-full items-center justify-center p-4 text-center">
+                <form method="POST" action="" class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-2xl border border-slate-200" enctype="multipart/form-data" id="quickEditBrandForm">
                     @csrf
                     @method('PUT')
                     
-                    <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between bg-gray-50/50">
-                        <h3 class="text-base font-bold text-gray-900" id="quickEditBrandModalLabel">
-                            {{ __('catalog.brands.quick_edit') }}
-                        </h3>
-                        <button type="button" @click="open = false" class="text-gray-450 hover:text-gray-600 focus:outline-none">
+                    <!-- Modal Header -->
+                    <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+                        <div class="flex items-center gap-2">
+                            <iconify-icon icon="solar:bolt-bold" class="text-amber-500 text-xl"></iconify-icon>
+                            <h3 class="text-base font-bold text-slate-900">
+                                Sửa nhanh thương hiệu
+                            </h3>
+                        </div>
+                        <button type="button" @click="open = false" class="text-slate-400 hover:text-slate-600 focus:outline-none">
                             <iconify-icon icon="solar:close-circle-linear" class="text-2xl"></iconify-icon>
                         </button>
                     </div>
 
-                    <div class="p-6 space-y-4">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div class="md:col-span-2">
-                                <label class="block mb-1.5 text-xs font-semibold text-gray-700" for="quick_name">{{ __('catalog.fields.name') }} <span class="text-red-500">*</span></label>
-                                <input type="text" class="block w-full p-2.5 text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-primary focus:border-primary focus:outline-none transition-colors" id="quick_name" name="name" required>
+                    <!-- Modal Body -->
+                    <div class="p-6 space-y-4 max-h-[75vh] overflow-y-auto">
+                        <div class="grid grid-cols-1 sm:grid-cols-12 gap-4">
+                            <!-- Name -->
+                            <div class="sm:col-span-7">
+                                <label class="block mb-1.5 text-xs font-bold text-slate-700" for="quick_name">Tên thương hiệu <span class="text-rose-500">*</span></label>
+                                <input type="text" class="block w-full px-3 py-2 text-sm text-slate-900 bg-white rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none" id="quick_name" name="name" required>
                             </div>
-                            <div>
-                                <label class="block mb-1.5 text-xs font-semibold text-gray-700" for="quick_slug">{{ __('catalog.fields.slug') }}</label>
-                                <input type="text" class="block w-full p-2.5 text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-primary focus:border-primary focus:outline-none transition-colors" id="quick_slug" name="slug">
+                            <!-- Slug -->
+                            <div class="sm:col-span-5">
+                                <label class="block mb-1.5 text-xs font-bold text-slate-700" for="quick_slug">Đường dẫn (Slug)</label>
+                                <input type="text" class="block w-full px-3 py-2 text-sm text-slate-900 bg-white rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none font-mono text-xs" id="quick_slug" name="slug">
                             </div>
                         </div>
 
-                        <div>
-                            <label class="block mb-1.5 text-xs font-semibold text-gray-700" for="quick_image_file">{{ __('catalog.fields.image') }}</label>
-                            <input type="file" class="block w-full text-sm text-gray-900 border border-gray-350 rounded-lg cursor-pointer bg-white focus:outline-none" id="quick_image_file" name="image_file" accept="image/*" data-media-folder="brands">
+                        <div class="grid grid-cols-1 sm:grid-cols-12 gap-4">
+                            <!-- Country -->
+                            <div class="sm:col-span-6">
+                                <label class="block mb-1.5 text-xs font-bold text-slate-700" for="quick_country">Quốc gia / Xuất xứ</label>
+                                <input type="text" class="block w-full px-3 py-2 text-sm text-slate-900 bg-white rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none" id="quick_country" name="country" placeholder="America, Italy, Germany...">
+                            </div>
+                            <!-- Website -->
+                            <div class="sm:col-span-6">
+                                <label class="block mb-1.5 text-xs font-bold text-slate-700" for="quick_website_url">Website hãng</label>
+                                <input type="text" class="block w-full px-3 py-2 text-sm text-slate-900 bg-white rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none font-mono text-xs" id="quick_website_url" name="website_url" placeholder="https://...">
+                            </div>
                         </div>
 
-                        <div class="hidden" id="quickImagePreviewWrap">
-                            <label class="block mb-1.5 text-xs font-semibold text-gray-700">Xem trước ảnh</label>
-                            <img src="" alt="" id="quickImagePreview" class="rounded-lg border border-gray-250 p-0.5 object-cover h-16 w-16" onerror="this.onerror=null;this.src='{{ asset('admin-assets/js/icons/404.png') }}';">
-                        </div>
-
+                        <!-- Description Quill Editor -->
                         <div>
-                            <label class="block mb-1.5 text-xs font-semibold text-gray-700" for="quick_description">{{ __('catalog.fields.description') }}</label>
+                            <label class="block mb-1.5 text-xs font-bold text-slate-700" for="quick_description">Mô tả tóm tắt (Mặt sau Flip-box)</label>
                             <textarea class="hidden" id="quick_description" name="description"></textarea>
-                            <div class="rounded-lg border border-gray-300 overflow-hidden">
-                                <div id="quick_description_editor" class="catalog-quill min-h-[120px]" data-target="quick_description"></div>
+                            <div class="brand-quick-quill overflow-hidden">
+                                <div id="quick_description_editor" class="bg-white min-h-[140px]" data-target="quick_description"></div>
                             </div>
                         </div>
 
-                        <div>
-                            <input type="hidden" name="is_active" value="1">
-                            <div class="flex items-center">
-                                <input class="w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded focus:ring-primary cursor-pointer" type="checkbox" name="is_active" value="0" id="quick_is_active">
-                                <label class="ml-2 text-xs font-semibold text-gray-900 cursor-pointer" for="quick_is_active">{{ __('catalog.fields.save_draft') }}</label>
-                            </div>
+                        <!-- Toggles -->
+                        <div class="grid grid-cols-2 gap-4 pt-2">
+                            <label class="flex items-center gap-2.5 p-3 rounded-xl border border-slate-200 bg-slate-50 cursor-pointer">
+                                <input type="hidden" name="is_active" value="0">
+                                <input type="checkbox" id="quick_is_active" name="is_active" value="1" class="w-4 h-4 text-primary rounded border-slate-300 focus:ring-primary">
+                                <span class="text-xs font-bold text-slate-800">Hiển thị công khai</span>
+                            </label>
+                            <label class="flex items-center gap-2.5 p-3 rounded-xl border border-slate-200 bg-slate-50 cursor-pointer">
+                                <input type="hidden" name="is_featured" value="0">
+                                <input type="checkbox" id="quick_is_featured" name="is_featured" value="1" class="w-4 h-4 text-purple-600 rounded border-slate-300 focus:ring-purple-500">
+                                <span class="text-xs font-bold text-slate-800">Thương hiệu nổi bật</span>
+                            </label>
                         </div>
                     </div>
 
-                    <div class="px-6 py-4 border-t border-gray-200 bg-gray-50/50 flex justify-end gap-3">
-                        <button type="button" @click="open = false" class="inline-flex items-center justify-center font-semibold rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 active:bg-gray-105 px-4 py-2 text-sm">
-                            {{ __('catalog.actions.cancel') }}
+                    <!-- Modal Footer -->
+                    <div class="px-6 py-3.5 bg-slate-50 border-t border-slate-200 flex justify-end gap-3">
+                        <button type="button" @click="open = false" class="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-800 bg-white border border-slate-300 rounded-xl transition-colors">
+                            Hủy
                         </button>
-                        <button type="submit" class="inline-flex items-center justify-center font-semibold rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 text-white bg-primary hover:bg-primary-hover active:bg-primary-active px-4 py-2 text-sm">
-                            {{ __('catalog.actions.save') }}
+                        <button type="submit" class="px-5 py-2 text-xs font-bold text-white bg-primary hover:bg-primary-hover rounded-xl shadow-xs transition-colors">
+                            Cập nhật nhanh
                         </button>
                     </div>
                 </form>
@@ -274,30 +376,36 @@
     <script src="{{ asset('admin-assets/libs/quill/dist/quill.min.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const sortable = document.getElementById('brand-table-sortable');
-            const csrfToken = @json(csrf_token());
-            const sortUrl = @json(route('admin.brands.sort'));
-            const quickUpdateUrlTemplate = @json(route('admin.brands.quick-update', ['brand' => '__BRAND_ID__']));
+            // Drag-and-drop sortable rows
+            const sortableTable = document.getElementById('brand-table-sortable');
+            if (sortableTable && window.dragula) {
+                const drake = dragula([sortableTable], {
+                    moves: function (el, container, handle) {
+                        return handle.closest('.catalog-drag-handle') !== null;
+                    }
+                });
 
-            const toast = function (icon, message) {
-                if (!window.Swal) {
-                    return;
-                }
+                drake.on('drop', function () {
+                    const ids = Array.from(sortableTable.querySelectorAll('tr[data-brand-id]'))
+                        .map(row => row.dataset.brandId);
+                    const startOrder = parseInt(sortableTable.dataset.startOrder || '0', 10);
 
-                Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 2500,
-                    timerProgressBar: true
-                }).fire({ icon, title: message });
-            };
+                    fetch(@json(route('admin.brands.sort')), {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                        },
+                        body: JSON.stringify({ ids, start_order: startOrder })
+                    });
+                });
+            }
 
-            // Initialize Quick Edit Quill editor
+            // Quick Edit Quill editor
             const quickEditorElement = document.getElementById('quick_description_editor');
+            let quickQuill = null;
             if (quickEditorElement && window.Quill) {
-                const target = document.getElementById(quickEditorElement.dataset.target);
-                const quill = new Quill(quickEditorElement, {
+                quickQuill = new Quill(quickEditorElement, {
                     theme: 'snow',
                     modules: {
                         toolbar: [
@@ -307,98 +415,80 @@
                         ]
                     }
                 });
-                quickEditorElement.__quill = quill;
+                quickEditorElement.__quill = quickQuill;
 
-                const form = quickEditorElement.closest('form');
-                if (form && target) {
-                    form.addEventListener('submit', function () {
-                        target.value = quill.root.innerHTML;
-                    });
-                }
-            }
-
-            if (sortable && window.dragula) {
-                dragula([sortable], {
-                    moves: function (el, container, handle) {
-                        return handle.closest('.catalog-drag-handle') !== null;
+                quickQuill.on('text-change', function () {
+                    const target = document.getElementById('quick_description');
+                    if (target) {
+                        const html = quickQuill.root.innerHTML;
+                        target.value = (html === '<p><br></p>' || html === '<p></p>') ? '' : html;
                     }
-                }).on('drop', function () {
-                    const ids = Array.from(sortable.querySelectorAll('tr')).map(function (row) {
-                        return row.dataset.brandId;
-                    });
-
-                    fetch(sortUrl, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json',
-                            'X-CSRF-TOKEN': csrfToken
-                        },
-                        body: JSON.stringify({
-                            ids: ids,
-                            start_order: Number(sortable.dataset.startOrder || 0)
-                        })
-                    })
-                        .then(function (response) {
-                            if (!response.ok) {
-                                throw new Error('Sort failed');
-                            }
-
-                            return response.json();
-                        })
-                        .then(function (payload) {
-                            toast('success', payload.message || @json(__('catalog.brands.sorted')));
-                        })
-                        .catch(function () {
-                            toast('error', @json(__('catalog.brands.sort_failed')));
-                        });
                 });
             }
 
-            // Quick edit button click handler
+            // Quick Edit button click handler
+            const modalEl = document.getElementById('quickEditBrandModal');
+            const quickForm = document.getElementById('quickEditBrandForm');
+
             document.querySelectorAll('.js-brand-quick-edit').forEach(function (button) {
                 button.addEventListener('click', function () {
-                    const modalEl = document.getElementById('quickEditBrandModal');
+                    const id = this.dataset.id;
+                    const name = this.dataset.name || '';
+                    const slug = this.dataset.slug || '';
+                    const country = this.dataset.country || '';
+                    const websiteUrl = this.dataset.websiteUrl || '';
+                    const description = this.dataset.description || '';
+                    const isActive = this.dataset.isActive === '1';
+                    const isFeatured = this.dataset.isFeatured === '1';
+
+                    if (quickForm) {
+                        quickForm.action = `/{{ app()->getLocale() }}/admin/brands/${id}/quick-update`;
+                    }
+
+                    const nameInput = document.getElementById('quick_name');
+                    if (nameInput) nameInput.value = name;
+
+                    const slugInput = document.getElementById('quick_slug');
+                    if (slugInput) slugInput.value = slug;
+
+                    const countryInput = document.getElementById('quick_country');
+                    if (countryInput) countryInput.value = country;
+
+                    const websiteInput = document.getElementById('quick_website_url');
+                    if (websiteInput) websiteInput.value = websiteUrl;
+
+                    const activeInput = document.getElementById('quick_is_active');
+                    if (activeInput) activeInput.checked = isActive;
+
+                    const featuredInput = document.getElementById('quick_is_featured');
+                    if (featuredInput) featuredInput.checked = isFeatured;
+
+                    const targetDesc = document.getElementById('quick_description');
+                    if (targetDesc) targetDesc.value = description;
+
+                    if (quickQuill) {
+                        quickQuill.root.innerHTML = description;
+                    }
+
+                    // Open Alpine modal
                     if (modalEl && modalEl.__x) {
-                        // Open the Alpine.js modal
                         modalEl.__x.$data.open = true;
-                    }
-
-                    const form = document.getElementById('quickEditBrandForm');
-                    const imageUrl = button.dataset.imageUrl || '';
-                    const previewWrap = document.getElementById('quickImagePreviewWrap');
-                    const preview = document.getElementById('quickImagePreview');
-
-                    form.action = quickUpdateUrlTemplate.replace('__BRAND_ID__', button.dataset.id);
-                    document.getElementById('quick_name').value = button.dataset.name || '';
-                    document.getElementById('quick_slug').value = button.dataset.slug || '';
-                    
-                    const descriptionVal = button.dataset.description || '';
-                    document.getElementById('quick_description').value = descriptionVal;
-                    const quickEditor = document.getElementById('quick_description_editor');
-                    if (quickEditor && quickEditor.__quill) {
-                        quickEditor.__quill.root.innerHTML = descriptionVal;
-                    }
-
-                    document.getElementById('quick_is_active').checked = button.dataset.isActive !== '1';
-                    document.getElementById('quick_image_file').value = '';
-
-                    if (imageUrl) {
-                        preview.src = imageUrl;
-                        preview.alt = button.dataset.name || '';
-                        if (previewWrap) {
-                            previewWrap.classList.remove('hidden');
-                            previewWrap.classList.remove('d-none');
-                        }
                     } else {
-                        preview.src = '';
-                        preview.alt = '';
-                        if (previewWrap) {
-                            previewWrap.classList.add('hidden');
-                        }
+                        modalEl.style.display = 'block';
                     }
                 });
             });
+
+            // On quickForm submit, sync quill
+            if (quickForm) {
+                quickForm.addEventListener('submit', function () {
+                    const target = document.getElementById('quick_description');
+                    if (target && quickQuill) {
+                        const html = quickQuill.root.innerHTML;
+                        target.value = (html === '<p><br></p>' || html === '<p></p>') ? '' : html;
+                    }
+                });
+            }
         });
     </script>
 @endpush

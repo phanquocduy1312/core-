@@ -58,38 +58,70 @@ class BrandService
         $name = $this->translationValue($data['name'] ?? null, $brand, 'name');
         $submittedSlugs = $this->localizedValues($data['slug'] ?? []);
         $baseSlug = $submittedSlugs[$this->languages->defaultLocale()] ?? $submittedSlugs[app()->getLocale()] ?? ($name[$this->languages->defaultLocale()] ?? $name[$this->fallbackLocale()] ?? reset($name));
-        $imageUrl = $this->imageUrl($data['image_file'] ?? null, $data['image_url'] ?? null, $brand);
 
-        $showcaseImage = null;
-        if (!empty($data['showcase_image_file']) && $data['showcase_image_file'] instanceof UploadedFile) {
-            $showcaseImage = $this->cloudinaryService->uploadFile($data['showcase_image_file'], 'brands');
-        } elseif (filled($data['showcase_image'] ?? null)) {
-            $showcaseImage = trim($data['showcase_image']);
-        } else {
-            $showcaseImage = $brand?->showcase_image;
-        }
+        $imageUrl = $this->imageUrl($data['image_file'] ?? null, $data['image_url'] ?? null, $brand, !empty($data['remove_image']));
+        $showcaseImage = $this->showcaseImageUrl($data['showcase_image_file'] ?? null, $data['showcase_image'] ?? null, $brand, !empty($data['remove_showcase_image']));
+
+        $country = array_key_exists('country', $data)
+            ? (filled($data['country']) ? trim($data['country']) : null)
+            : $brand?->country;
+
+        $websiteUrl = array_key_exists('website_url', $data)
+            ? $this->normalizeUrl($data['website_url'] ?? null)
+            : $brand?->website_url;
 
         return [
             'name' => $name,
             'slug' => $this->uniqueSlug((string) $baseSlug, $brand?->id),
-            'country' => filled($data['country'] ?? null) ? trim($data['country']) : $brand?->country,
+            'country' => $country,
             'description' => $this->translationValue($data['description'] ?? null, $brand, 'description'),
             'image_url' => $imageUrl,
             'showcase_image' => $showcaseImage,
-            'website_url' => filled($data['website_url'] ?? null) ? trim($data['website_url']) : $brand?->website_url,
+            'website_url' => $websiteUrl,
             'sort_order' => (int) ($data['sort_order'] ?? $brand?->sort_order ?? 0),
             'is_active' => (bool) ($data['is_active'] ?? false),
             'is_featured' => (bool) ($data['is_featured'] ?? false),
         ];
     }
 
-    private function imageUrl(?UploadedFile $file, ?string $selectedUrl, ?Brand $brand): ?string
+    private function imageUrl(?UploadedFile $file, ?string $selectedUrl, ?Brand $brand, bool $remove = false): ?string
     {
+        if ($remove) {
+            return null;
+        }
+
         if ($file) {
             return $this->cloudinaryService->uploadFile($file, 'brands');
         }
 
-        return filled($selectedUrl) ? $selectedUrl : $brand?->image_url;
+        return filled($selectedUrl) ? trim($selectedUrl) : $brand?->image_url;
+    }
+
+    private function showcaseImageUrl(?UploadedFile $file, ?string $selectedUrl, ?Brand $brand, bool $remove = false): ?string
+    {
+        if ($remove) {
+            return null;
+        }
+
+        if ($file) {
+            return $this->cloudinaryService->uploadFile($file, 'brands');
+        }
+
+        return filled($selectedUrl) ? trim($selectedUrl) : $brand?->showcase_image;
+    }
+
+    private function normalizeUrl(?string $url): ?string
+    {
+        if (blank($url)) {
+            return null;
+        }
+
+        $url = trim($url);
+        if (! preg_match('~^https?://~i', $url)) {
+            return 'https://' . $url;
+        }
+
+        return $url;
     }
 
     private function translationValue(string|array|null $value, ?Brand $brand, string $attribute): array
@@ -97,17 +129,42 @@ class BrandService
         $translations = $brand?->getTranslations($attribute) ?? [];
         $locale = app()->getLocale() ?: $this->fallbackLocale();
         $fallbackLocale = $this->fallbackLocale();
+
         if (is_array($value)) {
             foreach ($value as $lang => $translation) {
-                if ($this->languages->supports((string) $lang) && is_string($translation) && trim($translation) !== '') {
-                    $translations[$lang] = $attribute === 'description' ? $this->htmlSanitizer->clean(trim($translation)) : trim($translation);
+                if ($this->languages->supports((string) $lang)) {
+                    $text = is_string($translation) ? trim($translation) : '';
+                    if ($attribute === 'description') {
+                        if ($text === '<p><br></p>' || $text === '<p></p>' || $text === '<br>') {
+                            $text = '';
+                        } elseif ($text !== '') {
+                            $text = $this->htmlSanitizer->clean($text);
+                        }
+                    }
+                    if ($text !== '') {
+                        $translations[$lang] = $text;
+                    } else {
+                        unset($translations[$lang]);
+                    }
                 }
             }
         } else {
-            $value = is_string($value) ? trim($value) : '';
-            if ($attribute === 'description') $value = $this->htmlSanitizer->clean($value);
-            if ($value !== '') $translations[$locale] = $value;
-            if ($locale !== $fallbackLocale && $value !== '' && empty($translations[$fallbackLocale])) $translations[$fallbackLocale] = $value;
+            $text = is_string($value) ? trim($value) : '';
+            if ($attribute === 'description') {
+                if ($text === '<p><br></p>' || $text === '<p></p>' || $text === '<br>') {
+                    $text = '';
+                } elseif ($text !== '') {
+                    $text = $this->htmlSanitizer->clean($text);
+                }
+            }
+            if ($text !== '') {
+                $translations[$locale] = $text;
+                if ($locale !== $fallbackLocale && empty($translations[$fallbackLocale])) {
+                    $translations[$fallbackLocale] = $text;
+                }
+            } else {
+                unset($translations[$locale]);
+            }
         }
 
         return array_filter($translations, fn ($translation) => $translation !== null && $translation !== '');

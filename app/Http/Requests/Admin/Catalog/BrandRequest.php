@@ -29,6 +29,8 @@ class BrandRequest extends FormRequest
             'showcase_image_file' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp,gif', 'max:5120'],
             'image_url' => ['nullable', 'string', 'max:1000'],
             'image_file' => ['nullable', 'file', 'mimes:jpg,jpeg,png,webp,gif', 'max:5120'],
+            'remove_image' => ['nullable', 'boolean'],
+            'remove_showcase_image' => ['nullable', 'boolean'],
             'sort_order' => ['nullable', 'integer', 'min:0'],
             'is_active' => ['nullable', 'boolean'],
             'is_featured' => ['nullable', 'boolean'],

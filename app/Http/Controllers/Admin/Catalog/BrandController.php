@@ -20,6 +20,8 @@ class BrandController extends Controller
     public function index()
     {
         $keyword = request('q');
+        $country = request('country');
+        $status = request('status');
 
         $brandsList = Brand::query()
             ->withCount('products')
@@ -31,13 +33,33 @@ class BrandController extends Controller
                         ->orWhere('description', 'like', "%{$keyword}%");
                 });
             })
+            ->when($country, function ($query, string $country) {
+                $query->where('country', $country);
+            })
+            ->when($status !== null && $status !== '', function ($query) use ($status) {
+                if ($status === 'active') {
+                    $query->where('is_active', true);
+                } elseif ($status === 'inactive') {
+                    $query->where('is_active', false);
+                } elseif ($status === 'featured') {
+                    $query->where('is_featured', true);
+                }
+            })
             ->orderBy('sort_order')
             ->orderBy('id')
             ->paginate(15)
             ->withQueryString();
 
+        $countries = Brand::query()
+            ->whereNotNull('country')
+            ->where('country', '!=', '')
+            ->distinct()
+            ->orderBy('country')
+            ->pluck('country');
+
         return view('admin.catalog.brands.index', [
             'brands' => $brandsList,
+            'countries' => $countries,
         ]);
     }
 
