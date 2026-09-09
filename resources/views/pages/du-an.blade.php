@@ -115,6 +115,11 @@
         transform: translateY(-50%) scale(0.35) !important;
     }
 
+    .elementor-12382 .card {
+        cursor: pointer !important;
+        text-decoration: none !important;
+    }
+
     @media only screen and (max-width: 767px) {
         .elementor-12382 .hero-projects-content h1 {
             font-size: 20px !important;
@@ -122,16 +127,6 @@
         }
         .elementor-12382 .elementor-element.elementor-element-c57d41d {
             padding: 35px 15px !important;
-        }
-    }
-    @media (max-width: 991px) {
-        .elementor-12382 .premium-blog-post-outer-container {
-            width: 50% !important;
-        }
-    }
-    @media (max-width: 640px) {
-        .elementor-12382 .premium-blog-post-outer-container {
-            width: 100% !important;
         }
     }
 </style>
@@ -198,15 +193,15 @@
                                                 <div class="infoList">
                                                     <div class="info__wrapper">
                                                         <div class="info current--info">
-                                                            <h3 class="text name">Hospitality</h3>
+                                                            <h3 class="text name"><a href="{{ route('projects.hospitality') }}" style="color: inherit; text-decoration: none; pointer-events: auto; cursor: pointer;">Hospitality</a></h3>
                                                             <p class="text description">Our Projects</p>
                                                         </div>
                                                         <div class="info next--info">
-                                                            <h3 class="text name">Residential</h3>
+                                                            <h3 class="text name"><a href="{{ route('projects.residential') }}" style="color: inherit; text-decoration: none; pointer-events: auto; cursor: pointer;">Residential</a></h3>
                                                             <p class="text description">Our Projects</p>
                                                         </div>
                                                         <div class="info previous--info">
-                                                            <h3 class="text name">Commercial</h3>
+                                                            <h3 class="text name"><a href="{{ route('projects.commercial') }}" style="color: inherit; text-decoration: none; pointer-events: auto; cursor: pointer;">Commercial</a></h3>
                                                             <p class="text description">Our Projects</p>
                                                         </div>
                                                     </div>
@@ -234,97 +229,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Dynamic Projects List Section -->
-    <section class="elementor-section elementor-top-section project-filter-section elementor-section-full_width elementor-section-height-default" style="background-color: #ffffff; padding: 60px 0 80px 0;">
-        <div class="elementor-container elementor-column-gap-default" style="max-width: 1200px; margin: 0 auto; padding: 0 15px; display: block;">
-            <div class="elementor-widget-wrap" style="width: 100%; display: block;">
-                <!-- Filter Tabs -->
-                <div class="elementor-widget elementor-widget-icon-list" style="margin-bottom: 45px; width: 100%; text-align: center;">
-                    <ul class="elementor-icon-list-items elementor-inline-items" style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 36px; list-style: none; padding: 0; margin: 0;">
-                        <li class="elementor-icon-list-item elementor-inline-item">
-                            <a class="{{ empty($category) ? 'active' : '' }}" href="{{ url('/du-an') }}" style="font-family: 'DIN', sans-serif; font-size: 22px; font-weight: 500; color: {{ empty($category) ? '#EAA931' : '#0B1523' }}; text-decoration: none;">
-                                <span class="elementor-icon-list-text">All</span>
-                            </a>
-                        </li>
-                        <li class="elementor-icon-list-item elementor-inline-item">
-                            <a href="{{ url('/hospitality-lighting-projects') }}" style="font-family: 'DIN', sans-serif; font-size: 22px; font-weight: 400; color: #0B1523; text-decoration: none;">
-                                <span class="elementor-icon-list-text">Hospitality</span>
-                            </a>
-                        </li>
-                        <li class="elementor-icon-list-item elementor-inline-item">
-                            <a href="{{ url('/residential-lighting-projects') }}" style="font-family: 'DIN', sans-serif; font-size: 22px; font-weight: 400; color: #0B1523; text-decoration: none;">
-                                <span class="elementor-icon-list-text">Residential</span>
-                            </a>
-                        </li>
-                        <li class="elementor-icon-list-item elementor-inline-item">
-                            <a href="{{ url('/commercial-lighting-projects') }}" style="font-family: 'DIN', sans-serif; font-size: 22px; font-weight: 400; color: #0B1523; text-decoration: none;">
-                                <span class="elementor-icon-list-text">Commercial</span>
-                            </a>
-                        </li>
-                        <li class="elementor-icon-list-item elementor-inline-item">
-                            <a href="{{ url('/other-lighting-projects') }}" style="font-family: 'DIN', sans-serif; font-size: 22px; font-weight: 400; color: #0B1523; text-decoration: none;">
-                                <span class="elementor-icon-list-text">Others</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Dynamic Projects Grid -->
-                <div class="premium-blog-wrap premium-blog-even" style="display: flex; flex-wrap: wrap; width: 100%; margin: 0 -15px;">
-                    @forelse($projects as $project)
-                        @php
-                            $locale = app()->getLocale();
-                            $title = $project->getTranslation('title', $locale, false) ?: $project->getTranslation('title', 'en', false) ?: $project->title;
-                            $location = $project->getTranslation('location', $locale, false) ?: $project->getTranslation('location', 'en', false);
-                            $img = $project->image_url ?: asset('images/icons/default-product.png');
-                            $detailUrl = url('/projects/' . ($project->slug ?: $project->id));
-                        @endphp
-                        <div class="premium-blog-post-outer-container" style="width: 33.333333%; max-width: 33.333333%; flex: 0 0 33.333333%; padding: 0 15px 30px 15px; box-sizing: border-box; display: block;">
-                            <div class="premium-blog-post-container" style="position: relative; overflow: hidden; height: 380px; background-color: #0B1523; border-radius: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); width: 100%;">
-                                <div class="premium-blog-thumb-effect-wrapper" style="position: absolute; inset: 0; overflow: hidden; width: 100%; height: 100%;">
-                                    <div class="premium-blog-thumbnail-container" style="width: 100%; height: 100%;">
-                                        <img alt="{{ $title }}"
-                                             src="{{ $img }}"
-                                             onerror="this.onerror=null;this.src='{{ asset('images/icons/default-product.png') }}';"
-                                             style="width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);"
-                                             loading="lazy" />
-                                    </div>
-                                    <a class="premium-blog-thumbnail-overlay" href="{{ $detailUrl }}" style="position: absolute; inset: 0; z-index: 2; display: block;">
-                                        <span class="sr-only">{{ $title }}</span>
-                                    </a>
-                                </div>
-                                <div class="premium-blog-content-wrapper" style="position: absolute; left: 0; right: 0; bottom: 0; padding: 30px 24px 20px 24px; background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(11, 21, 35, 0.75) 50%, rgba(11, 21, 35, 0.92) 100%); z-index: 3; display: flex; flex-direction: column; pointer-events: none;">
-                                    <div class="premium-blog-inner-container">
-                                        <h2 class="premium-blog-entry-title" style="margin: 0; font-family: 'ACaslonPro', serif; font-size: 24px; font-weight: 400; line-height: 30px; color: #FFFFFF;">
-                                            <a href="{{ $detailUrl }}" style="color: #FFFFFF; text-decoration: none; pointer-events: auto;">
-                                                {{ $title }}
-                                            </a>
-                                        </h2>
-                                        @if($location)
-                                            <div class="premium-blog-entry-location" style="font-family: 'DIN', sans-serif; font-size: 13px; letter-spacing: 0.5px; text-transform: uppercase; color: #EAA931; margin-top: 6px;">
-                                                {{ $location }}
-                                            </div>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @empty
-                        <div style="width: 100%; padding: 80px 20px; text-align: center; color: #64748b;">
-                            <p style="font-size: 18px; font-weight: 500;">{{ __('admin.projects.no_projects') }}</p>
-                        </div>
-                    @endforelse
-                </div>
-
-                @if($projects->hasPages())
-                    <div class="lux-projects-pagination" style="margin-top: 40px; margin-bottom: 20px; display: flex; justify-content: center; width: 100%;">
-                        {{ $projects->links() }}
-                    </div>
-                @endif
             </div>
         </div>
     </section>

@@ -33,21 +33,9 @@ class PageController extends Controller
         return $this->managedPage('thuong-hieu', 'pages.thuong-hieu');
     }
 
-    public function projects(Request $request)
+    public function projects()
     {
-        $category = $request->query('category');
-        if (! \Illuminate\Support\Facades\Schema::hasTable('projects')) {
-            $projects = new \Illuminate\Pagination\LengthAwarePaginator([], 0, 12);
-            return view('pages.du-an', compact('projects', 'category'));
-        }
-
-        $query = \App\Models\Project::query()->where('is_active', true)->orderBy('sort_order')->latest('id');
-        if ($category && in_array($category, ['hospitality', 'residential', 'commercial', 'other'])) {
-            $query->where('category', $category);
-        }
-        $projects = $query->paginate(12)->withQueryString();
-
-        return view('pages.du-an', compact('projects', 'category'));
+        return view('pages.du-an');
     }
 
     public function hospitalityProjects(Request $request)

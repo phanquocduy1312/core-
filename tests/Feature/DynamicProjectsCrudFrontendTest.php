@@ -57,14 +57,15 @@ class DynamicProjectsCrudFrontendTest extends TestCase
             'is_active' => false,
         ]);
 
-        // Verify /du-an renders active projects dynamically
+        // Verify /du-an renders 3D Carousel showcase with category card links
         $duAnRes = $this->get('/du-an');
         $duAnRes->assertOk();
-        $duAnRes->assertSee('Dự án Khách Sạn Biển', false);
-        $duAnRes->assertSee('Căn hộ Cao Cấp Masterise', false);
-        $duAnRes->assertSee('Tòa Nhà Văn Phòng Landmark', false);
-        $duAnRes->assertSee('Công Viên Ánh Sáng', false);
-        $duAnRes->assertDontSee('Hidden Secret Project', false);
+        $duAnRes->assertSee(route('projects.hospitality'), false);
+        $duAnRes->assertSee(route('projects.residential'), false);
+        $duAnRes->assertSee(route('projects.commercial'), false);
+        $duAnRes->assertSee('Our Projects', false);
+        // The dynamic listing belongs to category pages, not /du-an
+        $duAnRes->assertDontSee('Ocean Resort Project', false);
 
         // Verify /hospitality-lighting-projects filters only hospitality
         $hospRes = $this->get('/hospitality-lighting-projects');
@@ -118,5 +119,26 @@ class DynamicProjectsCrudFrontendTest extends TestCase
 
         $res3 = $this->get('/hospitality-lighting-projects');
         $res3->assertDontSee('Tên Mới Sau Khi Sửa Admin', false);
+    }
+
+    public function test_category_page_pagination_uses_custom_clean_component(): void
+    {
+        // Create 15 projects in hospitality (page size is 12)
+        for ($i = 1; $i <= 15; $i++) {
+            Project::query()->create([
+                'title' => ['vi' => "Dự án Hospitality {$i}", 'en' => "Hospitality Project {$i}"],
+                'slug' => "hospitality-project-{$i}",
+                'category' => 'hospitality',
+                'is_active' => true,
+            ]);
+        }
+
+        $res = $this->get('/hospitality-lighting-projects');
+        $res->assertOk();
+        // Custom clean pagination class must be rendered
+        $res->assertSee('lux-pagination', false);
+        $res->assertSee('page-link active', false);
+        // Page 2 link exists
+        $res->assertSee('page=2', false);
     }
 }

@@ -46,12 +46,12 @@ class RemainingPagesBuilderTest extends TestCase
         $service = app(PageBuilderService::class);
         $page = $service->create([
             'title' => [
-                'vi' => 'Hospitality Lighting Test',
-                'en' => 'Hospitality Lighting Test',
+                'vi' => 'Privacy Policy Test',
+                'en' => 'Privacy Policy Test',
             ],
             'slug' => [
-                'vi' => 'hospitality-lighting-projects',
-                'en' => 'hospitality-lighting-projects',
+                'vi' => 'privacy-policy',
+                'en' => 'privacy-policy',
             ],
             'meta_title' => ['vi' => 'Meta Title VI', 'en' => 'Meta Title EN'],
             'meta_description' => ['vi' => 'Meta Desc VI', 'en' => 'Meta Desc EN'],
@@ -66,7 +66,7 @@ class RemainingPagesBuilderTest extends TestCase
             'is_active' => true,
         ]);
 
-        $response = $this->get('/hospitality-lighting-projects');
+        $response = $this->get('/privacy-policy');
         $response->assertOk();
         $response->assertSee('Builder Content Live', false);
     }

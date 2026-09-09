@@ -325,7 +325,7 @@
 
                 @if($projects->hasPages())
                     <div class="lux-projects-pagination" style="margin-top: 40px; margin-bottom: 30px; display: flex; justify-content: center; width: 100%;">
-                        {{ $projects->links() }}
+                        {{ $projects->links('partials.frontend-pagination') }}
                     </div>
                 @endif
             </div>
