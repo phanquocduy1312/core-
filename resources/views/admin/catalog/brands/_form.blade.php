@@ -18,40 +18,43 @@
     }
 }" class="space-y-6">
 
-    <!-- Card 1: Thông tin định danh & Giới thiệu (Đa ngôn ngữ) -->
-    <div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
-        <!-- Header & Language Tabs -->
-        <div class="px-6 py-4 bg-slate-50/80 border-b border-slate-200 flex flex-wrap items-center justify-between gap-4">
-            <div class="flex items-center gap-2.5">
-                <div class="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-bold">
-                    <iconify-icon icon="solar:document-text-bold-duotone" class="text-xl"></iconify-icon>
-                </div>
-                <div>
-                    <h3 class="font-bold text-slate-800 text-base">Thông tin thương hiệu & Giới thiệu</h3>
-                    <p class="text-xs text-slate-500">Tên, đường dẫn và nội dung mô tả chi tiết ở mặt sau thẻ flip-box</p>
-                </div>
+    <!-- Card 1: Thông tin thương hiệu & Giới thiệu -->
+    <div class="bg-white border border-gray-200 rounded-xl shadow-xs overflow-hidden">
+        <!-- Card Header -->
+        <div class="px-6 py-4 bg-gray-50/70 border-b border-gray-200 flex flex-wrap items-center justify-between gap-4">
+            <div>
+                <h3 class="font-bold text-gray-900 text-base flex items-center gap-2">
+                    <iconify-icon icon="solar:document-text-bold" class="text-primary text-lg"></iconify-icon>
+                    <span>Thông tin thương hiệu & Giới thiệu</span>
+                </h3>
+                <p class="text-xs text-gray-500 mt-0.5">Tên thương hiệu, đường dẫn và phần mô tả tóm tắt ở mặt sau thẻ flip-box</p>
             </div>
 
-            <!-- Language Pills -->
-            <div class="flex items-center gap-1.5 bg-slate-200/70 p-1 rounded-xl">
-                @foreach($contentLanguages as $language)
-                    <button type="button" 
-                            @click="activeLanguage = '{{ $language->code }}'; $nextTick(() => window.refreshBrandQuillEditors && window.refreshBrandQuillEditors())" 
-                            :class="activeLanguage === '{{ $language->code }}' ? 'bg-white text-slate-900 shadow-sm font-bold' : 'text-slate-600 hover:text-slate-900 font-medium'" 
-                            class="px-3.5 py-1.5 rounded-lg text-xs flex items-center gap-1.5 transition-all focus:outline-none">
-                        @if($language->code === 'vi')
-                            <span class="text-sm">🇻🇳</span>
-                        @elseif($language->code === 'en')
-                            <span class="text-sm">🇬🇧</span>
-                        @elseif($language->code === 'ko')
-                            <span class="text-sm">🇰🇷</span>
-                        @else
-                            <iconify-icon icon="solar:global-linear" class="text-sm"></iconify-icon>
-                        @endif
-                        <span>{{ $language->native_name }}</span>
-                    </button>
-                @endforeach
-            </div>
+            <!-- Language Switcher -->
+            @if(count($contentLanguages) > 1)
+                <div class="flex items-center gap-1 bg-gray-200/80 p-1 rounded-lg">
+                    @foreach($contentLanguages as $language)
+                        <button type="button" 
+                                @click="activeLanguage = '{{ $language->code }}'; $nextTick(() => window.refreshBrandQuillEditors && window.refreshBrandQuillEditors())" 
+                                :class="activeLanguage === '{{ $language->code }}' ? 'bg-white text-gray-900 shadow-xs font-bold' : 'text-gray-600 hover:text-gray-900 font-medium'" 
+                                class="px-3 py-1 rounded-md text-xs transition-all focus:outline-none">
+                            @if($language->code === 'vi')
+                                🇻🇳 Tiếng Việt
+                            @elseif($language->code === 'en')
+                                🇬🇧 English
+                            @elseif($language->code === 'ko')
+                                🇰🇷 한국어
+                            @else
+                                {{ $language->native_name }}
+                            @endif
+                        </button>
+                    @endforeach
+                </div>
+            @else
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold bg-gray-100 text-gray-700 border border-gray-200">
+                    🇻🇳 Tiếng Việt
+                </span>
+            @endif
         </div>
 
         <div class="p-6">
@@ -62,78 +65,68 @@
                     $slug = old("slug.$code", $brand->localizedSlug($code) ?: ($code === $defaultContentLocale ? $brand->slug : ''));
                     $description = old("description.$code", $brand->getTranslation('description', $code, false));
                 @endphp
-                <div x-show="activeLanguage === '{{ $code }}'" x-cloak class="space-y-6">
+                <div x-show="activeLanguage === '{{ $code }}'" x-cloak class="space-y-5">
                     @if($code !== $defaultContentLocale)
-                        <div class="flex items-center justify-between p-3 bg-amber-50/70 border border-amber-200/80 rounded-xl">
+                        <div class="flex items-center justify-between p-3 bg-amber-50 border border-amber-200 rounded-lg">
                             <div class="flex items-center gap-2 text-xs text-amber-800">
                                 <iconify-icon icon="solar:info-circle-bold" class="text-base text-amber-600"></iconify-icon>
-                                <span>Đang nhập nội dung cho ngôn ngữ <strong>{{ $language->native_name }}</strong>. Bạn có thể dùng tính năng dịch tự động.</span>
+                                <span>Đang chỉnh sửa nội dung ngôn ngữ: <strong>{{ $language->native_name }}</strong></span>
                             </div>
-                            <button type="button" class="inline-flex items-center gap-1.5 py-1.5 px-3 text-xs font-semibold text-primary bg-white hover:bg-primary hover:text-white border border-primary/30 rounded-lg shadow-sm transition-all focus:outline-none js-translate-locale" data-source-locale="{{ $defaultContentLocale }}" data-target-locale="{{ $code }}">
+                            <button type="button" class="inline-flex items-center gap-1.5 py-1 px-3 text-xs font-semibold text-primary bg-white hover:bg-primary hover:text-white border border-primary/30 rounded-md transition-colors focus:outline-none js-translate-locale" data-source-locale="{{ $defaultContentLocale }}" data-target-locale="{{ $code }}">
                                 <iconify-icon icon="solar:global-linear" class="text-sm"></iconify-icon>
                                 Dịch từ {{ strtoupper($defaultContentLocale) }}
                             </button>
                         </div>
                     @endif
 
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
                         <!-- Tên thương hiệu -->
                         <div class="md:col-span-7">
-                            <label class="block mb-2 text-sm font-bold text-slate-800" for="name_{{ $code }}">
-                                Tên thương hiệu @if($code === $defaultContentLocale)<span class="text-rose-500">*</span>@endif
+                            <label class="block mb-1.5 text-sm font-semibold text-gray-800" for="name_{{ $code }}">
+                                Tên thương hiệu @if($code === $defaultContentLocale)<span class="text-red-500">*</span>@endif
                             </label>
-                            <div class="relative">
-                                <input type="text" 
-                                       class="block w-full pl-3.5 pr-10 py-2.5 text-sm text-slate-900 bg-white rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none transition-all" 
-                                       id="name_{{ $code }}" 
-                                       name="name[{{ $code }}]" 
-                                       value="{{ $name }}" 
-                                       placeholder="Ví dụ: Acolyte, Aldabra, Flos..."
-                                       data-i18n-locale="{{ $code }}" 
-                                       data-i18n-field="name" 
-                                       oninput="window.handleBrandNameInput && window.handleBrandNameInput(this, '{{ $code }}')"
-                                       @required($code === $defaultContentLocale)>
-                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-slate-400">
-                                    <iconify-icon icon="solar:tag-linear" class="text-lg"></iconify-icon>
-                                </div>
-                            </div>
+                            <input type="text" 
+                                   class="form-input block w-full px-3.5 py-2.5 text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-100 focus:border-blue-600 focus:outline-none transition-colors" 
+                                   id="name_{{ $code }}" 
+                                   name="name[{{ $code }}]" 
+                                   value="{{ $name }}" 
+                                   placeholder="Ví dụ: Acolyte, Aldabra, Flos..."
+                                   data-i18n-locale="{{ $code }}" 
+                                   data-i18n-field="name" 
+                                   oninput="window.handleBrandNameInput && window.handleBrandNameInput(this, '{{ $code }}')"
+                                   @required($code === $defaultContentLocale)>
                         </div>
 
                         <!-- Slug -->
                         <div class="md:col-span-5">
-                            <div class="flex items-center justify-between mb-2">
-                                <label class="text-sm font-bold text-slate-800" for="slug_{{ $code }}">Đường dẫn (Slug)</label>
+                            <div class="flex items-center justify-between mb-1.5">
+                                <label class="text-sm font-semibold text-gray-800" for="slug_{{ $code }}">Đường dẫn (Slug)</label>
                                 <button type="button" 
                                         onclick="window.regenerateBrandSlug && window.regenerateBrandSlug('{{ $code }}')"
-                                        class="text-xs text-primary hover:underline font-semibold flex items-center gap-1">
+                                        class="text-xs text-primary hover:underline font-medium flex items-center gap-1">
                                     <iconify-icon icon="solar:restart-linear" class="text-xs"></iconify-icon> Tự tạo từ tên
                                 </button>
                             </div>
-                            <div class="relative">
-                                <input type="text" 
-                                       class="block w-full pl-3.5 pr-10 py-2.5 text-sm text-slate-900 bg-white rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none transition-all font-mono text-xs" 
-                                       id="slug_{{ $code }}" 
-                                       name="slug[{{ $code }}]" 
-                                       value="{{ $slug }}" 
-                                       data-i18n-locale="{{ $code }}" 
-                                       data-i18n-field="slug" 
-                                       placeholder="acolyte-lighting">
-                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-slate-400">
-                                    <iconify-icon icon="solar:link-linear" class="text-lg"></iconify-icon>
-                                </div>
-                            </div>
+                            <input type="text" 
+                                   class="form-input block w-full px-3.5 py-2.5 text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-100 focus:border-blue-600 focus:outline-none font-mono text-xs transition-colors" 
+                                   id="slug_{{ $code }}" 
+                                   name="slug[{{ $code }}]" 
+                                   value="{{ $slug }}" 
+                                   data-i18n-locale="{{ $code }}" 
+                                   data-i18n-field="slug" 
+                                   placeholder="acolyte-lighting">
                         </div>
 
                         <!-- Rich text Mô tả -->
                         <div class="md:col-span-12">
-                            <div class="flex items-center justify-between mb-2">
-                                <label class="text-sm font-bold text-slate-800" for="description_{{ $code }}">
+                            <div class="flex items-center justify-between mb-1.5">
+                                <label class="text-sm font-semibold text-gray-800" for="description_{{ $code }}">
                                     Mô tả giới thiệu (Hiển thị mặt sau Flip-box)
                                 </label>
-                                <span class="text-xs text-slate-500 font-normal">Hỗ trợ định dạng in đậm, in nghiêng, danh sách và liên kết</span>
+                                <span class="text-xs text-gray-400">Hỗ trợ in đậm, in nghiêng, danh sách, đổi màu và liên kết</span>
                             </div>
 
-                            <!-- Hidden Textarea for Actual Form POST -->
+                            <!-- Hidden Textarea for Form POST -->
                             <textarea class="hidden" 
                                       id="description_{{ $code }}" 
                                       name="description[{{ $code }}]" 
@@ -142,9 +135,9 @@
                                       data-translation-format="html">{{ $description }}</textarea>
 
                             <!-- Quill Editor Container -->
-                            <div class="brand-quill-wrapper rounded-xl border border-slate-300 overflow-hidden shadow-sm transition-all focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-primary">
+                            <div class="brand-editor-container">
                                 <div id="description_editor_{{ $code }}" 
-                                     class="catalog-quill bg-white min-h-[180px]" 
+                                     class="catalog-quill" 
                                      data-target="description_{{ $code }}">{!! $description ? (str_contains($description, '<p>') ? app(\App\Support\HtmlSanitizer::class)->clean($description) : nl2br(e($description))) : '' !!}</div>
                             </div>
                         </div>
@@ -154,45 +147,38 @@
         </div>
     </div>
 
-    <!-- Card 2: Xuất xứ & Liên kết ngoài -->
-    <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-6 space-y-5">
-        <div class="flex items-center gap-2.5 pb-4 border-b border-slate-100">
-            <div class="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center font-bold">
-                <iconify-icon icon="solar:global-bold-duotone" class="text-xl"></iconify-icon>
-            </div>
-            <div>
-                <h3 class="font-bold text-slate-800 text-base">Xuất xứ & Liên kết ngoài</h3>
-                <p class="text-xs text-slate-500">Quốc gia hiển thị làm nhãn tag góc dưới thẻ & liên kết trang chủ hãng</p>
-            </div>
+    <!-- Card 2: Xuất xứ & Website thương hiệu -->
+    <div class="bg-white border border-gray-200 rounded-xl shadow-xs p-6 space-y-5">
+        <div class="pb-3 border-b border-gray-100">
+            <h3 class="font-bold text-gray-900 text-base flex items-center gap-2">
+                <iconify-icon icon="solar:global-bold" class="text-amber-500 text-lg"></iconify-icon>
+                <span>Xuất xứ & Liên kết ngoài</span>
+            </h3>
+            <p class="text-xs text-gray-500 mt-0.5">Quốc gia hiển thị làm nhãn tag ở góc dưới ảnh và liên kết mở website của hãng</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
-            <!-- Country Field -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
+            <!-- Quốc gia -->
             <div class="md:col-span-6 space-y-2">
-                <label class="block text-sm font-bold text-slate-800" for="country">
+                <label class="block text-sm font-semibold text-gray-800" for="country">
                     Quốc gia / Xuất xứ
                 </label>
-                <div class="relative">
-                    <input type="text"
-                           class="block w-full pl-10 pr-3.5 py-2.5 text-sm text-slate-900 bg-white rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none transition-all"
-                           id="country"
-                           name="country"
-                           x-model="country"
-                           placeholder="Ví dụ: America, Italy, China, Germany, Japan...">
-                    <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
-                        <iconify-icon icon="solar:flag-2-linear" class="text-lg"></iconify-icon>
-                    </div>
-                </div>
+                <input type="text"
+                       class="form-input block w-full px-3.5 py-2.5 text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-100 focus:border-blue-600 focus:outline-none transition-colors"
+                       id="country"
+                       name="country"
+                       x-model="country"
+                       placeholder="Ví dụ: America, Italy, China, Germany, Japan...">
 
-                <!-- Quick Tags -->
+                <!-- Gợi ý nhanh pills -->
                 <div class="pt-1">
-                    <span class="text-xs text-slate-500 mr-1.5 font-medium">Gợi ý nhanh:</span>
+                    <span class="text-xs text-gray-500 font-medium">Gợi ý nhanh:</span>
                     <div class="inline-flex flex-wrap gap-1.5 mt-1">
                         @foreach(['America', 'Italy', 'China', 'Germany', 'Spain', 'Japan', 'Croatia', 'Belgium', 'Australia', 'United Kingdom', 'Switzerland'] as $c)
                             <button type="button" 
                                     @click="setCountry('{{ $c }}')"
-                                    :class="country === '{{ $c }}' ? 'bg-amber-100 text-amber-800 border-amber-300 font-bold' : 'bg-slate-100 text-slate-600 hover:bg-slate-200 border-slate-200'"
-                                    class="px-2.5 py-0.5 text-xs rounded-full border transition-colors focus:outline-none">
+                                    :class="country === '{{ $c }}' ? 'bg-amber-100 text-amber-800 border-amber-300 font-semibold' : 'bg-gray-100 hover:bg-gray-200 text-gray-700 border-gray-200'"
+                                    class="px-2.5 py-0.5 text-xs rounded-md border transition-colors focus:outline-none">
                                 {{ $c }}
                             </button>
                         @endforeach
@@ -200,196 +186,190 @@
                 </div>
             </div>
 
-            <!-- Website URL Field -->
+            <!-- Website thương hiệu -->
             <div class="md:col-span-6 space-y-2">
-                <label class="block text-sm font-bold text-slate-800" for="website_url">
+                <label class="block text-sm font-semibold text-gray-800" for="website_url">
                     Website thương hiệu (Nút "Visit Website")
                 </label>
-                <div class="flex gap-2">
-                    <div class="relative flex-1">
-                        <input type="text"
-                               class="block w-full pl-10 pr-3.5 py-2.5 text-sm text-slate-900 bg-white rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none transition-all font-mono text-xs"
-                               id="website_url"
-                               name="website_url"
-                               x-model="websiteUrl"
-                               placeholder="https://genledbrands.com/acolyte/">
-                        <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
-                            <iconify-icon icon="solar:link-circle-linear" class="text-lg"></iconify-icon>
-                        </div>
-                    </div>
+                <div class="flex rounded-lg shadow-xs">
+                    <input type="text"
+                           class="form-input block w-full px-3.5 py-2.5 text-sm text-gray-900 bg-white rounded-l-lg border border-r-0 border-gray-300 focus:ring-2 focus:ring-blue-100 focus:border-blue-600 focus:outline-none font-mono text-xs transition-colors"
+                           id="website_url"
+                           name="website_url"
+                           x-model="websiteUrl"
+                           placeholder="https://genledbrands.com/acolyte/">
                     <button type="button" 
                             @click="if(websiteUrl) { window.open(websiteUrl.startsWith('http') ? websiteUrl : 'https://' + websiteUrl, '_blank') }"
                             :disabled="!websiteUrl"
-                            title="Mở thử liên kết trong tab mới"
-                            class="px-3.5 py-2.5 text-xs font-semibold rounded-xl border border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-700 disabled:opacity-40 disabled:pointer-events-none flex items-center gap-1.5 transition-colors focus:outline-none">
-                        <iconify-icon icon="solar:arrow-right-up-linear" class="text-base"></iconify-icon>
+                            class="inline-flex items-center px-4 rounded-r-lg border border-gray-300 bg-gray-50 text-gray-700 text-sm font-medium hover:bg-gray-100 disabled:opacity-40 disabled:pointer-events-none transition-colors focus:outline-none">
+                        <iconify-icon icon="solar:arrow-right-up-linear" class="mr-1.5 text-base"></iconify-icon>
                         <span>Mở thử</span>
                     </button>
                 </div>
-                <p class="text-xs text-slate-500">Đường dẫn khi khách bấm nút "Visit Website" ở mặt sau flipbox (tự động thêm https:// nếu thiếu).</p>
+                <p class="text-xs text-gray-500">Đường dẫn khi khách bấm nút "Visit Website" ở mặt sau flipbox (tự động thêm https:// nếu thiếu).</p>
             </div>
         </div>
     </div>
 
-    <!-- Card 3: Hình ảnh & Nhận diện (Showcase Image & Logo) -->
-    <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-6 space-y-6">
-        <div class="flex items-center gap-2.5 pb-4 border-b border-slate-100">
-            <div class="w-9 h-9 rounded-xl bg-purple-500/10 text-purple-600 flex items-center justify-center font-bold">
-                <iconify-icon icon="solar:gallery-bold-duotone" class="text-xl"></iconify-icon>
-            </div>
-            <div>
-                <h3 class="font-bold text-slate-800 text-base">Hình ảnh & Nhận diện thương hiệu</h3>
-                <p class="text-xs text-slate-500">Ảnh đại diện công trình mặt trước thẻ flip-box và Logo hãng hiển thị bên dưới</p>
-            </div>
+    <!-- Card 3: Hình ảnh & Nhận diện thương hiệu -->
+    <div class="bg-white border border-gray-200 rounded-xl shadow-xs p-6 space-y-5">
+        <div class="pb-3 border-b border-gray-100">
+            <h3 class="font-bold text-gray-900 text-base flex items-center gap-2">
+                <iconify-icon icon="solar:gallery-bold" class="text-purple-600 text-lg"></iconify-icon>
+                <span>Hình ảnh & Nhận diện thương hiệu</span>
+            </h3>
+            <p class="text-xs text-gray-500 mt-0.5">Ảnh công trình đại diện hiển thị ở mặt trước thẻ flip-box và Logo hãng hiển thị ngay bên dưới</p>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <!-- Showcase Image (Mặt trước Flip-box) -->
-            <div class="bg-slate-50/70 p-5 rounded-2xl border border-slate-200 space-y-4">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- 1. Ảnh công trình đại diện (Mặt trước Flip-box) -->
+            <div class="bg-gray-50 border border-gray-200 rounded-xl p-5 space-y-4">
                 <div class="flex items-center justify-between">
                     <div>
-                        <h4 class="font-bold text-slate-900 text-sm flex items-center gap-1.5">
-                            <span>Ảnh công trình đại diện (Mặt trước Flip-box)</span>
-                        </h4>
-                        <span class="text-xs text-slate-500">Khổ đứng tỷ lệ ~ 3:4 (800x1072 px)</span>
+                        <h4 class="font-bold text-gray-900 text-sm">Ảnh công trình đại diện (Mặt trước Flip-box)</h4>
+                        <span class="text-xs text-gray-500">Khổ đứng tỷ lệ ~ 3:4 (800x1072 px)</span>
                     </div>
 
                     <!-- Mode Toggle -->
-                    <div class="flex items-center bg-white border border-slate-200 rounded-lg p-0.5 text-xs font-semibold">
-                        <button type="button" @click="showcaseTab = 'file'" :class="showcaseTab === 'file' ? 'bg-primary text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'" class="px-2.5 py-1 rounded-md transition-colors">Tải file</button>
-                        <button type="button" @click="showcaseTab = 'url'" :class="showcaseTab === 'url' ? 'bg-primary text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'" class="px-2.5 py-1 rounded-md transition-colors">Dán URL</button>
+                    <div class="flex items-center bg-white border border-gray-200 rounded-lg p-0.5 text-xs font-medium">
+                        <button type="button" @click="showcaseTab = 'file'" :class="showcaseTab === 'file' ? 'bg-gray-800 text-white font-semibold' : 'text-gray-600 hover:text-gray-900'" class="px-2.5 py-1 rounded-md transition-colors">Tải file</button>
+                        <button type="button" @click="showcaseTab = 'url'" :class="showcaseTab === 'url' ? 'bg-gray-800 text-white font-semibold' : 'text-gray-600 hover:text-gray-900'" class="px-2.5 py-1 rounded-md transition-colors">Dán URL</button>
                     </div>
                 </div>
 
-                <!-- Preview Area -->
                 <div class="flex gap-4 items-start">
-                    <!-- 3:4 Aspect Ratio Frame -->
-                    <div class="relative w-36 h-48 rounded-xl border-2 border-dashed border-slate-300 bg-white overflow-hidden shadow-xs shrink-0 flex items-center justify-center group" id="showcase_preview_box">
+                    <!-- Preview Box (Portrait 3:4) -->
+                    <div class="relative w-32 h-44 rounded-lg border border-gray-200 bg-white overflow-hidden shadow-xs shrink-0 flex items-center justify-center">
+                        <div id="showcase_placeholder" class="{{ $brand->showcase_image ? 'hidden' : 'flex' }} flex-col items-center justify-center p-2 text-center text-gray-400">
+                            <iconify-icon icon="solar:gallery-wide-linear" class="text-3xl mb-1"></iconify-icon>
+                            <span class="text-[11px]">Chưa có ảnh</span>
+                        </div>
                         <img id="showcase_preview_img" 
-                             src="{{ $brand->showcase_image ?: asset('admin-assets/js/icons/empty.png') }}" 
+                             src="{{ $brand->showcase_image ?: '' }}" 
                              alt="Showcase" 
-                             class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                             onerror="this.onerror=null;this.src='{{ asset('admin-assets/js/icons/empty.png') }}';">
-                        <div class="absolute bottom-2 left-2 bg-black/60 backdrop-blur-xs text-white text-[10px] font-semibold px-2 py-0.5 rounded">
-                            Tỷ lệ 3:4
+                             class="{{ $brand->showcase_image ? 'block' : 'hidden' }} w-full h-full object-cover">
+                        <div class="absolute bottom-1.5 left-1.5 bg-black/60 text-white text-[10px] font-medium px-1.5 py-0.5 rounded">
+                            3:4
                         </div>
                     </div>
 
+                    <!-- Input Controls -->
                     <div class="flex-1 space-y-3">
-                        <!-- Tab 1: File Upload Dropzone -->
+                        <!-- Mode File -->
                         <div x-show="showcaseTab === 'file'">
-                            <label for="showcase_image_file" class="block w-full border border-slate-300 hover:border-primary border-dashed rounded-xl p-3 text-center cursor-pointer bg-white hover:bg-slate-50 transition-all">
-                                <iconify-icon icon="solar:cloud-upload-linear" class="text-2xl text-slate-400 block mx-auto mb-1"></iconify-icon>
-                                <span class="text-xs font-semibold text-primary block">Chọn file từ máy tính</span>
-                                <span class="text-[11px] text-slate-500 block">PNG, JPG, WEBP tối đa 5MB</span>
+                            <label for="showcase_image_file" class="block w-full border-2 border-dashed border-gray-300 hover:border-gray-400 rounded-lg p-4 text-center cursor-pointer bg-white hover:bg-gray-50 transition-colors">
+                                <iconify-icon icon="solar:cloud-upload-linear" class="text-2xl text-gray-400 block mx-auto mb-1"></iconify-icon>
+                                <span class="text-xs font-semibold text-gray-700 block">Chọn file ảnh từ máy</span>
+                                <span class="text-[11px] text-gray-400 block mt-0.5">PNG, JPG, WEBP tối đa 5MB</span>
                                 <input type="file" 
                                        id="showcase_image_file" 
                                        name="showcase_image_file" 
                                        accept="image/*" 
                                        class="hidden" 
-                                       onchange="window.previewSelectedImage && window.previewSelectedImage(this, 'showcase_preview_img')">
+                                       onchange="window.previewBrandImage && window.previewBrandImage(this, 'showcase_preview_img', 'showcase_placeholder', 'showcase_file_name')">
                             </label>
-                            <div id="showcase_file_name" class="text-[11px] text-slate-600 mt-1 font-medium truncate hidden"></div>
+                            <div id="showcase_file_name" class="text-xs text-gray-600 font-medium mt-1 truncate hidden"></div>
                         </div>
 
-                        <!-- Tab 2: URL Input -->
+                        <!-- Mode URL -->
                         <div x-show="showcaseTab === 'url'">
                             <input type="text"
                                    id="showcase_image"
                                    name="showcase_image"
                                    value="{{ old('showcase_image', $brand->showcase_image) }}"
-                                   placeholder="https://domain.com/image.jpg hoặc /wp-content/..."
-                                   class="block w-full px-3 py-2 text-xs border border-slate-300 rounded-xl bg-white focus:ring-1 focus:ring-primary focus:outline-none"
-                                   oninput="document.getElementById('showcase_preview_img').src = this.value || '{{ asset('admin-assets/js/icons/empty.png') }}'">
-                            <span class="text-[11px] text-slate-500 block mt-1">Dán link ảnh trực tiếp từ website hoặc thư viện</span>
+                                   placeholder="https://... hoặc /wp-content/..."
+                                   class="form-input block w-full px-3 py-2 text-xs border border-gray-300 rounded-lg bg-white focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-100"
+                                   oninput="window.previewUrlImage && window.previewUrlImage(this.value, 'showcase_preview_img', 'showcase_placeholder')">
+                            <span class="text-[11px] text-gray-500 block mt-1">Dán link ảnh từ thư viện hoặc website</span>
                         </div>
 
                         @if($brand->showcase_image)
                             <div class="pt-1">
                                 <input type="hidden" name="remove_showcase_image" :value="removeShowcase ? 1 : 0">
                                 <button type="button" 
-                                        @click="removeShowcase = !removeShowcase; if(removeShowcase) document.getElementById('showcase_preview_img').src = '{{ asset('admin-assets/js/icons/empty.png') }}'; else document.getElementById('showcase_preview_img').src = '{{ $brand->showcase_image }}';"
-                                        class="text-xs font-semibold text-rose-600 hover:text-rose-700 inline-flex items-center gap-1">
+                                        @click="removeShowcase = !removeShowcase; if(removeShowcase) { document.getElementById('showcase_preview_img').classList.add('hidden'); document.getElementById('showcase_placeholder').classList.remove('hidden'); } else { document.getElementById('showcase_preview_img').src = '{{ $brand->showcase_image }}'; document.getElementById('showcase_preview_img').classList.remove('hidden'); document.getElementById('showcase_placeholder').classList.add('hidden'); }"
+                                        class="text-xs font-medium text-red-600 hover:text-red-700 inline-flex items-center gap-1">
                                     <iconify-icon icon="solar:trash-bin-minimalistic-linear" class="text-sm"></iconify-icon>
-                                    <span x-text="removeShowcase ? 'Hủy xóa ảnh' : 'Xóa ảnh công trình hiện tại'"></span>
+                                    <span x-text="removeShowcase ? 'Hủy đánh dấu xóa' : 'Gỡ bỏ ảnh công trình này'"></span>
                                 </button>
-                                <div x-show="removeShowcase" class="text-[11px] text-rose-600 italic">Đã đánh dấu xóa ảnh khi lưu.</div>
+                                <div x-show="removeShowcase" class="text-[11px] text-red-600 italic mt-0.5">Sẽ xóa ảnh khi bấm Lưu.</div>
                             </div>
                         @endif
                     </div>
                 </div>
             </div>
 
-            <!-- Brand Logo -->
-            <div class="bg-slate-50/70 p-5 rounded-2xl border border-slate-200 space-y-4">
+            <!-- 2. Logo thương hiệu -->
+            <div class="bg-gray-50 border border-gray-200 rounded-xl p-5 space-y-4">
                 <div class="flex items-center justify-between">
                     <div>
-                        <h4 class="font-bold text-slate-900 text-sm flex items-center gap-1.5">
-                            <span>Logo thương hiệu</span>
-                        </h4>
-                        <span class="text-xs text-slate-500">Hiển thị ngay dưới thẻ công trình</span>
+                        <h4 class="font-bold text-gray-900 text-sm">Logo thương hiệu</h4>
+                        <span class="text-xs text-gray-500">Hiển thị ngay dưới thẻ công trình</span>
                     </div>
 
                     <!-- Mode Toggle -->
-                    <div class="flex items-center bg-white border border-slate-200 rounded-lg p-0.5 text-xs font-semibold">
-                        <button type="button" @click="logoTab = 'file'" :class="logoTab === 'file' ? 'bg-primary text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'" class="px-2.5 py-1 rounded-md transition-colors">Tải file</button>
-                        <button type="button" @click="logoTab = 'url'" :class="logoTab === 'url' ? 'bg-primary text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'" class="px-2.5 py-1 rounded-md transition-colors">Dán URL</button>
+                    <div class="flex items-center bg-white border border-gray-200 rounded-lg p-0.5 text-xs font-medium">
+                        <button type="button" @click="logoTab = 'file'" :class="logoTab === 'file' ? 'bg-gray-800 text-white font-semibold' : 'text-gray-600 hover:text-gray-900'" class="px-2.5 py-1 rounded-md transition-colors">Tải file</button>
+                        <button type="button" @click="logoTab = 'url'" :class="logoTab === 'url' ? 'bg-gray-800 text-white font-semibold' : 'text-gray-600 hover:text-gray-900'" class="px-2.5 py-1 rounded-md transition-colors">Dán URL</button>
                     </div>
                 </div>
 
-                <!-- Preview Area -->
                 <div class="flex gap-4 items-start">
-                    <!-- Logo Box with Checkered/White background -->
-                    <div class="relative w-36 h-48 rounded-xl border-2 border-dashed border-slate-300 bg-white overflow-hidden shadow-xs shrink-0 flex items-center justify-center p-3 group" id="logo_preview_box" style="background-image: radial-gradient(#e2e8f0 1px, transparent 1px); background-size: 10px 10px;">
+                    <!-- Preview Box (Checkerboard white) -->
+                    <div class="relative w-32 h-44 rounded-lg border border-gray-200 bg-white overflow-hidden shadow-xs shrink-0 flex items-center justify-center p-2" style="background-image: radial-gradient(#e5e7eb 1px, transparent 1px); background-size: 8px 8px;">
+                        <div id="logo_placeholder" class="{{ $brand->image_url ? 'hidden' : 'flex' }} flex-col items-center justify-center p-2 text-center text-gray-400">
+                            <iconify-icon icon="solar:tag-linear" class="text-3xl mb-1"></iconify-icon>
+                            <span class="text-[11px]">Chưa có logo</span>
+                        </div>
                         <img id="logo_preview_img" 
-                             src="{{ $brand->image_url ?: asset('admin-assets/js/icons/empty.png') }}" 
+                             src="{{ $brand->image_url ?: '' }}" 
                              alt="Logo" 
-                             class="max-h-24 max-w-full object-contain transition-transform duration-300 group-hover:scale-105"
-                             onerror="this.onerror=null;this.src='{{ asset('admin-assets/js/icons/empty.png') }}';">
-                        <div class="absolute bottom-2 left-2 bg-slate-900/60 backdrop-blur-xs text-white text-[10px] font-semibold px-2 py-0.5 rounded">
+                             class="{{ $brand->image_url ? 'block' : 'hidden' }} max-h-24 max-w-full object-contain">
+                        <div class="absolute bottom-1.5 left-1.5 bg-gray-900/60 text-white text-[10px] font-medium px-1.5 py-0.5 rounded">
                             Logo
                         </div>
                     </div>
 
+                    <!-- Input Controls -->
                     <div class="flex-1 space-y-3">
-                        <!-- Tab 1: File Upload Dropzone -->
+                        <!-- Mode File -->
                         <div x-show="logoTab === 'file'">
-                            <label for="image_file" class="block w-full border border-slate-300 hover:border-primary border-dashed rounded-xl p-3 text-center cursor-pointer bg-white hover:bg-slate-50 transition-all">
-                                <iconify-icon icon="solar:cloud-upload-linear" class="text-2xl text-slate-400 block mx-auto mb-1"></iconify-icon>
-                                <span class="text-xs font-semibold text-primary block">Chọn file logo từ máy</span>
-                                <span class="text-[11px] text-slate-500 block">Khuyên dùng PNG nền trong suốt</span>
+                            <label for="image_file" class="block w-full border-2 border-dashed border-gray-300 hover:border-gray-400 rounded-lg p-4 text-center cursor-pointer bg-white hover:bg-gray-50 transition-colors">
+                                <iconify-icon icon="solar:cloud-upload-linear" class="text-2xl text-gray-400 block mx-auto mb-1"></iconify-icon>
+                                <span class="text-xs font-semibold text-gray-700 block">Chọn file logo từ máy</span>
+                                <span class="text-[11px] text-gray-400 block mt-0.5">Khuyên dùng PNG nền trong suốt</span>
                                 <input type="file" 
                                        id="image_file" 
                                        name="image_file" 
                                        accept="image/*" 
                                        class="hidden" 
-                                       onchange="window.previewSelectedImage && window.previewSelectedImage(this, 'logo_preview_img')">
+                                       onchange="window.previewBrandImage && window.previewBrandImage(this, 'logo_preview_img', 'logo_placeholder', 'logo_file_name')">
                             </label>
-                            <div id="logo_file_name" class="text-[11px] text-slate-600 mt-1 font-medium truncate hidden"></div>
+                            <div id="logo_file_name" class="text-xs text-gray-600 font-medium mt-1 truncate hidden"></div>
                         </div>
 
-                        <!-- Tab 2: URL Input -->
+                        <!-- Mode URL -->
                         <div x-show="logoTab === 'url'">
                             <input type="text"
                                    id="image_url"
                                    name="image_url"
                                    value="{{ old('image_url', $brand->image_url) }}"
-                                   placeholder="https://domain.com/logo.png hoặc /wp-content/..."
-                                   class="block w-full px-3 py-2 text-xs border border-slate-300 rounded-xl bg-white focus:ring-1 focus:ring-primary focus:outline-none"
-                                   oninput="document.getElementById('logo_preview_img').src = this.value || '{{ asset('admin-assets/js/icons/empty.png') }}'">
-                            <span class="text-[11px] text-slate-500 block mt-1">Dán URL logo thương hiệu</span>
+                                   placeholder="https://... hoặc /wp-content/..."
+                                   class="form-input block w-full px-3 py-2 text-xs border border-gray-300 rounded-lg bg-white focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-100"
+                                   oninput="window.previewUrlImage && window.previewUrlImage(this.value, 'logo_preview_img', 'logo_placeholder')">
+                            <span class="text-[11px] text-gray-500 block mt-1">Dán link logo từ thư viện</span>
                         </div>
 
                         @if($brand->image_url)
                             <div class="pt-1">
                                 <input type="hidden" name="remove_image" :value="removeLogo ? 1 : 0">
                                 <button type="button" 
-                                        @click="removeLogo = !removeLogo; if(removeLogo) document.getElementById('logo_preview_img').src = '{{ asset('admin-assets/js/icons/empty.png') }}'; else document.getElementById('logo_preview_img').src = '{{ $brand->image_url }}';"
-                                        class="text-xs font-semibold text-rose-600 hover:text-rose-700 inline-flex items-center gap-1">
+                                        @click="removeLogo = !removeLogo; if(removeLogo) { document.getElementById('logo_preview_img').classList.add('hidden'); document.getElementById('logo_placeholder').classList.remove('hidden'); } else { document.getElementById('logo_preview_img').src = '{{ $brand->image_url }}'; document.getElementById('logo_preview_img').classList.remove('hidden'); document.getElementById('logo_placeholder').classList.add('hidden'); }"
+                                        class="text-xs font-medium text-red-600 hover:text-red-700 inline-flex items-center gap-1">
                                     <iconify-icon icon="solar:trash-bin-minimalistic-linear" class="text-sm"></iconify-icon>
-                                    <span x-text="removeLogo ? 'Hủy xóa logo' : 'Xóa logo hiện tại'"></span>
+                                    <span x-text="removeLogo ? 'Hủy đánh dấu xóa' : 'Gỡ bỏ logo này'"></span>
                                 </button>
-                                <div x-show="removeLogo" class="text-[11px] text-rose-600 italic">Đã đánh dấu xóa logo khi lưu.</div>
+                                <div x-show="removeLogo" class="text-[11px] text-red-600 italic mt-0.5">Sẽ xóa logo khi bấm Lưu.</div>
                             </div>
                         @endif
                     </div>
@@ -398,87 +378,70 @@
         </div>
     </div>
 
-    <!-- Card 4: Cài đặt hiển thị & Trạng thái -->
-    <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-6 space-y-6">
-        <div class="flex items-center gap-2.5 pb-4 border-b border-slate-100">
-            <div class="w-9 h-9 rounded-xl bg-blue-500/10 text-blue-600 flex items-center justify-center font-bold">
-                <iconify-icon icon="solar:settings-bold-duotone" class="text-xl"></iconify-icon>
-            </div>
-            <div>
-                <h3 class="font-bold text-slate-800 text-base">Cài đặt hiển thị & Sắp xếp</h3>
-                <p class="text-xs text-slate-500">Thứ tự xuất hiện trên website và trạng thái hoạt động của thương hiệu</p>
-            </div>
+    <!-- Card 4: Cài đặt hiển thị & Sắp xếp -->
+    <div class="bg-white border border-gray-200 rounded-xl shadow-xs p-6 space-y-5">
+        <div class="pb-3 border-b border-gray-100">
+            <h3 class="font-bold text-gray-900 text-base flex items-center gap-2">
+                <iconify-icon icon="solar:settings-bold" class="text-blue-600 text-lg"></iconify-icon>
+                <span>Cài đặt hiển thị & Sắp xếp</span>
+            </h3>
+            <p class="text-xs text-gray-500 mt-0.5">Thứ tự hiển thị trên danh sách và trạng thái hoạt động của thương hiệu</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
             <!-- Thứ tự hiển thị -->
             <div class="md:col-span-4">
-                <label class="block mb-2 text-sm font-bold text-slate-800" for="sort_order">
+                <label class="block mb-1.5 text-sm font-semibold text-gray-800" for="sort_order">
                     Thứ tự sắp xếp
                 </label>
-                <div class="relative">
-                    <input type="number"
-                           class="block w-full pl-3.5 pr-10 py-2.5 text-sm text-slate-900 bg-white rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary/20 focus:border-primary focus:outline-none transition-all font-mono"
-                           id="sort_order"
-                           name="sort_order"
-                           value="{{ old('sort_order', $brand->sort_order ?? 0) }}"
-                           min="0">
-                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-slate-400">
-                        <iconify-icon icon="solar:sort-vertical-linear" class="text-lg"></iconify-icon>
+                <input type="number"
+                       class="form-input block w-full px-3.5 py-2.5 text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-100 focus:border-blue-600 focus:outline-none font-mono"
+                       id="sort_order"
+                       name="sort_order"
+                       value="{{ old('sort_order', $brand->sort_order ?? 0) }}"
+                       min="0">
+                <p class="text-xs text-gray-400 mt-1">Số nhỏ hơn sẽ hiển thị trước (0, 1, 2...)</p>
+            </div>
+
+            <!-- Switch: Hiển thị công khai -->
+            <div class="md:col-span-4">
+                <div class="flex items-center justify-between p-4 rounded-lg border border-gray-200 bg-gray-50">
+                    <div>
+                        <label for="is_active" class="text-sm font-semibold text-gray-900 block cursor-pointer">Hiển thị công khai</label>
+                        <span class="text-xs text-gray-500 block">Hiển thị trên website</span>
                     </div>
+                    <label class="custom-switch cursor-pointer">
+                        <input type="hidden" name="is_active" value="0">
+                        <input type="checkbox" id="is_active" name="is_active" value="1" @checked((bool) old('is_active', $brand->is_active ?? true))>
+                        <span class="custom-switch-slider"></span>
+                    </label>
                 </div>
-                <p class="text-xs text-slate-500 mt-1">Số nhỏ hơn sẽ được ưu tiên hiển thị trước (0, 1, 2...)</p>
             </div>
 
-            <!-- Switch: Hiển thị -->
+            <!-- Switch: Thương hiệu nổi bật -->
             <div class="md:col-span-4">
-                <input type="hidden" name="is_active" value="0">
-                <label class="flex items-center justify-between p-3.5 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-slate-50 cursor-pointer transition-colors" for="is_active_toggle">
+                <div class="flex items-center justify-between p-4 rounded-lg border border-gray-200 bg-gray-50">
                     <div>
-                        <span class="block text-sm font-bold text-slate-800">Hiển thị công khai</span>
-                        <span class="block text-xs text-slate-500">Khách có thể xem thương hiệu này</span>
+                        <label for="is_featured" class="text-sm font-semibold text-gray-900 block cursor-pointer">Thương hiệu nổi bật</label>
+                        <span class="text-xs text-gray-500 block">Ưu tiên vị trí đầu</span>
                     </div>
-                    <div class="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" 
-                               id="is_active_toggle" 
-                               name="is_active" 
-                               value="1" 
-                               class="sr-only peer"
-                               @checked((bool) old('is_active', $brand->is_active ?? true))>
-                        <div class="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
-                    </div>
-                </label>
-            </div>
-
-            <!-- Switch: Nổi bật -->
-            <div class="md:col-span-4">
-                <input type="hidden" name="is_featured" value="0">
-                <label class="flex items-center justify-between p-3.5 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-slate-50 cursor-pointer transition-colors" for="is_featured_toggle">
-                    <div>
-                        <span class="block text-sm font-bold text-slate-800">Thương hiệu nổi bật</span>
-                        <span class="block text-xs text-slate-500">Gắn nhãn Featured & ưu tiên trang chủ</span>
-                    </div>
-                    <div class="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" 
-                               id="is_featured_toggle" 
-                               name="is_featured" 
-                               value="1" 
-                               class="sr-only peer"
-                               @checked((bool) old('is_featured', $brand->is_featured ?? false))>
-                        <div class="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
-                    </div>
-                </label>
+                    <label class="custom-switch cursor-pointer">
+                        <input type="hidden" name="is_featured" value="0">
+                        <input type="checkbox" id="is_featured" name="is_featured" value="1" @checked((bool) old('is_featured', $brand->is_featured ?? false))>
+                        <span class="custom-switch-slider custom-switch-purple"></span>
+                    </label>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Action Bar -->
-    <div class="flex items-center justify-between pt-4 pb-12">
-        <a href="{{ route('admin.brands.index') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 bg-white hover:bg-slate-50 font-semibold text-sm transition-colors shadow-xs">
+    <div class="flex items-center justify-between pt-2 pb-10">
+        <a href="{{ route('admin.brands.index') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-gray-300 text-gray-700 bg-white hover:bg-gray-50 font-semibold text-sm transition-colors shadow-xs">
             <iconify-icon icon="solar:arrow-left-linear" class="text-base"></iconify-icon>
             <span>Quay lại danh sách</span>
         </a>
-        <button type="submit" id="btn_save_brand" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-primary hover:bg-primary-hover text-white font-bold text-sm transition-all shadow-md shadow-primary/25 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary/50">
+        <button type="submit" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-primary hover:bg-primary-hover text-white font-bold text-sm transition-colors shadow-sm focus:outline-none">
             <iconify-icon icon="solar:diskette-bold" class="text-lg"></iconify-icon>
             <span>{{ $brand->exists ? 'Lưu thay đổi thương hiệu' : 'Tạo mới thương hiệu' }}</span>
         </button>
@@ -490,36 +453,94 @@
 @push('styles')
     <link rel="stylesheet" href="{{ asset('admin-assets/libs/quill/dist/quill.snow.css') }}">
     <style>
-        /* Modern Quill Snow Theme Overrides */
-        .brand-quill-wrapper .ql-toolbar.ql-snow {
-            border: none !important;
-            border-bottom: 1px solid #e2e8f0 !important;
-            background-color: #f8fafc !important;
-            padding: 8px 12px !important;
+        /* Bulletproof Pure CSS Custom Switch Toggle */
+        .custom-switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+            margin: 0;
+            flex-shrink: 0;
         }
-        .brand-quill-wrapper .ql-container.ql-snow {
-            border: none !important;
+        .custom-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+            position: absolute;
+        }
+        .custom-switch-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #d1d5db;
+            transition: .25s ease-in-out;
+            border-radius: 24px;
+        }
+        .custom-switch-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .25s ease-in-out;
+            border-radius: 50%;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        .custom-switch input:checked + .custom-switch-slider {
+            background-color: #10b981;
+        }
+        .custom-switch input:checked + .custom-switch-slider.custom-switch-purple {
+            background-color: #8b5cf6;
+        }
+        .custom-switch input:checked + .custom-switch-slider:before {
+            transform: translateX(20px);
+        }
+
+        /* Seamless Quill Snow Theme Styling */
+        .brand-editor-container .ql-toolbar.ql-snow {
+            border: 1px solid #d1d5db !important;
+            border-bottom: 1px solid #e5e7eb !important;
+            border-top-left-radius: 8px !important;
+            border-top-right-radius: 8px !important;
+            background-color: #f9fafb !important;
+            padding: 8px 10px !important;
+        }
+        .brand-editor-container .ql-container.ql-snow {
+            border: 1px solid #d1d5db !important;
+            border-top: none !important;
+            border-bottom-left-radius: 8px !important;
+            border-bottom-right-radius: 8px !important;
+            background-color: #ffffff !important;
             font-family: inherit !important;
         }
-        .brand-quill-wrapper .ql-editor {
+        .brand-editor-container .ql-editor {
             min-height: 180px !important;
-            font-size: 14.5px !important;
-            line-height: 1.65 !important;
-            color: #0f172a !important;
-            padding: 14px 16px !important;
+            font-size: 14px !important;
+            line-height: 1.6 !important;
+            color: #111827 !important;
+            padding: 12px 14px !important;
         }
-        .brand-quill-wrapper .ql-editor.ql-blank::before {
-            color: #94a3b8 !important;
+        .brand-editor-container .ql-editor.ql-blank::before {
+            color: #9ca3af !important;
             font-style: normal !important;
         }
-        .brand-quill-wrapper .ql-snow .ql-stroke {
-            stroke: #475569 !important;
+        .brand-editor-container .ql-snow .ql-stroke {
+            stroke: #4b5563 !important;
         }
-        .brand-quill-wrapper .ql-snow .ql-fill {
-            fill: #475569 !important;
+        .brand-editor-container .ql-snow .ql-fill {
+            fill: #4b5563 !important;
         }
-        .brand-quill-wrapper .ql-snow .ql-picker {
-            color: #475569 !important;
+        .brand-editor-container .ql-snow .ql-picker {
+            color: #4b5563 !important;
+        }
+        .brand-editor-container:focus-within .ql-toolbar.ql-snow,
+        .brand-editor-container:focus-within .ql-container.ql-snow {
+            border-color: #2563eb !important;
         }
     </style>
 @endpush
@@ -559,12 +580,51 @@
         };
 
         // File image preview helper
-        window.previewSelectedImage = function(fileInput, previewImgId) {
+        window.previewBrandImage = function(fileInput, imgId, placeholderId, nameId) {
             if (fileInput.files && fileInput.files[0]) {
                 const file = fileInput.files[0];
-                const previewImg = document.getElementById(previewImgId);
-                if (previewImg) {
-                    previewImg.src = URL.createObjectURL(file);
+                const img = document.getElementById(imgId);
+                const placeholder = document.getElementById(placeholderId);
+                const nameEl = document.getElementById(nameId);
+
+                if (img) {
+                    img.src = URL.createObjectURL(file);
+                    img.classList.remove('hidden');
+                    img.classList.add('block');
+                }
+                if (placeholder) {
+                    placeholder.classList.add('hidden');
+                    placeholder.classList.remove('flex');
+                }
+                if (nameEl) {
+                    nameEl.textContent = file.name + ' (' + Math.round(file.size / 1024) + ' KB)';
+                    nameEl.classList.remove('hidden');
+                }
+            }
+        };
+
+        // URL image preview helper
+        window.previewUrlImage = function(url, imgId, placeholderId) {
+            const img = document.getElementById(imgId);
+            const placeholder = document.getElementById(placeholderId);
+            if (url && url.trim() !== '') {
+                if (img) {
+                    img.src = url.trim();
+                    img.classList.remove('hidden');
+                    img.classList.add('block');
+                }
+                if (placeholder) {
+                    placeholder.classList.add('hidden');
+                    placeholder.classList.remove('flex');
+                }
+            } else {
+                if (img) {
+                    img.classList.add('hidden');
+                    img.classList.remove('block');
+                }
+                if (placeholder) {
+                    placeholder.classList.remove('hidden');
+                    placeholder.classList.add('flex');
                 }
             }
         };
@@ -588,7 +648,7 @@
                     theme: 'snow',
                     modules: {
                         toolbar: [
-                            [{ 'header': [1, 2, 3, 4, false] }],
+                            [{ 'header': [1, 2, 3, false] }],
                             ['bold', 'italic', 'underline', 'strike'],
                             [{ 'color': [] }, { 'background': [] }],
                             [{ 'list': 'ordered' }, { 'list': 'bullet' }],
@@ -599,14 +659,14 @@
                 });
                 editorElement.__quill = quill;
 
-                // Sync immediately on every keystroke/formatting change
+                // Sync immediately on every keystroke
                 quill.on('text-change', function () {
                     const html = quill.root.innerHTML;
                     target.value = (html === '<p><br></p>' || html === '<p></p>') ? '' : html;
                     target.dispatchEvent(new Event('input', { bubbles: true }));
                 });
 
-                // Extra safety on form submission
+                // Safety on form submit
                 const form = editorElement.closest('form');
                 if (form) {
                     form.addEventListener('submit', function () {
@@ -616,7 +676,7 @@
                 }
             });
 
-            // Expose function to refresh Quill instances when tab changes
+            // Refresh Quill on language tab switch
             window.refreshBrandQuillEditors = function() {
                 document.querySelectorAll('.catalog-quill').forEach(function(el) {
                     if (el.__quill) {
