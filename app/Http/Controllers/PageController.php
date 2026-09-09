@@ -33,29 +33,93 @@ class PageController extends Controller
         return $this->managedPage('thuong-hieu', 'pages.thuong-hieu');
     }
 
-    public function projects()
+    public function projects(Request $request)
     {
-        return $this->managedPage('du-an', 'pages.du-an');
+        $category = $request->query('category');
+        if (! \Illuminate\Support\Facades\Schema::hasTable('projects')) {
+            $projects = new \Illuminate\Pagination\LengthAwarePaginator([], 0, 12);
+            return view('pages.du-an', compact('projects', 'category'));
+        }
+
+        $query = \App\Models\Project::query()->where('is_active', true)->orderBy('sort_order')->latest('id');
+        if ($category && in_array($category, ['hospitality', 'residential', 'commercial', 'other'])) {
+            $query->where('category', $category);
+        }
+        $projects = $query->paginate(12)->withQueryString();
+
+        return view('pages.du-an', compact('projects', 'category'));
     }
 
-    public function hospitalityProjects()
+    public function hospitalityProjects(Request $request)
     {
-        return $this->managedPage('hospitality-lighting-projects', 'pages.du-an-hospitality');
+        if (! \Illuminate\Support\Facades\Schema::hasTable('projects')) {
+            $projects = new \Illuminate\Pagination\LengthAwarePaginator([], 0, 12);
+            return view('pages.du-an-hospitality', compact('projects'));
+        }
+
+        $projects = \App\Models\Project::query()
+            ->where('is_active', true)
+            ->where('category', 'hospitality')
+            ->orderBy('sort_order')
+            ->latest('id')
+            ->paginate(12)
+            ->withQueryString();
+
+        return view('pages.du-an-hospitality', compact('projects'));
     }
 
-    public function residentialProjects()
+    public function residentialProjects(Request $request)
     {
-        return $this->managedPage('residential-lighting-projects', 'pages.du-an-residential');
+        if (! \Illuminate\Support\Facades\Schema::hasTable('projects')) {
+            $projects = new \Illuminate\Pagination\LengthAwarePaginator([], 0, 12);
+            return view('pages.du-an-residential', compact('projects'));
+        }
+
+        $projects = \App\Models\Project::query()
+            ->where('is_active', true)
+            ->where('category', 'residential')
+            ->orderBy('sort_order')
+            ->latest('id')
+            ->paginate(12)
+            ->withQueryString();
+
+        return view('pages.du-an-residential', compact('projects'));
     }
 
-    public function commercialProjects()
+    public function commercialProjects(Request $request)
     {
-        return $this->managedPage('commercial-lighting-projects', 'pages.du-an-commercial');
+        if (! \Illuminate\Support\Facades\Schema::hasTable('projects')) {
+            $projects = new \Illuminate\Pagination\LengthAwarePaginator([], 0, 12);
+            return view('pages.du-an-commercial', compact('projects'));
+        }
+
+        $projects = \App\Models\Project::query()
+            ->where('is_active', true)
+            ->where('category', 'commercial')
+            ->orderBy('sort_order')
+            ->latest('id')
+            ->paginate(12)
+            ->withQueryString();
+
+        return view('pages.du-an-commercial', compact('projects'));
     }
 
-    public function otherProjects()
+    public function otherProjects(Request $request)
     {
-        return $this->managedPage('other-lighting-projects', 'pages.du-an-other');
+        if (! \Illuminate\Support\Facades\Schema::hasTable('projects')) {
+            $projects = new \Illuminate\Pagination\LengthAwarePaginator([], 0, 12);
+            return view('pages.du-an-other', compact('projects'));
+        }
+
+        $projects = \App\Models\Project::query()
+            ->where('is_active', true)
+            ->where('category', 'other')
+            ->orderBy('sort_order')
+            ->latest('id')
+            ->paginate(12)
+            ->withQueryString();
+
+        return view('pages.du-an-other', compact('projects'));
     }
 
     public function projectDetail(string $slug)

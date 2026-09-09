@@ -116,7 +116,7 @@
                                 <td class="px-6 py-4">
                                     <div class="flex items-center gap-3">
                                         <div class="w-12 h-12 rounded-lg border border-gray-200 p-0.5 bg-white flex items-center justify-center overflow-hidden shrink-0">
-                                            <img src="{{ $img }}" alt="{{ $title }}" class="w-full h-full object-cover rounded-md">
+                                            <img src="{{ $img }}" alt="{{ $title }}" class="w-full h-full object-cover rounded-md" onerror="this.onerror=null;this.src='{{ asset('images/icons/default-product.png') }}';">
                                         </div>
                                         <div>
                                             <h6 class="font-bold text-gray-900 hover:text-primary transition-colors">
@@ -174,27 +174,19 @@
             </div>
         </div>
 
-        <!-- Pagination & Results Bar -->
+        <!-- Pagination Bar -->
         <div class="px-6 py-4 border-t border-gray-200 bg-gray-50/50 flex flex-wrap items-center justify-between gap-4">
-            <div class="flex items-center gap-3">
-                <span class="text-xs font-semibold text-gray-600">
-                    {{ __('admin.projects.showing', [
-                        'from' => $projects->firstItem() ?? 0,
-                        'to' => $projects->lastItem() ?? 0,
-                        'total' => $projects->total()
-                    ]) }}
-                </span>
-
-                <!-- Per Page Selector Form -->
-                <form method="GET" class="inline-flex items-center gap-1.5 ml-2">
+            <div class="flex items-center gap-2">
+                <span class="text-xs text-gray-500 font-medium">Số dòng:</span>
+                <form method="GET" class="inline-flex items-center">
                     @if(request('q')) <input type="hidden" name="q" value="{{ request('q') }}"> @endif
                     @if(request('category')) <input type="hidden" name="category" value="{{ request('category') }}"> @endif
                     @if(request()->has('status')) <input type="hidden" name="status" value="{{ request('status') }}"> @endif
                     <select name="per_page" onchange="this.form.submit()" class="text-xs font-medium py-1 px-2 border border-gray-300 rounded bg-white text-gray-700 focus:ring-primary focus:border-primary">
-                        <option value="10" @selected(request('per_page', 10) == 10)>10 {{ __('admin.projects.per_page') }}</option>
-                        <option value="20" @selected(request('per_page') == 20)>20 {{ __('admin.projects.per_page') }}</option>
-                        <option value="50" @selected(request('per_page') == 50)>50 {{ __('admin.projects.per_page') }}</option>
-                        <option value="100" @selected(request('per_page') == 100)>100 {{ __('admin.projects.per_page') }}</option>
+                        <option value="10" @selected(request('per_page', 10) == 10)>10 / trang</option>
+                        <option value="20" @selected(request('per_page') == 20)>20 / trang</option>
+                        <option value="50" @selected(request('per_page') == 50)>50 / trang</option>
+                        <option value="100" @selected(request('per_page') == 100)>100 / trang</option>
                     </select>
                 </form>
             </div>
