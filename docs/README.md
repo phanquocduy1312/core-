@@ -41,5 +41,5 @@ Khi phát hiện một sự thật nghiệp vụ/quyết định chưa được 
 
 ### Sổ tay PDF UI/UX Builder — 09/09/2026
 
-- [PDF 40 trang dành cho người không biết code](uiux-builder/handbook/HUONG-DAN-UIUX-BUILDER.pdf) — ảnh mới, hướng dẫn từng bước, đủ 38 khối, bài thực hành và checklist.
+- [PDF 24 trang thao tác trực tiếp trong Builder](uiux-builder/handbook/HUONG-DAN-UIUX-BUILDER.pdf) — ảnh giao diện được khoanh số/mũi tên, hướng dẫn sửa chữ, ảnh, khối, thiết bị, lưu và xuất bản.
 - [Bản HTML và cách cập nhật/in lại](uiux-builder/handbook/README.md).

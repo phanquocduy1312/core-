@@ -23,8 +23,10 @@
 - Có môi trường SQLite kiểm thử riêng ở `/tmp/uiux-audit`; chỉ dùng môi trường này cho ảnh.
 
 ## Kết quả xác minh
-- PDF: 40 trang A4, 25 ảnh nhúng khác nhau, 37 liên kết mục lục, font tiếng Việt được nhúng.
-- Có 35 file ảnh chụp mới (bao gồm ảnh toàn màn hình và ảnh vùng điều khiển); chọn 25 ảnh đưa vào PDF.
+
+> Bản kế hoạch này được thay thế ngày 09/09/2026 theo phản hồi người dùng: PDF được rút gọn từ 40 còn 24 trang, bỏ nội dung tạo trang mới/SEO/HTML-CSS và chuyển trọng tâm sang ảnh chụp Builder có khoanh số, mũi tên và nhãn hướng dẫn trực tiếp.
+
+- PDF cuối: 24 trang A4; 22 ảnh giao diện có chú thích trực tiếp; font tiếng Việt được nhúng.
 - Playwright: mọi ảnh tải đủ, không có phần nội dung tràn chân trang.
 - So sánh từ trong HTML với text trích từ từng trang PDF: không mất từ.
 - Đã xem bản raster các trang 1, 3, 6, 11, 12, 15, 20, 25, 39; sửa ảnh tab thuộc tính và bố cục checklist trước khi xuất bản cuối.

@@ -1,6 +1,6 @@
 # Hướng dẫn sử dụng UI/UX Builder
 
-> Bản mở rộng ngày 09/09/2026: [Sổ tay PDF 40 trang cho người mới](handbook/HUONG-DAN-UIUX-BUILDER.pdf), có ảnh chụp mới và tra cứu đủ 38 khối của giao diện hiện tại. Phần dưới giữ nguyên hướng dẫn của đợt 08/09/2026.
+> Bản trực quan ngày 09/09/2026: [Sổ tay PDF 24 trang dùng trực tiếp trong Builder](handbook/HUONG-DAN-UIUX-BUILDER.pdf), với ảnh chụp mới có khoanh số/mũi tên và hướng dẫn thao tác ngay dưới ảnh. Phần dưới giữ nguyên hướng dẫn của đợt 08/09/2026.
 
 Ngày kiểm tra: 08/09/2026. Dành cho người quản trị nội dung website hiện tại.
 
