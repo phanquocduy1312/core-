@@ -673,6 +673,7 @@ return [
         'pages' => 'Trang nội dung',
         'page_management' => 'Quản lý trang',
         'page_partials' => 'Khối dùng chung',
+        'projects' => 'Quản lý dự án',
         'user_management' => 'Người dùng',
         'user_list' => 'Danh sách người dùng',
         'roles_permissions' => 'Vai trò & Quyền',
@@ -1016,6 +1017,10 @@ return [
         'updated_success' => 'Đã cập nhật dự án :title thành công.',
         'deleted_success' => 'Đã xoá dự án :title thành công.',
         'bulk_success' => 'Đã cập nhật :count dự án thành công.',
+        'deleted_bulk_success' => 'Đã xoá :count dự án thành công.',
+        'updated_bulk_status' => 'Đã cập nhật trạng thái :status cho :count dự án.',
+        'per_page' => 'dự án / trang',
+        'showing' => 'Hiển thị :from - :to trên tổng số :total dự án',
         'sections' => [
             'general' => 'Thông tin dự án',
             'gallery' => 'Thư viện ảnh',

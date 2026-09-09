@@ -670,6 +670,7 @@ return [
         'pages' => 'Content Pages',
         'page_management' => 'Page Management',
         'page_partials' => 'Shared Blocks',
+        'projects' => 'Projects',
         'user_management' => 'User Management',
         'user_list' => 'Users List',
         'roles_permissions' => 'Roles & Permissions',
@@ -1013,6 +1014,10 @@ return [
         'updated_success' => 'Project :title updated successfully.',
         'deleted_success' => 'Project :title deleted successfully.',
         'bulk_success' => 'Successfully updated :count projects.',
+        'deleted_bulk_success' => 'Successfully deleted :count projects.',
+        'updated_bulk_status' => 'Successfully updated status to :status for :count projects.',
+        'per_page' => 'projects / page',
+        'showing' => 'Showing :from - :to of :total projects',
         'sections' => [
             'general' => 'Project Information',
             'gallery' => 'Image Gallery',

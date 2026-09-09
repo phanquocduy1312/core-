@@ -27,6 +27,11 @@ class ProjectController extends Controller
 
     public function index(Request $request, ?string $locale = null)
     {
+        $perPage = (int) $request->query('per_page', 10);
+        if (! in_array($perPage, [10, 20, 50, 100], true)) {
+            $perPage = 10;
+        }
+
         $projects = Project::query()
             ->when($request->query('q'), function ($query, $keyword) {
                 $query->where('title', 'like', "%{$keyword}%")
@@ -41,12 +46,12 @@ class ProjectController extends Controller
             })
             ->orderBy('sort_order')
             ->latest('id')
-            ->paginate(15)
+            ->paginate($perPage)
             ->withQueryString();
 
         $categories = Project::CATEGORIES;
 
-        return view('admin.projects.index', compact('projects', 'categories'));
+        return view('admin.projects.index', compact('projects', 'categories', 'perPage'));
     }
 
     public function create(?string $locale = null)
@@ -171,12 +176,39 @@ class ProjectController extends Controller
 
     public function bulk(Request $request, ?string $locale = null)
     {
-        return $this->handleBulk(
-            $request,
-            Project::class,
-            'admin.projects.index',
-            'project',
-            'admin.projects.bulk_success'
-        );
+        $validated = $this->validatedBulkAction($request, 'projects');
+        $ids = $validated['ids'];
+
+        if ($validated['action'] === 'delete') {
+            $deleted = DB::transaction(function () use ($ids): int {
+                $projects = Project::query()->whereIn('id', $ids)->lockForUpdate()->get();
+                $projects->each->delete();
+
+                return $projects->count();
+            });
+
+            ActivityLogger::log('bulk_deleted', null, 'Xóa hàng loạt dự án', [
+                'model' => Project::class,
+                'ids' => $ids,
+                'count' => $deleted,
+            ]);
+
+            return back()->with('success', __('admin.projects.deleted_bulk_success', ['count' => $deleted]));
+        }
+
+        $isActive = $validated['action'] === 'activate';
+        $updated = Project::query()->whereIn('id', $ids)->update(['is_active' => $isActive]);
+
+        ActivityLogger::log('bulk_status_changed', null, 'Cập nhật trạng thái hàng loạt dự án', [
+            'model' => Project::class,
+            'ids' => $ids,
+            'count' => $updated,
+            'is_active' => $isActive,
+        ]);
+
+        return back()->with('success', __('admin.projects.updated_bulk_status', [
+            'status' => $isActive ? __('admin.projects.fields.active') : __('admin.projects.fields.inactive'),
+            'count' => $updated,
+        ]));
     }
 }

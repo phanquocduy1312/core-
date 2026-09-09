@@ -169,6 +169,92 @@ class ProjectManagementTest extends TestCase
         $this->assertDatabaseMissing('projects', ['id' => $project->id]);
     }
 
+    public function test_admin_can_access_create_and_edit_views(): void
+    {
+        $project = Project::query()->create([
+            'title' => ['vi' => 'Dự án Test View', 'en' => 'Test View Project'],
+            'slug' => 'du-an-test-view',
+            'category' => 'hospitality',
+            'is_active' => true,
+        ]);
+
+        $createResponse = $this->actingAs($this->admin)->get('/vi/admin/projects/create');
+        $createResponse->assertOk();
+
+        $editResponse = $this->actingAs($this->admin)->get("/vi/admin/projects/{$project->id}/edit");
+        $editResponse->assertOk();
+    }
+
+    public function test_projects_index_supports_pagination_and_per_page(): void
+    {
+        for ($i = 1; $i <= 12; $i++) {
+            Project::query()->create([
+                'title' => ['vi' => "Dự án {$i}", 'en' => "Project {$i}"],
+                'slug' => "du-an-{$i}",
+                'category' => 'hospitality',
+                'is_active' => true,
+                'sort_order' => $i,
+            ]);
+        }
+
+        // Default per_page is 10 -> page 1 has 10 items
+        $response = $this->actingAs($this->admin)->get('/vi/admin/projects');
+        $response->assertOk();
+        $projects = $response->viewData('projects');
+        $this->assertSame(10, $projects->perPage());
+        $this->assertSame(12, $projects->total());
+        $this->assertSame(2, $projects->lastPage());
+
+        // Custom per_page=20 -> all 12 items on 1 page
+        $response20 = $this->actingAs($this->admin)->get('/vi/admin/projects?per_page=20');
+        $response20->assertOk();
+        $projects20 = $response20->viewData('projects');
+        $this->assertSame(20, $projects20->perPage());
+        $this->assertSame(1, $projects20->lastPage());
+    }
+
+    public function test_admin_can_bulk_operate_projects(): void
+    {
+        $p1 = Project::query()->create([
+            'title' => ['vi' => 'Dự án 1', 'en' => 'Project 1'],
+            'slug' => 'du-an-1-bulk',
+            'category' => 'hospitality',
+            'is_active' => true,
+        ]);
+        $p2 = Project::query()->create([
+            'title' => ['vi' => 'Dự án 2', 'en' => 'Project 2'],
+            'slug' => 'du-an-2-bulk',
+            'category' => 'residential',
+            'is_active' => true,
+        ]);
+
+        // Bulk deactivate
+        $response = $this->actingAs($this->admin)->patch('/vi/admin/projects/bulk', [
+            'action' => 'deactivate',
+            'ids' => [$p1->id, $p2->id],
+        ]);
+        $response->assertRedirect();
+        $this->assertFalse((bool) $p1->fresh()->is_active);
+        $this->assertFalse((bool) $p2->fresh()->is_active);
+
+        // Bulk activate
+        $response = $this->actingAs($this->admin)->patch('/vi/admin/projects/bulk', [
+            'action' => 'activate',
+            'ids' => [$p1->id],
+        ]);
+        $response->assertRedirect();
+        $this->assertTrue((bool) $p1->fresh()->is_active);
+
+        // Bulk delete
+        $response = $this->actingAs($this->admin)->patch('/vi/admin/projects/bulk', [
+            'action' => 'delete',
+            'ids' => [$p1->id, $p2->id],
+        ]);
+        $response->assertRedirect();
+        $this->assertDatabaseMissing('projects', ['id' => $p1->id]);
+        $this->assertDatabaseMissing('projects', ['id' => $p2->id]);
+    }
+
     public function test_page_block_renderer_renders_project_grid(): void
     {
         Project::query()->create([
@@ -188,4 +274,5 @@ class ProjectManagementTest extends TestCase
         $this->assertStringContainsString('Nha Trang', $rendered);
     }
 }
+
 

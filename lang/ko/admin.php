@@ -1,6 +1,9 @@
 <?php
 
 return [
+    'sidebar' => [
+        'projects' => '프로젝트 관리',
+    ],
     'projects' => [
         'title' => '프로젝트 관리',
         'create' => '프로젝트 추가',
@@ -13,6 +16,10 @@ return [
         'updated_success' => ':title 프로젝트가 성공적으로 업데이트되었습니다.',
         'deleted_success' => ':title 프로젝트가 성공적으로 삭제되었습니다.',
         'bulk_success' => ':count개의 프로젝트가 성공적으로 처리되었습니다.',
+        'deleted_bulk_success' => ':count개의 프로젝트를 성공적으로 삭제했습니다.',
+        'updated_bulk_status' => ':count개 프로젝트의 상태를 :status(으)로 변경했습니다.',
+        'per_page' => '프로젝트 / 페이지',
+        'showing' => '총 :total개 중 :from - :to 표시',
         'sections' => [
             'general' => '프로젝트 정보',
             'gallery' => '갤러리',
